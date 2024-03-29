@@ -5,11 +5,12 @@ import {
   IconWrapper,
 } from './Header.styled';
 import sprite from 'assets/sprite.svg';
+import logo from '../../assets/img/logo.svg';
 
 export const Header = () => {
-
   return (
     <HeaderContainer>
+      <img src={logo} alt="WaterTracker" />
       <Navigation>
         <StyledLink to="/first">
           <IconWrapper>

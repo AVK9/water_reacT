@@ -14,13 +14,20 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
+    "formik": "^2.4.5",
     "modern-normalize": "^2.0.0",
     "normalize.css": "^8.0.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
+    "react-toastify": "^10.0.5",
+    "redux-persist": "^6.0.0",
     "styled-components": "^6.0.7",
-    "vite-plugin-svgr": "^3.2.0"
+    "vite-plugin-svgr": "^3.2.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.62",

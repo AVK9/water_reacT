@@ -1,19 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const HeaderContainer = styled.div`
-  padding: 12px;
-`;
-
-export const Navigation = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 export const StyledLink = styled(Link)`
-  /* padding: 8px 16px;
-  color: #ffffff; White text color */
+  padding: 8px 16px;
+  color: #ffffff; /* White text color */
   text-shadow:
     0 0 5px #00baff,
     0 0 10px #00baff,

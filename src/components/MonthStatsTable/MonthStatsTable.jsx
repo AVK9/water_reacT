@@ -8,7 +8,15 @@ import {
   TableContainer,
   PersentRateWoter,
   ContainerData,
+  DayOfWeekSpan,
+  MonthSpan,
+  TableHeaderBox,
+  MonthYearSpan,
+  CarrentMonthBox,
+  IconWrapper,
+  BtnMonthBox,
 } from './MonthStatsTable.modal';
+import sprite from '../../assets/img/sprite.svg';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -42,25 +50,37 @@ const MonthStatsTable = () => {
 
   return (
     <TableContainer>
-      <MonthStatsTableContainer>
-        <BtnMonthStep
-          onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
-        >
-          last
-        </BtnMonthStep>
-        <span>
-          {dateFns.format(currentDate, formatOfManth)}
-          {dateFns.format(currentDate, formatOfYear)}
-        </span>
-        <BtnMonthStep
-          onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
-        >
-          next
-        </BtnMonthStep>
-      </MonthStatsTableContainer>
-
-      <div>Month</div>
-
+      <TableHeaderBox>
+        <MonthSpan>Month</MonthSpan>
+        <MonthStatsTableContainer>
+          <BtnMonthBox>
+            <BtnMonthStep
+              onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
+            >
+              <IconWrapper>
+                <use href={`${sprite}#icon-chevron-right`} />
+              </IconWrapper>
+            </BtnMonthStep>
+          </BtnMonthBox>
+          <CarrentMonthBox>
+            <MonthYearSpan>
+              {dateFns.format(currentDate, formatOfManth)},
+            </MonthYearSpan>
+            <MonthYearSpan>
+              {dateFns.format(currentDate, formatOfYear)}
+            </MonthYearSpan>
+          </CarrentMonthBox>
+          <BtnMonthBox>
+            <BtnMonthStep
+              onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
+            >
+              <IconWrapper>
+                <use href={`${sprite}#icon-chevron-right`} />
+              </IconWrapper>
+            </BtnMonthStep>
+          </BtnMonthBox>
+        </MonthStatsTableContainer>
+      </TableHeaderBox>
       <Calendar
         style={{
           display: 'grid',
@@ -71,7 +91,7 @@ const MonthStatsTable = () => {
         }}
       >
         {weeks.map((week) => (
-          <span>{dateFns.format(week, formatOfWeek)}</span>
+          <DayOfWeekSpan>{dateFns.format(week, formatOfWeek)}</DayOfWeekSpan>
         ))}
         {totalDate.map((date) => (
           <ContainerData>

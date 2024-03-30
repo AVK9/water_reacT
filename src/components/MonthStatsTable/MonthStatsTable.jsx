@@ -14,7 +14,7 @@ import {
   CarrentMonthBox,
   IconWrapper,
   BtnMonthBox,
-} from './MonthStatsTable.modal';
+} from './MonthStatsTable.styled';
 import sprite from '../../assets/img/sprite.svg';
 
 const formatOfYear = 'yyy';

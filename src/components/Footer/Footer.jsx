@@ -5,7 +5,9 @@ const Footer = () => {
   return (
     <FooterContainer>
       {/* <Logo /> */}
-      <Content> © 2024</Content>
+      <a href="/welcome">WelcomePage</a>
+      <Content> © 2024 </Content>
+      <a href="/home">HomePage</a>
     </FooterContainer>
   );
 };

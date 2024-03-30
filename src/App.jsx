@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Layout from 'components/Layout/Layout';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
 import { AppWrapper, Background, BackgroundBot } from './App.styled';
 
 import { lazy } from 'react';
@@ -16,11 +16,11 @@ function App() {
       <Background>
         <BackgroundBot>
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+            <Route path="/" element={<SharedLayout />}>
               <Route path="/welcome" element={<WelcomePage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/home" element={<HomePage />} />
               {/* <Route path="/second" element={<SecondPage />}>
                 <Route path=":half" element={<HalfPage />} />
               </Route> */}

@@ -8,22 +8,77 @@ export const TableContainer = styled.div`
   /* height: 332px; */
   height: 550px;
 `;
+export const TableHeaderBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 500px;
+  margin-left: 24px;
+`;
 
-export const MonthStatsTableContainer = styled.div`
-  display: 'flex';
-  justify-content: 'space-arround';
-  margin: '1 rem 0';
+export const MonthSpan = styled.span`
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 123%;
+  color: var(--primery-color-black);
+`;
+
+export const MonthYearSpan = styled.span`
+  margin-left: 5px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: var(--primery-color-blue);
+`;
+export const CarrentMonthBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 90px;
+  /* background-color: blue; */
+`;
+export const IconWrapper = styled.svg`
+  width: 14px;
+  height: 14px;
+  fill: #407bff;
+`;
+export const BtnMonthBox = styled.div`
+  margin: 0;
+  padding: 0;
+  border: none;
+  /* background-color: black; */
+  width: 14px;
+  height: 14px;
 `;
 
 export const BtnMonthStep = styled.button`
-  background-color: tomato;
-  width: 50px;
+  /* width: 50px; */
+  background-color: transparent;
+  border: none;
 `;
-
-export const Calendar = styled.div`
+export const DayOfWeekSpan = styled.span`
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--secondary-color-4);
+`;
+export const MonthStatsControlBox = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+`;
+export const CalendarTab = styled.div`
   display: 'grid';
-  grid-template-columns: 'repeat(7, 1fr)';
-  gap: '1rem';
+  grid-template-columns: 'repeat(7, 0fr)';
+  gap: '22px 20px';
+  align-items: center;
+  justify-content: center;
 `;
 export const CalendarData = styled.div`
   width: 34px;

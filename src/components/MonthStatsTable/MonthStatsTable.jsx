@@ -1,14 +1,21 @@
 import * as dateFns from 'date-fns';
 import { useState } from 'react';
 import {
-  BtnMonthStep,
-  Calendar,
+  CalendarTab,
   CalendarData,
-  MonthStatsTableContainer,
+  MonthStatsControlBox,
   TableContainer,
   PersentRateWoter,
   ContainerData,
+  DayOfWeekSpan,
+  MonthSpan,
+  TableHeaderBox,
+  MonthYearSpan,
+  CarrentMonthBox,
+  IconWrapper,
+  BtnMonthBox,
 } from './MonthStatsTable.modal';
+import sprite from '../../assets/img/sprite.svg';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -31,7 +38,7 @@ const MonthStatsTable = () => {
 
   const weeks = ((date) => {
     const weeks = [];
-    for (let day = 1; day <= 7; day++) {
+    for (let day = 0; day <= 6; day++) {
       weeks.push(date[day]);
     }
     return weeks;
@@ -42,36 +49,44 @@ const MonthStatsTable = () => {
 
   return (
     <TableContainer>
-      <MonthStatsTableContainer>
-        <BtnMonthStep
-          onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
-        >
-          last
-        </BtnMonthStep>
-        <span>
-          {dateFns.format(currentDate, formatOfManth)}
-          {dateFns.format(currentDate, formatOfYear)}
-        </span>
-        <BtnMonthStep
-          onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
-        >
-          next
-        </BtnMonthStep>
-      </MonthStatsTableContainer>
-
-      <div>Month</div>
-
-      <Calendar
+      <TableHeaderBox>
+        <MonthSpan>Month</MonthSpan>
+        <MonthStatsControlBox>
+          <BtnMonthBox
+            onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
+          >
+            <IconWrapper>
+              <use href={`${sprite}#icon-chevron-right`} />
+            </IconWrapper>
+          </BtnMonthBox>
+          <CarrentMonthBox>
+            <MonthYearSpan>
+              {dateFns.format(currentDate, formatOfManth)},
+            </MonthYearSpan>
+            <MonthYearSpan>
+              {dateFns.format(currentDate, formatOfYear)}
+            </MonthYearSpan>
+          </CarrentMonthBox>
+          <BtnMonthBox
+            onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
+          >
+            <IconWrapper>
+              <use href={`${sprite}#icon-chevron-left`} />
+            </IconWrapper>
+          </BtnMonthBox>
+        </MonthStatsControlBox>
+      </TableHeaderBox>
+      <CalendarTab
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(7, 1fr)',
+          gridTemplateColumns: 'repeat(7, 0fr)',
           gap: '22px 20px',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         {weeks.map((week) => (
-          <span>{dateFns.format(week, formatOfWeek)}</span>
+          <DayOfWeekSpan>{dateFns.format(week, formatOfWeek)}</DayOfWeekSpan>
         ))}
         {totalDate.map((date) => (
           <ContainerData>
@@ -96,7 +111,7 @@ const MonthStatsTable = () => {
             <PersentRateWoter>0%</PersentRateWoter>
           </ContainerData>
         ))}
-      </Calendar>
+      </CalendarTab>
     </TableContainer>
   );
 };

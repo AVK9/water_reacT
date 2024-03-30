@@ -1,11 +1,12 @@
-import { Container, Title, StyledImage } from './WelcomePage.styled';
-import example from '../../assets/img/background-main-page-bottom.png';
+import WaterConsumptionTracker from '../../components/WaterСonsumptionTracker/WaterСonsumptionTracker';
+import WhyDrinkWater from '../../components/WhyDrinkWater/WhyDrinkWater';
+import { Container } from './WelcomePage.styled';
 
 const WelcomePage = () => {
   return (
     <Container>
-      <Title>Welcome</Title>
-      <StyledImage src={example} alt="Example" />
+      <WaterConsumptionTracker />
+      <WhyDrinkWater />
     </Container>
   );
 };

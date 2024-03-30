@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const FooterContainer = styled.div`
   /* background-color: #f8fdff; */
@@ -10,4 +11,7 @@ export const FooterContainer = styled.div`
 
 export const Content = styled.div`
   padding: 1px;
+`;
+export const StyledLink = styled(Link)`
+  /* padding: 20px; */
 `;

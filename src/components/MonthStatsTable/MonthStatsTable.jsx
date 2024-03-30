@@ -1,10 +1,9 @@
 import * as dateFns from 'date-fns';
 import { useState } from 'react';
 import {
-  BtnMonthStep,
-  Calendar,
+  CalendarTab,
   CalendarData,
-  MonthStatsTableContainer,
+  MonthStatsControlBox,
   TableContainer,
   PersentRateWoter,
   ContainerData,
@@ -39,7 +38,7 @@ const MonthStatsTable = () => {
 
   const weeks = ((date) => {
     const weeks = [];
-    for (let day = 1; day <= 7; day++) {
+    for (let day = 0; day <= 6; day++) {
       weeks.push(date[day]);
     }
     return weeks;
@@ -52,15 +51,13 @@ const MonthStatsTable = () => {
     <TableContainer>
       <TableHeaderBox>
         <MonthSpan>Month</MonthSpan>
-        <MonthStatsTableContainer>
-          <BtnMonthBox>
-            <BtnMonthStep
-              onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
-            >
-              <IconWrapper>
-                <use href={`${sprite}#icon-chevron-right`} />
-              </IconWrapper>
-            </BtnMonthStep>
+        <MonthStatsControlBox>
+          <BtnMonthBox
+            onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
+          >
+            <IconWrapper>
+              <use href={`${sprite}#icon-chevron-right`} />
+            </IconWrapper>
           </BtnMonthBox>
           <CarrentMonthBox>
             <MonthYearSpan>
@@ -70,21 +67,19 @@ const MonthStatsTable = () => {
               {dateFns.format(currentDate, formatOfYear)}
             </MonthYearSpan>
           </CarrentMonthBox>
-          <BtnMonthBox>
-            <BtnMonthStep
-              onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
-            >
-              <IconWrapper>
-                <use href={`${sprite}#icon-chevron-right`} />
-              </IconWrapper>
-            </BtnMonthStep>
+          <BtnMonthBox
+            onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
+          >
+            <IconWrapper>
+              <use href={`${sprite}#icon-chevron-left`} />
+            </IconWrapper>
           </BtnMonthBox>
-        </MonthStatsTableContainer>
+        </MonthStatsControlBox>
       </TableHeaderBox>
-      <Calendar
+      <CalendarTab
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(7, 1fr)',
+          gridTemplateColumns: 'repeat(7, 0fr)',
           gap: '22px 20px',
           alignItems: 'center',
           justifyContent: 'center',
@@ -116,7 +111,7 @@ const MonthStatsTable = () => {
             <PersentRateWoter>0%</PersentRateWoter>
           </ContainerData>
         ))}
-      </Calendar>
+      </CalendarTab>
     </TableContainer>
   );
 };

@@ -11,6 +11,10 @@ export const TableContainer = styled.div`
 export const TableHeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 500px;
+  margin-left: 24px;
 `;
 
 export const MonthSpan = styled.span`
@@ -34,26 +38,25 @@ export const CarrentMonthBox = styled.div`
   display: flex;
   justify-content: center;
   width: 90px;
-  background-color: blue;
+  /* background-color: blue; */
 `;
 export const IconWrapper = styled.svg`
   width: 14px;
   height: 14px;
   fill: #407bff;
-  background-color: red;
-  /* display: inline-block; */
 `;
-export const BtnMonthBox = styled.button`
+export const BtnMonthBox = styled.div`
   margin: 0;
   padding: 0;
   border: none;
-  background-color: black;
-  width: 30px;
-  height: 10px;
+  /* background-color: black; */
+  width: 14px;
+  height: 14px;
 `;
 
 export const BtnMonthStep = styled.button`
   /* width: 50px; */
+  background-color: transparent;
   border: none;
 `;
 export const DayOfWeekSpan = styled.span`
@@ -61,23 +64,21 @@ export const DayOfWeekSpan = styled.span`
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
-  /* text-align: center; */
+  text-align: center;
   color: var(--secondary-color-4);
 `;
-export const MonthStatsTableContainer = styled.div`
-  /* display: block; */
-  display: 'flex';
-  /* flex-direction: row; */
-  width: 300px;
-  /* display: nowrap; */
-  justify-content: 'space-arround';
-  /* margin: '1 rem 0'; */
-  background-color: #06bd06;
+export const MonthStatsControlBox = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
 `;
-export const Calendar = styled.div`
+export const CalendarTab = styled.div`
   display: 'grid';
-  grid-template-columns: 'repeat(7, 1fr)';
-  gap: '1rem';
+  grid-template-columns: 'repeat(7, 0fr)';
+  gap: '22px 20px';
+  align-items: center;
+  justify-content: center;
 `;
 export const CalendarData = styled.div`
   width: 34px;

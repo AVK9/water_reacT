@@ -2,12 +2,12 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from 'components/Header/Header';
 import Footer from '../Footer/Footer';
-import { ContentContainer, MainContainer } from './SharedLayout.styled';
+import { Container, MainContainer } from './SharedLayout.styled';
 
 const SharedLayout = () => {
   return (
     <>
-      <ContentContainer>
+      <Container>
         <Header />
         <MainContainer>
           <Suspense fallback={null}>
@@ -15,7 +15,7 @@ const SharedLayout = () => {
           </Suspense>
         </MainContainer>
         <Footer />
-      </ContentContainer>
+      </Container>
     </>
   );
 };

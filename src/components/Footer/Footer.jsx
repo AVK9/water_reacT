@@ -1,13 +1,14 @@
-import { Content, FooterContainer } from './Footer.styled';
+import { Content, FooterContainer, StyledLink } from './Footer.styled';
 // import Logo from '../Logo/Logo';
 
 const Footer = () => {
   return (
     <FooterContainer>
       {/* <Logo /> */}
-      <a href="/welcome">WelcomePage</a>
+      <StyledLink to="/welcome">WelcomePage</StyledLink>
+
       <Content> © 2024 </Content>
-      <a href="/home">HomePage</a>
+      <StyledLink to="/home">HomePage</StyledLink>
     </FooterContainer>
   );
 };

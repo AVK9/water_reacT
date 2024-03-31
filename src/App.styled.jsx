@@ -9,6 +9,7 @@ export const Background = styled.div`
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
+  
 `;
 export const BackgroundBot = styled.div`
   width: 100%;

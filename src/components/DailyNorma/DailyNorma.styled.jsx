@@ -49,14 +49,14 @@ export const EditButton = styled.button`
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--secondary-color-6);
+    background-color: var(--primery-color-blue);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
   }
 
   &:hover {
-    color: var(--secondary-color-6);
+    color: var(--primery-color-blue);
 
     &::after {
       transform: scaleX(1);

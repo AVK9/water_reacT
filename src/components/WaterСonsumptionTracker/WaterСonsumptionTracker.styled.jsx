@@ -35,8 +35,12 @@ export const ListTrackers = styled.ul`
   gap: 16px;
   margin-bottom: 24px;
 
-  @media screen and (min-width: 768px) and (max-width: 1280px) {
+  @media screen and (min-width: 768px) {
     flex-direction: row;
+  }
+
+  @media screen and (min-width: 1440px) {
+    flex-direction: column;
   }
 `;
 
@@ -77,7 +81,7 @@ export const ButtonTracker = styled.button`
     height: 44px;  
   }
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1440px) {
     width: 384px;
   }
 `;

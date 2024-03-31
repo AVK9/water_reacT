@@ -14,6 +14,7 @@ export const Container = styled.div`
 
   @media screen and (min-width: 1280px) {
     flex-direction: row;
+    align-items: end;
     gap: 80px;
   }
 `;

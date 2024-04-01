@@ -1,7 +1,19 @@
-import React from 'react';
+import {
+  AddWaterBox,
+  BtnAddWater,
+  Header,
+  TodayWaterListBox,
+} from './TodayWaterList.styled';
 
 const TodayWaterList = () => {
-  return <div>TodayWaterList</div>;
+  return (
+    <TodayWaterListBox>
+      <Header>Today</Header>
+      <AddWaterBox>
+        <BtnAddWater>+ Add Water</BtnAddWater>
+      </AddWaterBox>
+    </TodayWaterListBox>
+  );
 };
 
 export default TodayWaterList;

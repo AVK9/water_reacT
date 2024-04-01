@@ -143,3 +143,41 @@ export const FormText = styled.div`
   font-weight: 400;
   margin-top: 12px;
 `;
+
+export const StyledButton = styled.button`
+  margin-top: 24px;
+  width: 256px;
+  height: 36px;
+  padding: 8px 30px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  border: none;
+  color: #ffffff;
+  background: #407bff;
+  box-shadow: 0px 4px 8px rgba(64, 123, 255, 0.34);
+  border-radius: 10px;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
+  }
+  &:focus {
+    outline: 1px solid #407bff;
+  }
+  &:active {
+    box-shadow: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 160px;
+    height: 44px;
+    padding: 10px 30px;
+    margin-left: auto;
+  }
+
+  @media screen and (min-width: 1440px) {
+    float: right;
+  }
+`;

@@ -2,19 +2,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const TableContainer = styled.div`
-  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
-  background: var(--secondary-color-2);
-  width: 544px;
-  /* height: 332px; */
-  height: 550px;
+  width: 264px;
+  height: 506px;
 `;
 export const TableHeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  width: 500px;
-  margin-left: 24px;
+  /* width: 500px; */
 `;
 
 export const MonthSpan = styled.span`

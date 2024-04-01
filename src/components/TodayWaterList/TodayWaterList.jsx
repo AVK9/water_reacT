@@ -1,8 +1,10 @@
 import { addWaterApi } from '../../redux/Api/apiWater';
+
 import {
   AddWaterBox,
   BtnAddWater,
   Header,
+
   IconWrapper,
   TodayWaterListBox,
   WaterAmountBox,
@@ -58,6 +60,7 @@ const TodayWaterList = () => {
           </IconWrapperTrash>
         </WaterAmountBox>
         <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
+
       </AddWaterBox>
     </TodayWaterListBox>
   );

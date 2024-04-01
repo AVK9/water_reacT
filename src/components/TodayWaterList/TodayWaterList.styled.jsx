@@ -13,14 +13,18 @@ export const Header = styled.h3`
   font-size: 24px;
   line-height: 125%;
   color: var(--primery-color-black);
+
   margin-bottom: 16px;
+
 `;
 export const AddWaterBox = styled.div`
   width: 264px;
   height: 212px;
+
   position: relative;
   margin-bottom: 24px;
   overflow: auto;
+
 `;
 
 export const BtnAddWater = styled.div`
@@ -82,4 +86,5 @@ export const WaterAmount = styled.span`
   color: var(--primery-color-blue);
   margin-right: 19px;
   white-space: nowrap;
+
 `;

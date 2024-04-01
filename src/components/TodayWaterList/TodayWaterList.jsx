@@ -10,7 +10,6 @@ import {
   WaterAmount,
   IconWrapperStr,
   IconWrapperTrash,
-  DayDrinkBox,
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
@@ -31,12 +30,14 @@ const TodayWaterList = () => {
 
   const addWater = () => {
     addWaterApi({ date, waterAmountDD });
+
   };
 
   return (
     <TodayWaterListBox>
       <Header>Today</Header>
       <AddWaterBox>
+
         <DayDrinkBox>
           {waterAmountCauntDD.map(({ waterAmountD, dates }) => (
             <WaterAmountBox>
@@ -55,6 +56,7 @@ const TodayWaterList = () => {
           ))}
         </DayDrinkBox>
         {/* <WaterAmountBox>
+
           <IconWrapper>
             <use href={`${sprite}#icon-glas-water`} />
           </IconWrapper>
@@ -65,8 +67,10 @@ const TodayWaterList = () => {
           </IconWrapperStr>
           <IconWrapperTrash>
             <use href={`${sprite}#icon-trash`} />
+
           </IconWrapperTrash>
         </WaterAmountBox>
+
         <WaterAmountBox>
           <IconWrapper>
             <use href={`${sprite}#icon-glas-water`} />
@@ -82,6 +86,7 @@ const TodayWaterList = () => {
         </WaterAmountBox> */}
 
         <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
+
       </AddWaterBox>
     </TodayWaterListBox>
   );

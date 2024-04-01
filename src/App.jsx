@@ -12,8 +12,6 @@ const SignUpPage = lazy(() => import('./pages/SignUpPage/SignUpPage'));
 
 function App() {
   return (
-    // <Background>
-      // <BackgroundBot>
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route path="/welcome" element={<WelcomePage />} />
@@ -26,8 +24,5 @@ function App() {
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
-      // </BackgroundBot>
-    // </Background>
-  );
 }
 export default App;

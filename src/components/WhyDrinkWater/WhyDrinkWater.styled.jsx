@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const ContainerWDW = styled.div`
   padding: 24px 16px;
@@ -7,7 +7,7 @@ export const ContainerWDW = styled.div`
   box-shadow: 0 4px 14px rgba(64, 123, 255, 0.3);
 
   @media screen and (min-width: 768px) {
-    padding: 32px 24px
+    padding: 32px 24px;
   }
 `;
 

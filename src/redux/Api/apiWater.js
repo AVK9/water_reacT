@@ -6,9 +6,9 @@ export const getWaterApi = async () => {
   return data;
 };
 
-getWaterApi();
 export const addWaterApi = async (body) => {
-  const { data } = await api.post('/???', body);
+  console.log(body);
+  const { data } = await api.post('/api/water', body);
   console.log(data);
   return data;
 };

@@ -26,7 +26,7 @@ const MonthStatsTable = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectDate, setSelectDate] = useState(new Date());
   const today = new Date();
-
+  console.log(selectDate);
   const firstDay = dateFns.startOfMonth(currentDate);
   const lastDay = dateFns.lastDayOfMonth(currentDate);
   const startDate = dateFns.startOfWeek(firstDay);
@@ -80,7 +80,7 @@ const MonthStatsTable = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(7, 0fr)',
-          gap: '22px 20px',
+          gap: '22px 4px',
           alignItems: 'center',
           justifyContent: 'center',
         }}

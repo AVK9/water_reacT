@@ -12,17 +12,18 @@ const SignUpPage = lazy(() => import('./pages/SignUpPage/SignUpPage'));
 
 function App() {
   return (
-        <Routes>
-          <Route path="/" element={<SharedLayout />}>
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/second" element={<SecondPage />}>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/home" element={<HomePage />} />
+        {/* <Route path="/second" element={<SecondPage />}>
                 <Route path=":half" element={<HalfPage />} />
               </Route> */}
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+    </Routes>
+  );
 }
 export default App;

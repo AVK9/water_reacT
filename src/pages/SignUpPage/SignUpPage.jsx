@@ -1,5 +1,15 @@
-import React, { useState } from 'react';
-import { SignUpGlobalContainer, SignUpContainer, SignUpTitle, SignUpLabel, SignUpInput, SignUpButton, TogglePasswordButton, ErrorMessage } from './SignUpPage.styled';
+import React, { useState, useEffect } from 'react';
+import {
+  SignUpGlobalContainer,
+  SignUpContainer,
+  SignUpTitle,
+  SignUpLabel,
+  SignUpInput,
+  SignUpButton,
+  SignUpwater,
+  TogglePasswordButton,
+  ErrorMessage,
+} from './SignUpPage.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -10,7 +20,13 @@ const SignUpComponent = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
-  const [error, setError] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = useState('');
+  const [formValid, setFormValid] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [repeatPasswordError, setRepeatPasswordError] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -20,35 +36,56 @@ const SignUpComponent = () => {
     setRepeatPasswordVisible(!repeatPasswordVisible);
   };
 
-   const handleSignUp = () => {
+  useEffect(() => {
+    if (emailError || passwordError || repeatPasswordError) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [emailError, passwordError, repeatPasswordError]);
+
+  const handleSignUp = () => {
     // Валідація електронної пошти
     if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address.');
-      return;
+      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailError(true);
+    } else {
+      setEmailError(false);
     }
+
     // Валідація пароля
     if (!password || password.length < 6) {
-      setError('Please enter a password with at least 6 characters.');
-      return;
+      setPasswordErrorMessage('Please enter a password with at least 6 characters.');
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
     }
+
     // Перевірка, чи паролі співпадають
     if (password !== repeatPassword) {
-      setError('Passwords do not match.');
-      return;
+      setRepeatPasswordErrorMessage('Passwords do not match.');
+      setRepeatPasswordError(true);
+    } else {
+      setRepeatPasswordError(false);
     }
-    // Логіка реєстрації користувача...
   };
+
   return (
     <SignUpGlobalContainer>
+       <SignUpwater></SignUpwater>
       <SignUpContainer>
+       
         <SignUpTitle>Sign Up</SignUpTitle>
         <SignUpLabel>Enter your email</SignUpLabel>
-        <SignUpInput 
-          type="email" 
-          placeholder="E-mail" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
+        <SignUpInput
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={emailError ? { borderColor: 'red'} : null}
         />
+        {emailError && <ErrorMessage>{emailErrorMessage}</ErrorMessage>}
+        
         <SignUpLabel>Enter your password</SignUpLabel>
         <div style={{ position: 'relative' }}>
           <SignUpInput
@@ -56,15 +93,14 @@ const SignUpComponent = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={passwordError ? { borderColor: 'red' } : null}
           />
-          <TogglePasswordButton
-            type="button"
-            onClick={togglePasswordVisibility}
-             disabled={!password}
-          >
+          <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
             <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
           </TogglePasswordButton>
         </div>
+        {passwordError && <ErrorMessage>{passwordErrorMessage}</ErrorMessage>}
+
         <SignUpLabel>Repeat password</SignUpLabel>
         <div style={{ position: 'relative' }}>
           <SignUpInput
@@ -72,18 +108,18 @@ const SignUpComponent = () => {
             placeholder="Repeat Password"
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)}
+            style={repeatPasswordError ? { borderColor: 'red' } : null}
           />
-          <TogglePasswordButton
-            type="button"
-            onClick={toggleRepeatPasswordVisibility}
-           disabled={!repeatPassword}
-          >
+          <TogglePasswordButton type="button" onClick={toggleRepeatPasswordVisibility}>
             <FontAwesomeIcon icon={repeatPasswordVisible ? faEyeSlash : faEye} />
           </TogglePasswordButton>
         </div>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <SignUpButton onClick={handleSignUp}>Sign Up</SignUpButton>
-        <Link to="/signin">Sign In</Link>
+        {repeatPasswordError && <ErrorMessage>{repeatPasswordErrorMessage}</ErrorMessage>}
+
+        <SignUpButton onClick={handleSignUp} disabled={!formValid}>
+          Sign Up
+        </SignUpButton>
+        <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>Sign In</Link>
       </SignUpContainer>
     </SignUpGlobalContainer>
   );

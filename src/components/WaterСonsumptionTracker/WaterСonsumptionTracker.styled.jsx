@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const TrackerContainer = styled.div``;
 
@@ -74,11 +74,11 @@ export const ButtonTracker = styled.button`
   &:active {
     box-shadow: none;
   }
-  
+
   @media screen and (min-width: 768px) {
     font-size: 18px;
     width: 336px;
-    height: 44px;  
+    height: 44px;
   }
 
   @media screen and (min-width: 1440px) {

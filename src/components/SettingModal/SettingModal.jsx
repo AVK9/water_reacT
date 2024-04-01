@@ -15,7 +15,6 @@ import {
 } from './SettingModal.styled';
 
 const SettingModal = () => {
-  const state = {};
   return (
     <Form onSubmit="">
       <FormContainer>

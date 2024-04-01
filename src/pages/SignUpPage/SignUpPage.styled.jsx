@@ -10,8 +10,6 @@ export const SignUpGlobalContainer = styled.section`
 `;
   
  
-
-
 export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,7 +28,7 @@ export const SignUpwater = styled.div`
     width: 280px;
     height: 210px;
     background-position: center center;
-`
+`;
 
 export const SignUpTitle = styled.h2`
   font-weight: 500;

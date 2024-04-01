@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import bacStail from '../../assets/img/Frame-mobail.png';
+import mobilWater from '../../assets/img/mobile-woter.png';
+
 
 export const SignUpGlobalContainer = styled.section`
   padding-top: 24px;
@@ -7,27 +10,25 @@ export const SignUpGlobalContainer = styled.section`
 `;
   
  
-
-
 export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
   align-items: flex-start;
- 
-   background-image: url('/src/assets/img/Frame 18 mobail.png');
+  background-image: url(${bacStail});
+   
 `;
 
 export const SignUpwater = styled.div`
 
-    background-image: url('/src/assets/img/mobile-woter.png');
+    background-image: url(${mobilWater});
     background-size: contain;
     background-repeat: no-repeat;
     width: 280px;
     height: 210px;
     background-position: center center;
-`
+`;
 
 export const SignUpTitle = styled.h2`
   font-weight: 500;

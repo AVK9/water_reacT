@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const TodayWaterListBox = styled.div`
   width: 100%;
 
+  position: relative;
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
@@ -21,9 +22,9 @@ export const AddWaterBox = styled.div`
   width: 264px;
   height: 212px;
 
-  position: relative;
   margin-bottom: 24px;
-  overflow: auto;
+
+  display: flex;
 
 `;
 
@@ -86,5 +87,18 @@ export const WaterAmount = styled.span`
   color: var(--primery-color-blue);
   margin-right: 19px;
   white-space: nowrap;
+`;
+
+export const DayDrinkBox = styled.div`
+  max-height: 180px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: red;
+  &::-webkit-scrollbar {
+    width: 2px; /* Товщина скролбара */
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(175, 0, 0, 0.8);
+  }
 
 `;

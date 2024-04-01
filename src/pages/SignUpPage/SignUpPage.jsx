@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SignUpGlobalContainer,
@@ -14,7 +13,7 @@ import {
 } from './SignUpPage.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 
@@ -79,17 +78,8 @@ const SignUpComponent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('email :>> ', email);
-    console.log('password :>> ', password);
     dispatch(signUpThunk({ email, password }));
-
     reset();
-  };
-
-  const reset = () => {
-    setEmail('');
-    setPassword('');
-    setRepeatPassword('');
   };
 
   const isAuth = useSelector(isAuthSelector);
@@ -100,6 +90,11 @@ const SignUpComponent = () => {
     isAuth && navigate('/home');
   }, [isAuth, navigate]);
 
+  const reset = () => {
+    setEmail('');
+    setPassword('');
+    setRepeatPassword('');
+  };
   return (
     <SignUpGlobalContainer>
       <SignUpwater></SignUpwater>

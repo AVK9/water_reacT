@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import bacStail from '../../assets/img/Frame-mobail.png';
+import mobilWater from '../../assets/img/mobile-woter.png';
 
 export const SignInGlobalContainer = styled.section`
   padding-top: 24px;
@@ -15,19 +17,19 @@ export const SignInContainer = styled.div`
   gap: 16px;
   width: 100%;
   align-items: flex-start;
- 
-   background-image: url('/src/assets/img/Frame 18 mobail.png');
+  background-image: url(${bacStail});
+   
 `;
 
 export const SignInwater = styled.div`
-
-    background-image: url('/src/assets/img/mobile-woter.png');
+    background-image: url(${mobilWater});
     background-size: contain;
     background-repeat: no-repeat;
     width: 280px;
     height: 210px;
     background-position: center center;
 `
+
 
 export const SignInTitle = styled.h2`
  font-weight: 500;

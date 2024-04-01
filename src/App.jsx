@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 
 import SharedLayout from 'components/SharedLayout/SharedLayout';
-import { Background, BackgroundBot } from './App.styled';
+// import { Background, BackgroundBot } from './App.styled';
 
 const ErrorPage = lazy(() => import('pages/ErrorPage/ErrorPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
@@ -12,8 +12,8 @@ const SignUpPage = lazy(() => import('./pages/SignUpPage/SignUpPage'));
 
 function App() {
   return (
-    <Background>
-      <BackgroundBot>
+    // <Background>
+      // <BackgroundBot>
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route path="/welcome" element={<WelcomePage />} />
@@ -26,8 +26,8 @@ function App() {
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
-      </BackgroundBot>
-    </Background>
+      // </BackgroundBot>
+    // </Background>
   );
 }
 export default App;

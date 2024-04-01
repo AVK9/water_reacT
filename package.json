@@ -21,6 +21,7 @@
     "date-fns": "^3.6.0",
     "formik": "^2.4.5",
     "modern-normalize": "^2.0.0",
+    "nanoid": "^5.0.6",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

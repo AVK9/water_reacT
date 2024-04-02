@@ -32,6 +32,9 @@ const GlobalStyles = () => {
       width: 100%;
       height: 100vh;
       margin: 0;
+      line-height: 1;
+      scroll-behavior: smooth;
+      transition: all 0.5s linear;
     }
     h1,
     h2,
@@ -43,6 +46,7 @@ const GlobalStyles = () => {
       margin: 0;
     }
     a {
+      color: currentColor;
       text-decoration: none;
     }
     ul {
@@ -57,6 +61,7 @@ const GlobalStyles = () => {
     }
     button {
       cursor: pointer;
+      border: none;
       padding: 0;
     }
 
@@ -75,6 +80,27 @@ const GlobalStyles = () => {
       font-family: 'Roboto';
       font-weight: 400;
       src: url(${RobotoRegular}) format('truetype');
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #9ebbff;
+      border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: rgba(239, 237, 232, 0.1);
+    }
+
+    * {
+      scrollbar-color: #9ebbff rgba(239, 237, 232, 0.1);
     }
   `;
 };

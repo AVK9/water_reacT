@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SignUpGlobalContainer,
@@ -13,7 +14,7 @@ import {
 } from './SignUpPage.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 
@@ -25,8 +26,7 @@ const SignUpComponent = () => {
   const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] =
-    useState('');
+  const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = useState('');
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -59,9 +59,7 @@ const SignUpComponent = () => {
 
     // Валідація пароля
     if (!password || password.length < 6) {
-      setPasswordErrorMessage(
-        'Please enter a password with at least 6 characters.'
-      );
+      setPasswordErrorMessage('Please enter a password with at least 6 characters.');
       setPasswordError(true);
     } else {
       setPasswordError(false);
@@ -82,6 +80,12 @@ const SignUpComponent = () => {
     reset();
   };
 
+  const reset = () => {
+    setEmail('');
+    setPassword('');
+    setRepeatPassword('');
+  };
+
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -90,11 +94,6 @@ const SignUpComponent = () => {
     isAuth && navigate('/home');
   }, [isAuth, navigate]);
 
-  const reset = () => {
-    setEmail('');
-    setPassword('');
-    setRepeatPassword('');
-  };
   return (
     <SignUpGlobalContainer>
       <SignUpwater></SignUpwater>
@@ -107,7 +106,9 @@ const SignUpComponent = () => {
             placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             style={emailError ? { borderColor: 'red' } : null}
+            inputProps={{ 'aria-describedby': 'emailHelp' }}
           />
           {emailError && <ErrorMessage>{emailErrorMessage}</ErrorMessage>}
 

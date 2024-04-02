@@ -1,15 +1,18 @@
+import { Section } from '../Section/Section';
 import { Content, FooterContainer, StyledLink } from './Footer.styled';
 // import Logo from '../Logo/Logo';
 
 const Footer = () => {
   return (
-    <FooterContainer>
-      {/* <Logo /> */}
-      <StyledLink to="/welcome">WelcomePage</StyledLink>
+    <Section>
+      <FooterContainer>
+        {/* <Logo /> */}
+        <StyledLink to="/welcome">WelcomePage</StyledLink>
 
-      <Content> © 2024 </Content>
-      <StyledLink to="/home">HomePage</StyledLink>
-    </FooterContainer>
+        <Content> © 2024 </Content>
+        <StyledLink to="/home">HomePage</StyledLink>
+      </FooterContainer>
+    </Section>
   );
 };
 

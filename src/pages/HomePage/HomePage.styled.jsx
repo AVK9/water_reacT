@@ -17,6 +17,8 @@ export const BackgroundBottom = styled.div`
   background-position: center bottom;
   background-size: contain;
   background-repeat: no-repeat;
+  background-size: 100%;
+  min-height: 100vh;
 `;
 export const Background = styled.div`
   background-image: url(${backgroundTop});
@@ -24,4 +26,6 @@ export const Background = styled.div`
   background-position: center top;
   background-size: contain;
   background-repeat: no-repeat;
+  background-size: 100%;
+  min-height: 100vh;
 `;

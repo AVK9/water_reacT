@@ -16,7 +16,7 @@ import {
 } from './SettingModalForm.styled';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { UpdateUserData } from '../../redux/auth/authThunk';
+
 
 const SettingModalForm = () => {
   let [password, setPassword] = useState('');
@@ -62,7 +62,7 @@ const SettingModalForm = () => {
     }
     isSubmit = false;
     setNewPassword(newPassword);
-    dispatch(UpdateUserData(state));
+    dispatch(state);
     toast.success('Update successfully');
   };
   return (

@@ -2,19 +2,16 @@ import styled from 'styled-components';
 
 export const Backdrop = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
+  inset: 0px;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: 50;
+  overflow: auto;
 `;
 
 export const ModalNorma = styled.div`
   position: absolute;
-  z-index: 100;
   left: 50%;
-  top: 54%;
+  top: 65%;
   transform: translate(-50%, -50%);
   color: #2f2f2f;
   width: 280px;
@@ -51,7 +48,7 @@ export const Title = styled.h2`
 
 export const CloseBtn = styled.button`
   position: absolute;
-  top: 28px;
+  top: 25px;
   right: 12px;
   border: none;
   background: transparent;
@@ -79,8 +76,6 @@ export const CloseBtn = styled.button`
 export const WrapperDef = styled.div`
   display: flex;
   flex-wrap: wrap;
-
-  margin-top: 24px;
   gap: 16px;
 
   @media screen and (min-width: 768px) {
@@ -140,7 +135,6 @@ export const CalcTitle = styled.h3`
 export const ContainerForm = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 16px;
 `;
 export const LabelGen = styled.label`
@@ -159,13 +153,9 @@ export const GenTitle = styled.p`
   margin-right: 24px;
 `;
 
-export const Form = styled.form`
-  /* styles for Form */
-`;
+export const Form = styled.form``;
 
-export const Label = styled.label`
-  /* styles for Label */
-`;
+export const Label = styled.label``;
 
 export const ValueResult = styled.span`
   white-space: nowrap;
@@ -198,6 +188,7 @@ export const Button = styled.button`
   background-color: rgb(64, 123, 255);
   box-shadow: rgba(64, 123, 255, 0.34) 0px 4px 8px 0px;
   transition: all 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98) 0s;
+  margin-top: 24px;
 
   @media screen and (min-width: 768px) {
     width: 160px;
@@ -207,10 +198,37 @@ export const Button = styled.button`
     padding: 10px 30px;
   }
 `;
-export const Input = styled.input``;
+export const InputValue = styled.input`
+  display: flex;
+  margin-top: 8px;
+  padding: 12px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 6px;
+  border: 1px solid #d7e3ff;
+  width: 100%;
+  color: var(--primery-color-blue);
+`;
 
 export const GenInput = styled.input`
   display: flex;
   align-items: flex-start;
   gap: 24px;
+`;
+export const Input = styled.input``;
+
+export const LabelSpan = styled.span``;
+
+export const LabelMuch = styled.label`
+  font-size: 18px;
+  font-weight: 500;
+  line-height: calc(1.11111);
+`;
+
+export const LabelAmount = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
 `;

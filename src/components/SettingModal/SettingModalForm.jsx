@@ -62,7 +62,7 @@ const SettingModalForm = () => {
     }
     isSubmit = false;
     setNewPassword(newPassword);
-    dispatch(UpdateUserData(state));
+    dispatch(state);
     toast.success('Update successfully');
   };
   return (

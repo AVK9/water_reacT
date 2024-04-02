@@ -1,13 +1,17 @@
 import WaterConsumptionTracker from '../../components/WaterСonsumptionTracker/WaterСonsumptionTracker';
 import WhyDrinkWater from '../../components/WhyDrinkWater/WhyDrinkWater';
-import { Container } from './WelcomePage.styled';
+import { BackgroundTopWP, BackgroundBottomWP, ContainerWP } from './WelcomePage.styled';
 
 const WelcomePage = () => {
   return (
-    <Container>
-      <WaterConsumptionTracker />
-      <WhyDrinkWater />
-    </Container>
+    <BackgroundTopWP>
+      <BackgroundBottomWP>
+        <ContainerWP>
+          <WaterConsumptionTracker />
+          <WhyDrinkWater />
+        </ContainerWP>
+      </BackgroundBottomWP>
+    </BackgroundTopWP>
   );
 };
 

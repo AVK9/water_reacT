@@ -6,6 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   overflow: hidden;
   /* background-color: #528a8a; */
+  background-size: contain;
+  align-items: stretch;
   min-width: 320px;
   max-width: 375px;
 

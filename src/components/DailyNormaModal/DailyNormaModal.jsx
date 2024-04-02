@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
   Title,
@@ -59,13 +60,9 @@ function DailyNormaModal({ onClose }) {
       <ModalNorma>
         <NormaContainer>
           <Title>My daily norma</Title>
-          <CloseBtn
-            onClick={() => {
-              onClose();
-            }}
-          >
-            <svg width={24} height={24}>
-              <use href="src/assets/img/sprite.svg#icon-close"></use>
+          <CloseBtn onClick={onClose}>
+            <svg>
+              <use href={`${sprite}#icon-close`} />
             </svg>
           </CloseBtn>
           <WrapperDef>

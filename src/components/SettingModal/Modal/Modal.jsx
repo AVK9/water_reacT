@@ -26,6 +26,7 @@ const Modal = ({ isOpen, children, onClose }) => {
 
   return (
     <>
+      {isOpen&&(
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
           <HeaderSettingModal>
@@ -43,7 +44,7 @@ const Modal = ({ isOpen, children, onClose }) => {
           </WrapperModalContent>
         </ModalContent>
       </ModalOverlay>
-    </>
+    )}</>
   );
 };
 export default Modal;

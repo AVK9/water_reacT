@@ -16,15 +16,15 @@ export const BackgroundTopWP = styled.div`
   background-image: url(${backgroundMobileTop});
   background-repeat: no-repeat;
   background-position: center top;
-  background-size: contain;
+  background-size: 100%;
 
   @media screen and (min-width: 768px) {
-    top: 90px;
+    top: 64px;
     background-image: url(${backgroundTabletTop});
   }
 
   @media screen and (min-width: 1440px) {
-    top: 72px;
+    top: 60px;
     background-image: url(${backgroundDesktopTop});
   }
 `;
@@ -33,21 +33,32 @@ export const BackgroundBottomWP = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
   width: 100%;
   background-image: url(${backgroundMobileBottom});
   background-repeat: no-repeat;
   background-position: center bottom;
-  background-size: contain;
-  
+  background-size: 100% 100%;
+
+  @media screen and (min-height: 800px){
+    bottom: 0;
+  }
 
   @media screen and (min-width: 768px) {
     background-image: url(${backgroundTabletBottom});
+
+    @media screen and (min-height: 740px){
+      bottom: 0;
+    }
   }
 
   @media screen and (min-width: 1440px) {
     background-image: url(${backgroundDesktopBottom});
+    background-size: contain;
+
+    @media screen and (min-height: 560px) {
+      bottom: 0;
+    }
   }
 `;
 
@@ -59,11 +70,6 @@ export const ContainerWP = styled.div`
   align-items: center;
   padding-top: 24px;
   padding-bottom: 40px;
-
-  @media screen and (max-width: 520px) {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
 
   @media screen and (min-width: 768px) {
     gap: 60px;

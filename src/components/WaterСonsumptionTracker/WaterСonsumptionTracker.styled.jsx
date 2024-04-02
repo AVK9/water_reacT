@@ -1,6 +1,12 @@
 import { styled } from 'styled-components';
 
-export const TrackerContainer = styled.div``;
+export const TrackerContainer = styled.div`
+  margin: 0 20px;
+
+  @media screen and (min-width: 420px) {
+    margin: 0;
+  }
+`;
 
 export const Title = styled.h1`
   color: var(--primery-color-black);

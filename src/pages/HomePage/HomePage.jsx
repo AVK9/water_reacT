@@ -1,23 +1,25 @@
 import MonthStatsTable from '../../components/MonthStatsTable/MonthStatsTable';
 import DailyNorma from '../../components/DailyNorma/DailyNorma';
 import {
-  Background,
-  BackgroundBot,
-  HomeBox,
   WaterControlBox,
+  Background,
+  BackgroundBottom,
 } from './HomePage.styled';
 import TodayWaterList from '../../components/TodayWaterList/TodayWaterList';
+import { Section } from '../../components/Section/Section';
 const HomePage = () => {
   return (
-    <HomeBox>
-      <Background></Background>
-      <BackgroundBot></BackgroundBot>
-      <DailyNorma />
-      <WaterControlBox>
-        <TodayWaterList />
-        <MonthStatsTable />
-      </WaterControlBox>
-    </HomeBox>
+    <Background>
+      <BackgroundBottom>
+        <Section>
+          <DailyNorma />
+          <WaterControlBox>
+            <TodayWaterList />
+            <MonthStatsTable />
+          </WaterControlBox>
+        </Section>
+      </BackgroundBottom>
+    </Background>
   );
 };
 

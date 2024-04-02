@@ -10,7 +10,7 @@ export const signUpApi = async (body) => {
 };
 
 export const loginApi = async (body) => {
-  const { data } = await api.post('/api/auth/signip', body);
+  const { data } = await api.post('/api/auth/signin', body);
   return data;
 };
 export const refreshApi = async (token) => {

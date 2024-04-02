@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   SignUpGlobalContainer,
   SignUpContainer,
@@ -12,7 +13,9 @@ import {
 } from './SignUpPage.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { isAuthSelector } from './../../redux/auth/selectors';
+import { signUpThunk } from './../../redux/auth/authThunk';
 
 const SignUpComponent = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +25,8 @@ const SignUpComponent = () => {
   const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] = useState('');
+  const [repeatPasswordErrorMessage, setRepeatPasswordErrorMessage] =
+    useState('');
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -55,7 +59,9 @@ const SignUpComponent = () => {
 
     // Валідація пароля
     if (!password || password.length < 6) {
-      setPasswordErrorMessage('Please enter a password with at least 6 characters.');
+      setPasswordErrorMessage(
+        'Please enter a password with at least 6 characters.'
+      );
       setPasswordError(true);
     } else {
       setPasswordError(false);
@@ -70,56 +76,88 @@ const SignUpComponent = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signUpThunk({ email, password }));
+    reset();
+  };
+
+  const isAuth = useSelector(isAuthSelector);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    isAuth && navigate('/home');
+  }, [isAuth, navigate]);
+
+  const reset = () => {
+    setEmail('');
+    setPassword('');
+    setRepeatPassword('');
+  };
   return (
     <SignUpGlobalContainer>
-       <SignUpwater></SignUpwater>
+      <SignUpwater></SignUpwater>
       <SignUpContainer>
-       
-        <SignUpTitle>Sign Up</SignUpTitle>
-        <SignUpLabel>Enter your email</SignUpLabel>
-        <SignUpInput
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={emailError ? { borderColor: 'red'} : null}
-        />
-        {emailError && <ErrorMessage>{emailErrorMessage}</ErrorMessage>}
-        
-        <SignUpLabel>Enter your password</SignUpLabel>
-        <div style={{ position: 'relative' }}>
+        <form onSubmit={handleSubmit}>
+          <SignUpTitle>Sign Up</SignUpTitle>
+          <SignUpLabel>Enter your email</SignUpLabel>
           <SignUpInput
-            type={passwordVisible ? 'text' : 'password'}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={passwordError ? { borderColor: 'red' } : null}
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={emailError ? { borderColor: 'red' } : null}
           />
-          <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
-            <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
-          </TogglePasswordButton>
-        </div>
-        {passwordError && <ErrorMessage>{passwordErrorMessage}</ErrorMessage>}
+          {emailError && <ErrorMessage>{emailErrorMessage}</ErrorMessage>}
 
-        <SignUpLabel>Repeat password</SignUpLabel>
-        <div style={{ position: 'relative' }}>
-          <SignUpInput
-            type={repeatPasswordVisible ? 'text' : 'password'}
-            placeholder="Repeat Password"
-            value={repeatPassword}
-            onChange={(e) => setRepeatPassword(e.target.value)}
-            style={repeatPasswordError ? { borderColor: 'red' } : null}
-          />
-          <TogglePasswordButton type="button" onClick={toggleRepeatPasswordVisibility}>
-            <FontAwesomeIcon icon={repeatPasswordVisible ? faEyeSlash : faEye} />
-          </TogglePasswordButton>
-        </div>
-        {repeatPasswordError && <ErrorMessage>{repeatPasswordErrorMessage}</ErrorMessage>}
+          <SignUpLabel>Enter your password</SignUpLabel>
+          <div style={{ position: 'relative' }}>
+            <SignUpInput
+              type={passwordVisible ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={passwordError ? { borderColor: 'red' } : null}
+            />
+            <TogglePasswordButton
+              type="button"
+              onClick={togglePasswordVisibility}
+            >
+              <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+            </TogglePasswordButton>
+          </div>
+          {passwordError && <ErrorMessage>{passwordErrorMessage}</ErrorMessage>}
 
-        <SignUpButton onClick={handleSignUp} disabled={!formValid}>
-          Sign Up
-        </SignUpButton>
-        <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>Sign In</Link>
+          <SignUpLabel>Repeat password</SignUpLabel>
+          <div style={{ position: 'relative' }}>
+            <SignUpInput
+              type={repeatPasswordVisible ? 'text' : 'password'}
+              placeholder="Repeat Password"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              style={repeatPasswordError ? { borderColor: 'red' } : null}
+            />
+            <TogglePasswordButton
+              type="button"
+              onClick={toggleRepeatPasswordVisibility}
+            >
+              <FontAwesomeIcon
+                icon={repeatPasswordVisible ? faEyeSlash : faEye}
+              />
+            </TogglePasswordButton>
+          </div>
+          {repeatPasswordError && (
+            <ErrorMessage>{repeatPasswordErrorMessage}</ErrorMessage>
+          )}
+
+          <SignUpButton onClick={handleSignUp} disabled={!formValid}>
+            Sign Up
+          </SignUpButton>
+          <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>
+            Sign In
+          </Link>
+        </form>
       </SignUpContainer>
     </SignUpGlobalContainer>
   );

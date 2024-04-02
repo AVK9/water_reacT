@@ -1,6 +1,5 @@
 // import styled from '@emotion/styled';
-// import backgroundTop from './assets/img/background-main-page.png';
-// import backgroundBottom from './assets/img/background-main-page-bottom.png';
+
 import 'normalize.css';
 
 // export const Background = styled.div`
@@ -9,6 +8,10 @@ import 'normalize.css';
 //   background-repeat: no-repeat;
 //   background-position: center top;
 //   background-size: contain;
+
+
+
+
 // `;
 // export const BackgroundBot = styled.div`
 //   width: 100%;

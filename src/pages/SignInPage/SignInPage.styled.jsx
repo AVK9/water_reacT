@@ -1,8 +1,4 @@
 import styled from '@emotion/styled';
-import bacStail from '../../assets/img/Frame-mobail.png';
-import mobilWater from '../../assets/img/mobile-woter.png';
-import tabWater from '../../assets/img/BottleforSignin.png';
-import desktopWater from '../../assets/img/desktopWaterIn.png';
 
 export const SignInGlobalContainer = styled.section`
   padding-top: 24px;
@@ -28,30 +24,9 @@ export const SignInContainer = styled.div`
   gap: 16px;
   width: 100%;
   align-items: flex-start;
-  background-image: url(${bacStail});
-   
-  @media screen and (min-width: 768px) {
-    position: relative;
-    background-image: url(${tabWater});
-    width: 786px;
-    height: 658px;
-    background-position: -35px;
-    };
-    
-    @media screen and (min-width: 1440px) {
-      background-image: none;
-      position: static;
-      min-width: 384px;
-      min-height: 312px
-      
-     
-    }
  
- 
-
+   background-image: url('/src/assets/img/Frame 18 mobail.png');
 `;
-
-
 
 export const SignInwater = styled.div`
     background-image: url(${mobilWater});
@@ -60,15 +35,7 @@ export const SignInwater = styled.div`
     width: 280px;
     height: 210px;
     background-position: center center;
-
-     @media screen and (min-width: 768px) {
-    background-image: none;
-    
-   
-  }
-
-`;
-
+`
 
 export const SignInTitle = styled.h2`
  font-weight: 500;

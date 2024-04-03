@@ -47,8 +47,20 @@ const SignUpComponent = () => {
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Required'),
     }),
-    onSubmit: (values) => {
-      dispatch(signUpThunk({ email: values.email, password: values.password }));
+    onSubmit: (values, { setSubmitting }) => {
+      dispatch(signUpThunk({ email: values.email, password: values.password }))
+        .then(response => {
+          setSubmitting(false);
+          if (response.error && response.error === 'Email already exists') {
+            formik.setFieldError('email', 'This email is already registered');
+          } else {
+            navigate('/home');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          setSubmitting(false);
+        });
     },
   });
 
@@ -68,8 +80,8 @@ const SignUpComponent = () => {
       <SignUpGlobalContainer>
         <SignUpwater></SignUpwater>
         <SignUpContainer>
-          {/* <form onSubmit={formik.handleSubmit}> */}
-            <SignUpTitle>Sign Up</SignUpTitle>
+          <SignUpTitle>Sign Up</SignUpTitle>
+          <form onSubmit={formik.handleSubmit}>
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -129,13 +141,13 @@ const SignUpComponent = () => {
               <ErrorMessage>{formik.errors.repeatPassword}</ErrorMessage>
             )}
 
-            <SignUpButton type="submit" disabled={!formik.isValid}>
+            <SignUpButton type="submit" disabled={!formik.isValid || formik.isSubmitting}>
               Sign Up
             </SignUpButton>
             <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>
               Sign In
             </Link>
-          {/* </form> */}
+          </form>
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

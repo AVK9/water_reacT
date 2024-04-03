@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
@@ -7,7 +7,6 @@ import {
   DescriptionTitle,
   Form,
   Label,
-  Input,
   Button,
   ValueResult,
   Backdrop,
@@ -24,6 +23,9 @@ import {
   LabelSpan,
   LabelAmount,
   LabelMuch,
+  RadioInput,
+  CustomRadio,
+  CustomRadioInner,
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose }) {
@@ -32,6 +34,7 @@ function DailyNormaModal({ onClose }) {
   const [activityTime, setActivityTime] = useState('0');
   const [waterIntake, setWaterIntake] = useState(0.0);
   const [plannedIntake, setPlannedIntake] = useState('0');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleKeyPress = (event) => {
     const keyCode = event.keyCode || event.which;
@@ -57,13 +60,22 @@ function DailyNormaModal({ onClose }) {
 
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
+      setIsOpen(false);
       onClose();
     }
   };
 
+  useEffect(() => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
-    <Backdrop onClick={handleBackdropClick}>
-      <ModalNorma>
+    <Backdrop isOpen={isOpen} onClick={handleBackdropClick}>
+      <ModalNorma isOpen={isOpen}>
         <NormaContainer>
           <Title>My daily norma</Title>
           <CloseBtn onClick={onClose}>
@@ -92,8 +104,9 @@ function DailyNormaModal({ onClose }) {
             <ContainerForm>
               <CalcTitle>Calculate your rate:</CalcTitle>
               <LabelGen>
-                <Input
+                <RadioInput
                   type="radio"
+                  id="girl"
                   value="girl"
                   checked={gender === 'girl'}
                   onChange={() => {
@@ -101,8 +114,14 @@ function DailyNormaModal({ onClose }) {
                     calculateWaterIntake('girl', weight, activityTime);
                   }}
                 />
+                <CustomRadio htmlFor="girl">
+                  <CustomRadioInner
+                    style={{ opacity: gender === 'girl' ? 1 : 0 }}
+                  />
+                </CustomRadio>
                 <GenTitle>For woman</GenTitle>
-                <Input
+                <RadioInput
+                  id="man"
                   className="radio_input"
                   type="radio"
                   value="man"
@@ -112,6 +131,11 @@ function DailyNormaModal({ onClose }) {
                     calculateWaterIntake('man', weight, activityTime);
                   }}
                 />
+                <CustomRadio htmlFor="man">
+                  <CustomRadioInner
+                    style={{ opacity: gender === 'man' ? 1 : 0 }}
+                  />
+                </CustomRadio>
                 <GenTitle>For man</GenTitle>
               </LabelGen>
               <Label>

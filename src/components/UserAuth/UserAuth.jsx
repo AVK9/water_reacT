@@ -1,16 +1,14 @@
-import { StyledLink, IconWrapper } from './UserAuth.Module';
+import { StyledLink, TextLink, IconWrapper } from './UserAuth.styled';
 import sprite from '../../assets/img/sprite.svg';
 
 const UserAuth = () => {
   return (
-    <div>
-      <StyledLink to="/signin">
-        Sign In
-        <IconWrapper>
-          <use href={`${sprite}#icon-user`} />
-        </IconWrapper>
-      </StyledLink>
-    </div>
+    <StyledLink to="/signin">
+      <TextLink>Sign In</TextLink>
+      <IconWrapper>
+        <use xlinkHref={`${sprite}#icon-user`} />
+      </IconWrapper>
+    </StyledLink>
   );
 };
 

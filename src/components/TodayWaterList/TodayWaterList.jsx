@@ -1,5 +1,5 @@
-import { addWaterApi } from '../../redux/Api/apiWater';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -15,9 +15,17 @@ import {
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
-import { addWaterThunk } from '../../redux/water/waterThunk';
+import { addWaterThunk, getWaterThunk } from '../../redux/water/waterThunk';
+import {
+  selectError,
+  selectLoading,
+  selectStateWaterDayList,
+} from '../../redux/water/waterSelectors';
+import { Loader } from '../Loader/Loader';
 
 const TodayWaterList = () => {
+  // const [dayWaterList, setDayWaterList] = useState('');
+  const formatOfTime = 'HH:mm:ss';
   const date = new Date();
   const waterAmount = 170;
   const waterAmountCauntDD = [
@@ -31,36 +39,53 @@ const TodayWaterList = () => {
     { waterAmountD: '200', dates: '17.00 PM' },
   ];
   const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   const addWater = () => {
     const body = { date, waterAmount };
     console.log('bodybody =>', body);
-    // addWaterApi(body);
     dispatch(addWaterThunk(body));
   };
+  useEffect(() => {
+    dispatch(getWaterThunk());
+  }, [dispatch]);
+  // setDayWaterList(useSelector(selectStateWaterDayList));
 
+  const dayWaterList = useSelector(selectStateWaterDayList);
+
+  // console.log('dayWaterList =>', dayWaterList.waterRecords.length);
+  // console.log('dayWaterList =>', dayWaterLists);
   return (
-    <TodayWaterListBox>
-      <Header>Today</Header>
-      <AddWaterBox>
-        <DayDrinkBox>
-          {waterAmountCauntDD.map(({ waterAmountD, dates }) => (
-            <WaterAmountBox>
-              <IconWrapper>
-                <use href={`${sprite}#icon-glas-water`} />
-              </IconWrapper>
-              <WaterAmount>{waterAmountD}</WaterAmount>
-              <WaterAmountTime>{dates}</WaterAmountTime>
-              <IconWrapperStr>
-                <use href={`${sprite}#icon-pencil-square`} />
-              </IconWrapperStr>
-              <IconWrapperTrash>
-                <use href={`${sprite}#icon-trash`} />
-              </IconWrapperTrash>
-            </WaterAmountBox>
-          ))}
-        </DayDrinkBox>
-        {/* <WaterAmountBox>
+    <>
+      {loading && !error && <p>Loading pleasure wait</p>}
+      {error && <p>Error: {error}</p>}
+      <TodayWaterListBox>
+        <Header>Today</Header>
+        <AddWaterBox>
+          {dayWaterList.length ? (
+            <DayDrinkBox>
+              {dayWaterList.map(({ _id, waterAmount, date }) => (
+                <WaterAmountBox>
+                  <IconWrapper>
+                    <use href={`${sprite}#icon-glas-water`} />
+                  </IconWrapper>
+                  <WaterAmount>{waterAmount}</WaterAmount>
+                  <WaterAmountTime>{date}</WaterAmountTime>
+                  <IconWrapperStr>
+                    <use href={`${sprite}#icon-pencil-square`} />
+                  </IconWrapperStr>
+                  <IconWrapperTrash>
+                    <use href={`${sprite}#icon-trash`} />
+                  </IconWrapperTrash>
+                </WaterAmountBox>
+              ))}
+            </DayDrinkBox>
+          ) : (
+            <Loader /> || <p>No water</p>
+          )}
+
+          {/* <WaterAmountBox>
           <IconWrapper>
             <use href={`${sprite}#icon-glas-water`} />
           </IconWrapper>
@@ -87,9 +112,10 @@ const TodayWaterList = () => {
           </IconWrapperTrash>
         </WaterAmountBox> */}
 
-        <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
-      </AddWaterBox>
-    </TodayWaterListBox>
+          <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
+        </AddWaterBox>
+      </TodayWaterListBox>
+    </>
   );
 };
 

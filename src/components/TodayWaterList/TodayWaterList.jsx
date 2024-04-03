@@ -66,12 +66,12 @@ const TodayWaterList = () => {
           {dayWaterList.length ? (
             <DayDrinkBox>
               {dayWaterList.map(({ _id, waterAmount, date }) => (
-                <WaterAmountBox>
+                <WaterAmountBox key={_id}>
                   <IconWrapper>
                     <use href={`${sprite}#icon-glas-water`} />
                   </IconWrapper>
-                  <WaterAmount>{waterAmount}</WaterAmount>
-                  <WaterAmountTime>{date}</WaterAmountTime>
+                  <WaterAmount>{waterAmount} ml</WaterAmount>
+                  <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
                   <IconWrapperStr>
                     <use href={`${sprite}#icon-pencil-square`} />
                   </IconWrapperStr>

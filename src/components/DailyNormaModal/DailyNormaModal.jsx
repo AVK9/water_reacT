@@ -33,6 +33,12 @@ function DailyNormaModal({ onClose }) {
   const [waterIntake, setWaterIntake] = useState(0.0);
   const [plannedIntake, setPlannedIntake] = useState('0');
 
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const keyValue = String.fromCharCode(keyCode);
+    if (!/\d/.test(keyValue)) event.preventDefault();
+  };
+
   const calculateWaterIntake = (gender, weight, activityTime) => {
     let intake;
     if (gender === 'girl') {
@@ -117,6 +123,7 @@ function DailyNormaModal({ onClose }) {
                     setWeight(e.target.value);
                     calculateWaterIntake(gender, e.target.value, activityTime);
                   }}
+                  onKeyPress={handleKeyPress}
                   required
                 />
               </Label>
@@ -130,6 +137,7 @@ function DailyNormaModal({ onClose }) {
                     setActivityTime(e.target.value);
                     calculateWaterIntake(gender, weight, e.target.value);
                   }}
+                  onKeyPress={handleKeyPress}
                   required
                 />
               </Label>
@@ -150,6 +158,7 @@ function DailyNormaModal({ onClose }) {
                 type="number"
                 value={plannedIntake}
                 onChange={(e) => setPlannedIntake(e.target.value)}
+                onKeyPress={handleKeyPress}
                 required
               />
             </Label>

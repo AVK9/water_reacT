@@ -78,7 +78,9 @@ const SignInComponent = () => {
             placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             style={emailError ? { borderColor: 'red' } : null}
+            inputProps={{ 'aria-describedby': 'emailHelp' }}
           />
           {emailError && <ErrorMessage>Email is invalid</ErrorMessage>}
           <SignInLabel>Enter your password</SignInLabel>

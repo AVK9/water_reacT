@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
   Title,
@@ -19,14 +20,18 @@ import {
   LabelGen,
   ContainerForm,
   GenTitle,
+  InputValue,
+  LabelSpan,
+  LabelAmount,
+  LabelMuch,
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose }) {
   const [gender, setGender] = useState('girl');
-  const [weight, setWeight] = useState('');
-  const [activityTime, setActivityTime] = useState('');
+  const [weight, setWeight] = useState('0');
+  const [activityTime, setActivityTime] = useState('0');
   const [waterIntake, setWaterIntake] = useState(0.0);
-  const [plannedIntake, setPlannedIntake] = useState('');
+  const [plannedIntake, setPlannedIntake] = useState('0');
 
   const calculateWaterIntake = (gender, weight, activityTime) => {
     let intake;
@@ -55,13 +60,9 @@ function DailyNormaModal({ onClose }) {
       <ModalNorma>
         <NormaContainer>
           <Title>My daily norma</Title>
-          <CloseBtn
-            onClick={() => {
-              onClose();
-            }}
-          >
-            <svg width={24} height={24}>
-              <use href="src/assets/img/sprite.svg#icon-close"></use>
+          <CloseBtn onClick={onClose}>
+            <svg>
+              <use href={`${sprite}#icon-close`} />
             </svg>
           </CloseBtn>
           <WrapperDef>
@@ -109,7 +110,7 @@ function DailyNormaModal({ onClose }) {
               </LabelGen>
               <Label>
                 Your weight in kilograms:
-                <Input
+                <InputValue
                   type="number"
                   value={weight}
                   onChange={(e) => {
@@ -121,8 +122,8 @@ function DailyNormaModal({ onClose }) {
               </Label>
               <Label>
                 The time of active participation in sports or other activities
-                with a high physical load:
-                <Input
+                with a high physical load in hours:
+                <InputValue
                   type="number"
                   value={activityTime}
                   onChange={(e) => {
@@ -132,16 +133,20 @@ function DailyNormaModal({ onClose }) {
                   required
                 />
               </Label>
-              <Label>
-                The required amount of water in liters per day:
+              <LabelAmount>
+                <LabelSpan>
+                  The required amount of water in liters per day:
+                </LabelSpan>
                 <ValueResult>
                   {parseFloat(waterIntake).toFixed(1)} L{' '}
                 </ValueResult>
-              </Label>
+              </LabelAmount>
             </ContainerForm>
             <Label>
-              Write down how much water you will drink in liters:
-              <Input
+              <LabelMuch>
+                Write down how much water you will drink in liters:
+              </LabelMuch>
+              <InputValue
                 type="number"
                 value={plannedIntake}
                 onChange={(e) => setPlannedIntake(e.target.value)}

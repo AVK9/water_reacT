@@ -1,11 +1,11 @@
 import logo from '../../assets/img/logo.svg';
-import { StyledLink } from './Logo.Module';
+import { Link } from 'react-router-dom';
 
 const Logo = () => {
   return (
-    <StyledLink to="/">
+    <Link to="/">
       <img src={logo} alt="Water Tracker" />
-    </StyledLink>
+    </Link>
   );
 };
 

@@ -68,7 +68,7 @@ export const IconWrapperTrash = styled.svg`
 export const WaterAmountTime = styled.span`
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 200%;
   color: var(--primery-color-black);
   margin-right: 45px;

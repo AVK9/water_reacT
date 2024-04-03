@@ -1,40 +1,39 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setTokenApi } from '../Api/apiAuth.js';
 import {
-  addContactApi,
-  delContactApi,
-  getContactApi,
-} from '../Api/contactsApi.js';
+  addWaterApi,
+  delWaterApi,
+  getWaterApi,
+  setTokenApi,
+} from '../Api/apiWater.js';
 
-export const getContactThunk = createAsyncThunk(
-  'contacts/getContacts',
+export const getWaterThunk = createAsyncThunk(
+  'waterAmount/getWater',
   async (_, { rejectWithValue, getState }) => {
     try {
       setTokenApi(getState().auth.token);
-      return await getContactApi();
+      return await getWaterApi();
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
   }
 );
-export const addContactThunk = createAsyncThunk(
-  'contacts/addContacts',
-  async (contact, { rejectWithValue }) => {
+export const addWaterThunk = createAsyncThunk(
+  'waterAmount/addWater',
+  async (waterAmount, { rejectWithValue, getState }) => {
     try {
-      const data = await addContactApi(contact);
-
-      return data;
+      setTokenApi(getState().auth.token);
+      return await addWaterApi(waterAmount);
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
   }
 );
 
-export const delContactThunk = createAsyncThunk(
-  'contacts/delContacts',
+export const delWaterThunk = createAsyncThunk(
+  'waterAmount/delWater',
   async (delId, { rejectWithValue }) => {
     try {
-      const data = await delContactApi(delId);
+      const data = await delWaterApi(delId);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);

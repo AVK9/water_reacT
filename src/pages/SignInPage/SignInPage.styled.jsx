@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
 import bacStail from '../../assets/img/Frame-mobail.png';
 import mobilWater from '../../assets/img/mobile-woter.png';
-
-
 import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
+
+
 
 
 export const SignInGlobalContainer = styled.section`
   padding-top: 24px;
   display: flex;
   flex-direction: column-reverse;
+  padding: 32px;
 
   @media screen and (min-width: 1440px) {
      background-image: url(${desktopWater});
@@ -100,16 +101,17 @@ export const SignInLabel = styled.label`
 `;
 
 export const SignInInput = styled.input`
-  border: 1px solid var(--secondary-color---5);
+  border: 1px solid ${props => (props.error ? 'red' : '#d7e3ff')};
   border-radius: 6px;
   padding: 12px 10px;
   width: 280px;
   height: 44px;
   background: var(--primery-color-white);
   outline: none;
+  
 
   @media screen and (min-width: 768px) {
-    border: 1px solid #d7e3ff;
+    border: 1px solid ${props => (props.error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
     padding: 12px 10px;
     width: 336px;

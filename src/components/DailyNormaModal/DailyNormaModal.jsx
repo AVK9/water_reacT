@@ -118,10 +118,17 @@ function DailyNormaModal({ onClose }) {
                 Your weight in kilograms:
                 <InputValue
                   type="number"
+                  min="0"
                   value={weight}
                   onChange={(e) => {
-                    setWeight(e.target.value);
-                    calculateWaterIntake(gender, e.target.value, activityTime);
+                    if (e.target.value <= 200) {
+                      setWeight(e.target.value);
+                      calculateWaterIntake(
+                        gender,
+                        e.target.value,
+                        activityTime
+                      );
+                    }
                   }}
                   onKeyPress={handleKeyPress}
                   required
@@ -132,10 +139,13 @@ function DailyNormaModal({ onClose }) {
                 with a high physical load in hours:
                 <InputValue
                   type="number"
+                  min="0"
                   value={activityTime}
                   onChange={(e) => {
-                    setActivityTime(e.target.value);
-                    calculateWaterIntake(gender, weight, e.target.value);
+                    if (e.target.value <= 20) {
+                      setActivityTime(e.target.value);
+                      calculateWaterIntake(gender, weight, e.target.value);
+                    }
                   }}
                   onKeyPress={handleKeyPress}
                   required
@@ -156,8 +166,13 @@ function DailyNormaModal({ onClose }) {
               </LabelMuch>
               <InputValue
                 type="number"
+                min="0"
                 value={plannedIntake}
-                onChange={(e) => setPlannedIntake(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value <= 18) {
+                    setPlannedIntake(e.target.value);
+                  }
+                }}
                 onKeyPress={handleKeyPress}
                 required
               />

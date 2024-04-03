@@ -39,12 +39,6 @@ function DailyNormaModal({ onClose }) {
     if (!/\d/.test(keyValue)) event.preventDefault();
   };
 
-  const handleKeyPress = (event) => {
-    const keyCode = event.keyCode || event.which;
-    const keyValue = String.fromCharCode(keyCode);
-    if (!/\d/.test(keyValue)) event.preventDefault();
-  };
-
   const calculateWaterIntake = (gender, weight, activityTime) => {
     let intake;
     if (gender === 'girl') {

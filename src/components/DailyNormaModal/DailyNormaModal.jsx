@@ -26,6 +26,7 @@ import {
   RadioInput,
   CustomRadio,
   CustomRadioInner,
+  ErrorMessage,
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose }) {
@@ -35,6 +36,7 @@ function DailyNormaModal({ onClose }) {
   const [waterIntake, setWaterIntake] = useState(0.0);
   const [plannedIntake, setPlannedIntake] = useState('0');
   const [isOpen, setIsOpen] = useState(false);
+  const [weightError, setWeightError] = useState('');
 
   const handleKeyPress = (event) => {
     const keyCode = event.keyCode || event.which;
@@ -145,7 +147,12 @@ function DailyNormaModal({ onClose }) {
                   min="0"
                   value={weight}
                   onChange={(e) => {
-                    if (e.target.value <= 200) {
+                    if (e.target.value > 300) {
+                      setWeightError(
+                        'Weight must be less than or equal to 300'
+                      );
+                    } else {
+                      setWeightError('');
                       setWeight(e.target.value);
                       calculateWaterIntake(
                         gender,
@@ -157,6 +164,7 @@ function DailyNormaModal({ onClose }) {
                   onKeyPress={handleKeyPress}
                   required
                 />
+                {weightError && <ErrorMessage>{weightError}</ErrorMessage>}
               </Label>
               <Label>
                 The time of active participation in sports or other activities

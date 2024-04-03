@@ -1,6 +1,6 @@
 export const handleGetWater = (state, { payload }) => {
-  state.water = payload;
-  console.log('handleGetWater :>> ', payload);
+  state.dayWaterList = payload.waterRecords;
+  console.log('handleGetWater :>> ', payload.waterRecords);
 };
 export const handleAddWater = (state, { payload }) => {
   console.log('handleAddWater :>> ', payload);

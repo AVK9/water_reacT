@@ -1,7 +1,7 @@
 import { api } from './api';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com';
+axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com/api/water';
 
 export const setTokenApi = (token) => {
   console.log('setTokenApi =>', token);
@@ -9,7 +9,7 @@ export const setTokenApi = (token) => {
 };
 
 export const addWaterApi = async (body) => {
-  const { data } = await axios.post('/api/water', body, {
+  const { data } = await axios.post('/', body, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -18,10 +18,19 @@ export const addWaterApi = async (body) => {
 };
 
 export const getWaterApi = async () => {
-  console.log(api());
-  const { data } = await api('/');
+  const { data } = await axios.get('/today', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return data;
 };
+
+// export const getWaterApi = async () => {
+//   console.log(api());
+//   const { data } = await api('/today');
+//   return data;
+// };
 
 // export const addWaterApi = async (body, token) => {
 //   console.log('body =>', body);

@@ -1,4 +1,3 @@
-import { api } from './api';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com/api/water';
@@ -9,6 +8,7 @@ export const setTokenApi = (token) => {
 };
 
 export const addWaterApi = async (body) => {
+  console.log(body);
   const { data } = await axios.post('/', body, {
     headers: {
       'Content-Type': 'application/json',
@@ -19,6 +19,24 @@ export const addWaterApi = async (body) => {
 
 export const getWaterApi = async () => {
   const { data } = await axios.get('/today', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return data;
+};
+export const getWaterSelectDayApi = async (body) => {
+  console.log('bodybody', body);
+  const { data } = await axios.get('/date', body, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return data;
+};
+
+export const delWaterApi = async (delId) => {
+  const { data } = await axios.delete(`/${delId}`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -53,8 +71,3 @@ export const getWaterApi = async () => {
 //   });
 //   return data;
 // };
-
-export const delWaterApi = async (delId) => {
-  const { data } = await api.delete(`/???/${delId}`);
-  return data;
-};

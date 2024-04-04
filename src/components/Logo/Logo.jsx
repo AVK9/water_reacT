@@ -1,11 +1,23 @@
-import logo from '../../assets/img/logo.svg';
+import { useSelector } from 'react-redux';
+import { isAuthSelector } from '../../redux/auth/selectors';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/img/logo.svg';
 
 const Logo = () => {
+  const isAuth = useSelector(isAuthSelector);
+  
   return (
-    <Link to="/">
-      <img src={logo} alt="Water Tracker" />
-    </Link>
+    <>
+      {
+        !isAuth ?
+          <Link to="/welcome">
+            <img src={logo} alt="Water Tracker" />
+          </Link> :
+          <Link to="/home">
+            <img src={logo} alt="Water Tracker" />
+          </Link>
+      }
+    </>
   );
 };
 

@@ -1,6 +1,8 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { loginOutThunk } from '../../redux/auth/authThunk';
+import { isAuthSelector } from '../../redux/auth/selectors';
 import { Section } from '../Section/Section';
 import {
   OverlayLogoutModal,
@@ -17,7 +19,15 @@ import {
 import sprite from '../../assets/img/sprite.svg';
 
 const UserLogoutModal = ({ onClose }) => {
+  const isAuth = useSelector(isAuthSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/welcome');
+    }
+  }, [isAuth, navigate]);
 
   const handleLogout = () => {
     dispatch(loginOutThunk());
@@ -30,7 +40,7 @@ const UserLogoutModal = ({ onClose }) => {
         <TitleContainer>
           <TitleLogout>Log out</TitleLogout>
 
-          <ButtonClose type='button' onClick={onClose}>
+          <ButtonClose type='button' onClick={isAuth && onClose}>
             <IconWrapper>
               <use xlinkHref={`${sprite}#icon-close`}></use>
             </IconWrapper>

@@ -105,12 +105,18 @@ export const EyeButton = styled.span`
   right: 8px;
   transform: translateY(-50%);
   cursor: pointer;
+ 
+  
 
   svg {
     display: block;
     width: 16px;
     height: 16px;
-    fill: #407bff;
+    fill: transparent;
+    stroke: #407BFF;
+    stroke-width: 1px;
+    
+    
   }
 `;
 
@@ -181,3 +187,4 @@ export const StyledButton = styled.button`
     float: right;
   }
 `;
+

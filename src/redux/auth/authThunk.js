@@ -1,11 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  UpdateAvatar,
   loginApi,
   loginOutApi,
   refreshApi,
   setTokenApi,
   signUpApi,
 } from '../Api/apiAuth';
+import axios from 'axios';
+import { api } from '../Api/api';
 
 export const signUpThunk = createAsyncThunk(
   'auth/signUp',
@@ -51,3 +54,27 @@ export const loginOutThunk = createAsyncThunk(
     }
   }
 );
+
+export const UpdateAvatarThunk = createAsyncThunk(
+  'auth/avatar',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const { data } = await api.patch('/users/avatars', userData, );
+      return data;
+    }catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+)
+
+export const changeUserData = createAsyncThunk(
+  'auth/changeUserData',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await api.patch('/users', user);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+)

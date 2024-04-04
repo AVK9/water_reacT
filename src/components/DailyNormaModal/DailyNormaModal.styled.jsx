@@ -6,6 +6,8 @@ export const Backdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 50;
   overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 `;
 
 export const ModalNorma = styled.div`
@@ -19,6 +21,8 @@ export const ModalNorma = styled.div`
   border-radius: 10px;
   background: #fff;
   overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.8s ease-in-out;
 
   @media screen and (min-width: 768px) {
     width: 704px;
@@ -139,8 +143,7 @@ export const ContainerForm = styled.div`
 `;
 export const LabelGen = styled.label`
   display: flex;
-  /*  align-items: flex-start;
-  gap: 24px; */
+  align-items: center;
 `;
 
 export const LabelG = styled.label`
@@ -190,6 +193,17 @@ export const Button = styled.button`
   transition: all 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98) 0s;
   margin-top: 24px;
 
+  &:hover,
+  &:focus {
+    box-shadow: rgba(64, 123, 255, 0.5) 0px 8px 16px 0px;
+    outline: none;
+  }
+
+  &:active {
+    background-color: rgb(50, 100, 200);
+    box-shadow: rgba(64, 123, 255, 0.7) 0px 4px 8px 0px;
+  }
+
   @media screen and (min-width: 768px) {
     width: 160px;
     margin-left: auto;
@@ -231,4 +245,44 @@ export const LabelAmount = styled.label`
   align-items: center;
   gap: 6px;
   margin-bottom: 24px;
+`;
+/**
+  |============================
+  | RadioButton
+  |============================
+*/
+export const RadioInput = styled.input`
+  display: none;
+`;
+
+export const CustomRadio = styled.label`
+  height: 14px;
+  width: 14px;
+  background-color: #fff;
+  border: 1px solid var(--primery-color-blue);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+export const CustomRadioInner = styled.span`
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: var(--primery-color-blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+`;
+/**
+  |============================
+  | ErrorMessage
+  |============================
+*/
+export const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 10px;
+  font-size: 0.8em;
+  font-family: Arial, sans-serif;
 `;

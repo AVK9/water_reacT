@@ -1,3 +1,4 @@
+import { Section } from '../../components/Section/Section';
 import WaterConsumptionTracker from '../../components/WaterСonsumptionTracker/WaterСonsumptionTracker';
 import WhyDrinkWater from '../../components/WhyDrinkWater/WhyDrinkWater';
 import { BackgroundTopWP, BackgroundBottomWP, ContainerWP } from './WelcomePage.styled';
@@ -6,10 +7,12 @@ const WelcomePage = () => {
   return (
     <BackgroundTopWP>
       <BackgroundBottomWP>
-        <ContainerWP>
-          <WaterConsumptionTracker />
-          <WhyDrinkWater />
-        </ContainerWP>
+        <Section>
+          <ContainerWP>
+            <WaterConsumptionTracker />
+            <WhyDrinkWater />
+          </ContainerWP>
+        </Section>
       </BackgroundBottomWP>
     </BackgroundTopWP>
   );

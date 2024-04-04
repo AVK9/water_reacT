@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
@@ -7,7 +7,6 @@ import {
   DescriptionTitle,
   Form,
   Label,
-  Input,
   Button,
   ValueResult,
   Backdrop,
@@ -24,6 +23,10 @@ import {
   LabelSpan,
   LabelAmount,
   LabelMuch,
+  RadioInput,
+  CustomRadio,
+  CustomRadioInner,
+  ErrorMessage,
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose }) {
@@ -32,6 +35,14 @@ function DailyNormaModal({ onClose }) {
   const [activityTime, setActivityTime] = useState('0');
   const [waterIntake, setWaterIntake] = useState(0.0);
   const [plannedIntake, setPlannedIntake] = useState('0');
+  const [isOpen, setIsOpen] = useState(false);
+  const [weightError, setWeightError] = useState('');
+
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const keyValue = String.fromCharCode(keyCode);
+    if (!/\d/.test(keyValue)) event.preventDefault();
+  };
 
   const calculateWaterIntake = (gender, weight, activityTime) => {
     let intake;
@@ -51,13 +62,22 @@ function DailyNormaModal({ onClose }) {
 
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
+      setIsOpen(false);
       onClose();
     }
   };
 
+  useEffect(() => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
-    <Backdrop onClick={handleBackdropClick}>
-      <ModalNorma>
+    <Backdrop isOpen={isOpen} onClick={handleBackdropClick}>
+      <ModalNorma isOpen={isOpen}>
         <NormaContainer>
           <Title>My daily norma</Title>
           <CloseBtn onClick={onClose}>
@@ -86,8 +106,9 @@ function DailyNormaModal({ onClose }) {
             <ContainerForm>
               <CalcTitle>Calculate your rate:</CalcTitle>
               <LabelGen>
-                <Input
+                <RadioInput
                   type="radio"
+                  id="girl"
                   value="girl"
                   checked={gender === 'girl'}
                   onChange={() => {
@@ -95,8 +116,14 @@ function DailyNormaModal({ onClose }) {
                     calculateWaterIntake('girl', weight, activityTime);
                   }}
                 />
+                <CustomRadio htmlFor="girl">
+                  <CustomRadioInner
+                    style={{ opacity: gender === 'girl' ? 1 : 0 }}
+                  />
+                </CustomRadio>
                 <GenTitle>For woman</GenTitle>
-                <Input
+                <RadioInput
+                  id="man"
                   className="radio_input"
                   type="radio"
                   value="man"
@@ -106,30 +133,53 @@ function DailyNormaModal({ onClose }) {
                     calculateWaterIntake('man', weight, activityTime);
                   }}
                 />
+                <CustomRadio htmlFor="man">
+                  <CustomRadioInner
+                    style={{ opacity: gender === 'man' ? 1 : 0 }}
+                  />
+                </CustomRadio>
                 <GenTitle>For man</GenTitle>
               </LabelGen>
               <Label>
                 Your weight in kilograms:
                 <InputValue
                   type="number"
+                  min="0"
                   value={weight}
                   onChange={(e) => {
-                    setWeight(e.target.value);
-                    calculateWaterIntake(gender, e.target.value, activityTime);
+                    if (e.target.value > 300) {
+                      setWeightError(
+                        'Weight must be less than or equal to 300'
+                      );
+                    } else {
+                      setWeightError('');
+                      setWeight(e.target.value);
+                      calculateWaterIntake(
+                        gender,
+                        e.target.value,
+                        activityTime
+                      );
+                    }
                   }}
+                  onKeyPress={handleKeyPress}
                   required
                 />
+                {weightError && <ErrorMessage>{weightError}</ErrorMessage>}
               </Label>
               <Label>
                 The time of active participation in sports or other activities
                 with a high physical load in hours:
                 <InputValue
                   type="number"
+                  min="0"
                   value={activityTime}
                   onChange={(e) => {
-                    setActivityTime(e.target.value);
-                    calculateWaterIntake(gender, weight, e.target.value);
+                    if (e.target.value <= 20) {
+                      setActivityTime(e.target.value);
+                      calculateWaterIntake(gender, weight, e.target.value);
+                    }
                   }}
+                  onKeyPress={handleKeyPress}
                   required
                 />
               </Label>
@@ -148,6 +198,7 @@ function DailyNormaModal({ onClose }) {
               </LabelMuch>
               <InputValue
                 type="number"
+                min="0"
                 value={plannedIntake}
                 onChange={(e) => setPlannedIntake(e.target.value)}
                 required

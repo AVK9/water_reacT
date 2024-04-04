@@ -5,32 +5,36 @@ import {
   handleRejected,
 } from '../auth/handlers';
 import {
-  handleAddContact,
-  handleDelContact,
-  handleGetContact,
-} from './contactsHandlers';
+  handleAddWater,
+  handleDelWater,
+  handleGetWater,
+} from './waterHandlers';
 import {
-  addContactThunk,
-  delContactThunk,
-  getContactThunk,
-} from './contactsThunk';
+  addWaterThunk,
+  delWaterThunk,
+  getWaterDayThunk,
+  getWaterThunk,
+} from './waterThunk';
 const initialState = {
-  contacts: [],
+  month: [],
+  dayWaterList: [],
+  selectDay: null,
   isLoading: false,
   error: null,
 };
-const contactsSlice = createSlice({
-  name: 'contacts',
+const waterSlice = createSlice({
+  name: 'water',
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(getContactThunk.fulfilled, handleGetContact)
-      .addCase(addContactThunk.fulfilled, handleAddContact)
-      .addCase(delContactThunk.fulfilled, handleDelContact)
+      .addCase(getWaterThunk.fulfilled, handleGetWater)
+      .addCase(addWaterThunk.fulfilled, handleAddWater)
+      .addCase(getWaterDayThunk.fulfilled, handleAddWater)
+      .addCase(delWaterThunk.fulfilled, handleDelWater)
       .addMatcher(({ type }) => type.endsWith('/pendihg'), handlePending)
       .addMatcher(({ type }) => type.endsWith('/fulfilled'), handleFulfilled)
       .addMatcher(({ type }) => type.endsWith('/rejected'), handleRejected);
   },
 });
 
-export const contactsReduser = contactsSlice.reducer;
+export const waterReduser = waterSlice.reducer;

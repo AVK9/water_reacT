@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import {
   SignInGlobalContainer,
   SignInContainer,
@@ -18,95 +19,93 @@ import { loginThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
 
 const SignInComponent = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [formValid, setFormValid] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-  // Валідація кнопки
-  useEffect(() => {
-    if (emailError || passwordError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
-    }
-  }, [emailError, passwordError]);
-
-  const handleSignIn = () => {
-    // Валідація електронної пошти
-    if (!email || !email.includes('@')) {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
-
-    // Валідація пароля
-    if (!password || password.length < 6) {
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(loginThunk({ email, password }));
-  };
-
+  const dispatch = useDispatch();
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     isAuth && navigate('/home');
   }, [isAuth, navigate]);
 
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validate: (values) => {
+      const errors = {};
+
+      if (!values.email || !values.email.includes('@')) {
+        errors.email = 'Email is invalid';
+      }
+
+      if (!values.password || values.password.length < 6) {
+        errors.password = 'Password is invalid';
+      }
+
+      return errors;
+    },
+    onSubmit: (values) => {
+      dispatch(loginThunk({ email: values.email, password: values.password }));
+    },
+  });
+
+  const togglePasswordVisibility = () => {
+    formik.setFieldValue('password', !formik.values.passwordVisible);
+  };
+
   return (
     <SignInGlobalContainer>
       <SignInwater></SignInwater>
       <SignInContainer>
-        <form onSubmit={handleSubmit}>
-          <SignInTitle>Sign In</SignInTitle>
+        <SignInTitle>Sign In</SignInTitle>
+        <form onSubmit={formik.handleSubmit}>
           <SignInLabel>Enter your email</SignInLabel>
           <SignInInput
             type="email"
+            name="email"
             placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             autoComplete="email"
-            style={emailError ? { borderColor: 'red' } : null}
-            inputProps={{ 'aria-describedby': 'emailHelp' }}
+            error={formik.touched.email && formik.errors.email}
           />
-          {emailError && <ErrorMessage>Email is invalid</ErrorMessage>}
+          {formik.touched.email && formik.errors.email && (
+            <ErrorMessage>{formik.errors.email}</ErrorMessage>
+          )}
+
           <SignInLabel>Enter your password</SignInLabel>
           <div style={{ position: 'relative' }}>
             <SignInInput
-              type={passwordVisible ? 'text' : 'password'}
+              type={formik.values.passwordVisible ? 'text' : 'password'}
+              name="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={passwordError ? { borderColor: 'red' } : null}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && formik.errors.password}
             />
             <TogglePasswordButton
               type="button"
               onClick={togglePasswordVisibility}
             >
-              <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+              <FontAwesomeIcon
+                icon={formik.values.passwordVisible ? faEyeSlash : faEye}
+              />
             </TogglePasswordButton>
           </div>
-          {passwordError && <ErrorMessage>Password is invalid</ErrorMessage>}
-          <SignInButton disabled={!formValid} onClick={handleSignIn}>
+          {formik.touched.password && formik.errors.password && (
+            <ErrorMessage>{formik.errors.password}</ErrorMessage>
+          )}
+
+          <SignInButton type="submit" disabled={!formik.isValid}>
             Sign In
           </SignInButton>
-          <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
-            Sign Up
-          </Link>
         </form>
+        <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
+          Sign Up
+        </Link>
       </SignInContainer>
     </SignInGlobalContainer>
   );

@@ -1,14 +1,13 @@
-export const handleGetContact = (state, { payload }) => {
-    state.contacts = payload
-    console.log('handleGetContact :>> ', payload);
-}
-export const handleAddContact = (state, { payload }) => {
-   
-    console.log('handleAddContact :>> ', payload);
-    state.contacts.push(payload);
-}
+export const handleGetWater = (state, { payload }) => {
+  state.dayWaterList = payload.waterRecords;
+  console.log('handleGetWater :>> ', payload.waterRecords);
+};
+export const handleAddWater = (state, { payload }) => {
+  console.log('handleAddWater :>> ', payload);
+  state.dayWaterList.push(payload);
+};
 
-export const handleDelContact = (state, { payload }) => {
- const item = state.contacts.findIndex(index => index.id === payload.id)
-state.contacts.splice(item, 1);
-}
+export const handleDelWater = (state, { payload }) => {
+  const item = state.water.findIndex((index) => index.id === payload.id);
+  state.water.splice(item, 1);
+};

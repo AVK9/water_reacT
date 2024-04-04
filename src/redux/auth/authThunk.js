@@ -51,3 +51,14 @@ export const loginOutThunk = createAsyncThunk(
     }
   }
 );
+// export const addWaterThunk = createAsyncThunk(
+//   'waterAmount/addWater',
+//   async (waterAmount, { rejectWithValue, getState }) => {
+//     try {
+//       setTokenApi(getState().auth.token);
+//       return await addWaterApi(waterAmount);
+//     } catch (error) {
+//       return rejectWithValue(error.response.data.error);
+//     }
+//   }
+// );

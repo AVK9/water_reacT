@@ -1,4 +1,6 @@
 import * as dateFns from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import {
   CalendarTab,
@@ -16,6 +18,8 @@ import {
   BtnMonthBox,
 } from './MonthStatsTable.styled';
 import sprite from '../../assets/img/sprite.svg';
+import { selectStateWaterDayList } from '../../redux/water/waterSelectors';
+import { getWaterDayThunk } from '../../redux/water/waterThunk';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -46,6 +50,15 @@ const MonthStatsTable = () => {
 
   const isToday = (day) => dateFns.isSameDay(day, today);
   const isSelectedDate = (day) => dateFns.isSameDay(day, selectDate);
+
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getWaterDayThunk(selectDate));
+  // }, [dispatch]);
+
+  // setDayWaterList(useSelector(selectStateWaterDayList));
+
+  const dayWaterList = useSelector(selectStateWaterDayList);
 
   return (
     <TableContainer>
@@ -103,7 +116,10 @@ const MonthStatsTable = () => {
                     ? 'red'
                     : '',
                 }}
-                onClick={() => setSelectDate(date)}
+                onClick={() => {
+                  setSelectDate(date);
+                  dispatch(getWaterDayThunk(selectDate));
+                }}
               >
                 {dateFns.format(date, formatOfDay)}
               </span>

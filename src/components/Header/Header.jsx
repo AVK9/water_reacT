@@ -3,7 +3,7 @@ import { isAuthSelector } from '../../redux/auth/selectors';
 import { HeaderContainer, Navigation } from './Header.styled';
 import Logo from './../Logo/Logo';
 import UserAuth from '../UserAuth/UserAuth';
-import HeaderSetting from '../SettingModal/HeaderSetting/HeaderSetting';
+import UserLogo from '../UserLogo/UserLogo';
 import { Section } from '../Section/Section';
 
 export const Header = () => {
@@ -14,9 +14,9 @@ export const Header = () => {
       <HeaderContainer>
         <Navigation>
           <Logo />
-          <UserAuth />
+          {isAuth ? <UserLogo /> : <UserAuth />}
         </Navigation>
-        <HeaderSetting />
+
       </HeaderContainer>
     </Section>
   );

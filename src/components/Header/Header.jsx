@@ -7,14 +7,14 @@ import UserLogo from '../UserLogo/UserLogo';
 import { Section } from '../Section/Section';
 
 export const Header = () => {
-  const isLogged = useSelector(isAuthSelector);
+  const isAuth = useSelector(isAuthSelector);
 
   return (
     <Section>
       <HeaderContainer>
         <Navigation>
           <Logo />
-          {isLogged ? <UserLogo /> : <UserAuth />}
+          {isAuth ? <UserLogo /> : <UserAuth />}
         </Navigation>
 
       </HeaderContainer>

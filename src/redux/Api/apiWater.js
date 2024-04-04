@@ -11,7 +11,6 @@ export const addWaterApi = async (body) => {
   console.log(body);
 
   const { data } = await axios.post('/api/water', body, {
-
     headers: {
       'Content-Type': 'application/json',
     },
@@ -39,24 +38,6 @@ export const getWaterSelectDayApi = async (body) => {
 
 export const delWaterApi = async (delId) => {
   const { data } = await axios.delete(`/api/water/${delId}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return data;
-};
-export const getWaterSelectDayApi = async (body) => {
-  console.log('bodybody', body);
-  const { data } = await axios.get('/date', body, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return data;
-};
-
-export const delWaterApi = async (delId) => {
-  const { data } = await axios.delete(`/${delId}`, {
     headers: {
       'Content-Type': 'application/json',
     },

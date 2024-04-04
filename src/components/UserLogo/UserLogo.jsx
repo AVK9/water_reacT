@@ -1,37 +1,39 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { profileSelector } from '../../redux/auth/selectors';
 import UserLogoModal from '../UserLogoModal/UserLogoModal';
-import { ButtonUserLogo, UserName, AvatarContainer, Avatar, Initials, IconWrapper } from './UserLogo.styled';
+import { ContainerButton, ButtonUserLogo, UserName, AvatarContainer, Avatar, Initials, IconWrapper } from './UserLogo.styled';
 import sprite from '../../assets/img/sprite.svg';
 
 const UserLogo = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const handleOpenUserModal = () => setIsUserModalOpen(true);
+  const handleCloseUserModal = () => setIsUserModalOpen(false);
+  
+  const profile = useSelector(profileSelector);
+  console.log(profile);
 
   const name = 'David';
   const initials = name ? name.charAt(0).toUpperCase() : '';
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <>
-      <ButtonUserLogo onClick={isModalOpen ? closeModal : openModal}>
+    <ContainerButton>
+      <ButtonUserLogo type='button' onClick={!isUserModalOpen ? handleOpenUserModal : handleCloseUserModal}>
         <UserName>{name}</UserName>
+
         <AvatarContainer>
           <Avatar>
             <Initials>{initials}</Initials>
           </Avatar>
+          
           <IconWrapper>
             <use xlinkHref={`${sprite}#icon-chevron-double-up`}></use>
           </IconWrapper>
         </AvatarContainer>
       </ButtonUserLogo>
-      {isModalOpen && <UserLogoModal />}
-    </>
+
+      {isUserModalOpen && <UserLogoModal onClose={handleCloseUserModal} />}
+    </ContainerButton>
   )
 };
 

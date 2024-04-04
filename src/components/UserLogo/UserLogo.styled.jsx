@@ -1,5 +1,9 @@
 import { styled } from 'styled-components';
 
+export const ContainerButton = styled.div`
+  position: relative;
+`;
+
 export const ButtonUserLogo = styled.button`
   display: flex;
   align-items: center;

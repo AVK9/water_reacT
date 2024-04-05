@@ -11,9 +11,9 @@ import {
   SignInwater,
   TogglePasswordButton,
   ErrorMessage,
+  Form,
 } from './SignInPage.styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import sprite from '../../assets/img/sprite.svg'; // Шлях до вашого спрайту
 import { Link, useNavigate } from 'react-router-dom';
 import { loginThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
@@ -51,7 +51,7 @@ const SignInComponent = () => {
   });
 
   const togglePasswordVisibility = () => {
-    formik.setFieldValue('password', !formik.values.passwordVisible);
+    formik.setFieldValue('passwordVisible', !formik.values.passwordVisible);
   };
 
   return (
@@ -59,7 +59,7 @@ const SignInComponent = () => {
       <SignInwater></SignInwater>
       <SignInContainer>
         <SignInTitle>Sign In</SignInTitle>
-        {/* <form onSubmit={formik.handleSubmit}> */}
+        <Form onSubmit={formik.handleSubmit}>
           <SignInLabel>Enter your email</SignInLabel>
           <SignInInput
             type="email"
@@ -88,7 +88,9 @@ const SignInComponent = () => {
               error={formik.touched.password && formik.errors.password}
             />
             <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
-              <FontAwesomeIcon icon={formik.values.passwordVisible ? faEyeSlash : faEye} />
+              <svg>
+                <use href={`${sprite}#icon-eye-slash`} />
+              </svg>
             </TogglePasswordButton>
           </div>
           {formik.touched.password && formik.errors.password && (
@@ -98,7 +100,7 @@ const SignInComponent = () => {
           <SignInButton type="submit" disabled={!formik.isValid}>
             Sign In
           </SignInButton>
-        {/* </form> */}
+        </Form>
         <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
           Sign Up
         </Link>

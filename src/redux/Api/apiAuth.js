@@ -19,8 +19,19 @@ export const loginApi = async (body) => {
 
 export const currentApi = async (email) => {
   const { data } = await axios.get('/api/users/current', {
+
     headers: {
       email: email,
+    },
+  });
+  return data;
+};
+
+export const UpdateAvatar = async (avatar) => {
+  const { data } = await axios.patch('/api/users/avatars', avatar, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+
     },
   });
   return data;

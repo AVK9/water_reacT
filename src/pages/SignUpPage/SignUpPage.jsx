@@ -21,6 +21,10 @@ import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
 
+
+
+
+
 const SignUpComponent = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(isAuthSelector);
@@ -83,6 +87,7 @@ const SignUpComponent = () => {
           <SignUpTitle>Sign Up</SignUpTitle>
 
           <Form onSubmit={formik.handleSubmit}>
+
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -108,6 +113,7 @@ const SignUpComponent = () => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.password && formik.errors.password}
               />
+
               <TogglePasswordButton
                 type="button"
                 onClick={togglePasswordVisibility}
@@ -118,6 +124,7 @@ const SignUpComponent = () => {
                       showPassword ? 'icon-eye' : 'icon-eye-slash'
                     }`}
                   />
+
                 </svg>
               </TogglePasswordButton>
             </div>
@@ -142,12 +149,14 @@ const SignUpComponent = () => {
                 type="button"
                 onClick={toggleRepeatPasswordVisibility}
               >
+
                 <svg>
                   <use
                     href={`${sprite}#${
                       showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'
                     }`}
                   />
+
                 </svg>
               </TogglePasswordButton>
             </div>
@@ -167,7 +176,9 @@ const SignUpComponent = () => {
             >
               Sign In
             </Link>
+
           </Form>
+
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

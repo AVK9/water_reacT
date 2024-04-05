@@ -6,16 +6,19 @@ import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
 
 export const SignInGlobalContainer = styled.section`
+
   display: flex;
   flex-direction: column-reverse;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 24px;
 
+
   @media screen and (min-width: 768px) {
     padding-left: 32px;
     padding-right: 32px;
   }
+
 
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
@@ -39,7 +42,7 @@ export const SignInContainer = styled.div`
     background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
-  }
+
 
   @media screen and (min-width: 1440px) {
     background-image: none;
@@ -145,6 +148,7 @@ export const SignInButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
+
   display: flex;
   position: absolute;
   right: 10px;
@@ -162,6 +166,7 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
+
 `;
 
 export const ErrorMessage = styled.div`
@@ -170,9 +175,11 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Form = styled.form`
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 
   gap: 16px;
   width: 280px;

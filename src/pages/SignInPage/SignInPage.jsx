@@ -15,7 +15,7 @@ import {
 } from './SignInPage.styled';
 import sprite from '../../assets/img/sprite.svg'; // Шлях до вашого спрайту
 import { Link, useNavigate } from 'react-router-dom';
-import { loginThunk } from '../../redux/auth/authThunk';
+import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
 
 const SignInComponent = () => {
@@ -50,17 +50,25 @@ const SignInComponent = () => {
 
       return errors;
     },
-    onSubmit: (values) => {
-      dispatch(loginThunk({ email: values.email, password: values.password }));
+    onSubmit: async (values) => {
+      try {
+        await dispatch(loginThunk({ email: values.email, password: values.password }));
+        await dispatch(currentThunk());
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
     },
   });
+
 
   return (
     <SignInGlobalContainer>
       <SignInwater></SignInwater>
       <SignInContainer>
         <SignInTitle>Sign In</SignInTitle>
+
         <Form onSubmit={formik.handleSubmit}>
+
           <SignInLabel>Enter your email</SignInLabel>
           <SignInInput
             type="email"
@@ -87,6 +95,7 @@ const SignInComponent = () => {
               onBlur={formik.handleBlur}
               error={formik.touched.password && formik.errors.password}
             />
+
             <TogglePasswordButton
               type="button"
               onClick={togglePasswordVisibility}
@@ -99,6 +108,7 @@ const SignInComponent = () => {
                   }`}
                 />
               </svg>
+
             </TogglePasswordButton>
           </div>
           {formik.touched.password && formik.errors.password && (
@@ -108,7 +118,11 @@ const SignInComponent = () => {
           <SignInButton type="submit" disabled={!formik.isValid}>
             Sign In
           </SignInButton>
+
         </Form>
+
+
+
         <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
           Sign Up
         </Link>

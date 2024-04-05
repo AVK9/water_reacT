@@ -18,11 +18,7 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
-<<<<<<< Updated upstream
-import { refreshThunk } from '../../redux/auth/authThunk';
-=======
 // import { refreshThunk } from '../../redux/auth/authThunk';
->>>>>>> Stashed changes
 import { useFormik } from 'formik';
 
 const SettingModalForm = ({ closeModal }) => {

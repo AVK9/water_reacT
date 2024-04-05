@@ -15,7 +15,7 @@ import {
 } from './SignInPage.styled';
 import sprite from '../../assets/img/sprite.svg'; // Шлях до вашого спрайту
 import { Link, useNavigate } from 'react-router-dom';
-import { loginThunk } from '../../redux/auth/authThunk';
+import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
 
 const SignInComponent = () => {
@@ -45,8 +45,13 @@ const SignInComponent = () => {
 
       return errors;
     },
-    onSubmit: (values) => {
-      dispatch(loginThunk({ email: values.email, password: values.password }));
+    onSubmit: async (values) => {
+      try {
+        await dispatch(loginThunk({ email: values.email, password: values.password }));
+        await dispatch(currentThunk());
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
     },
   });
 

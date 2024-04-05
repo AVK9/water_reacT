@@ -3,7 +3,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com';
 
 export const setTokenApi = (token) => {
-  console.log('setTokenApiLOOOO =>', token);
+  // console.log('setTokenApiLOOOO =>', token);
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -16,10 +16,11 @@ export const loginApi = async (body) => {
   const { data } = await axios.post('/api/auth/signin', body);
   return data;
 };
-export const refreshApi = async (token) => {
-  const { data } = await axios('/users/current', {
+
+export const currentApi = async (email) => {
+  const { data } = await axios.get('/api/users/current', {
     headers: {
-      Authorization: `Bearer ${token}`,
+      email: email,
     },
   });
   return data;

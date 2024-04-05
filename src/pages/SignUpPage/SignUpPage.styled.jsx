@@ -4,17 +4,21 @@ import mobilWater from '../../assets/img/mobile-woter.png';
 import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
+
 export const SignUpGlobalContainer = styled.section`
   display: flex;
   flex-direction: column-reverse;
+
 
   padding-top: 24px;
 
   margin: 0 auto;
 
+
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
     background-image: url(${desktopWater});
+
   }
 `;
 
@@ -36,6 +40,7 @@ export const SignUpContainer = styled.div`
     background-position-y: -70px;
     background-repeat: no-repeat;
   }
+
 
   @media screen and (min-width: 1440px) {
     background-image: none;
@@ -69,6 +74,7 @@ export const SignUpwater = styled.div`
     @media screen and (min-width: 768px) {
       background-image: none;
     }
+
   }
 `;
 
@@ -124,7 +130,7 @@ export const SignUpButton = styled.button`
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background: var(--primery-color-blue);
-  background: var(--primery-color-blue);
+
   color: var(--primery-color-white);
   border: none;
   border-radius: 10px;
@@ -158,17 +164,8 @@ export const TogglePasswordButton = styled.button`
   top: 50%;
   transform: translateY(-50%);
 
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: transparent;
-    stroke: #407bff;
-    background-color: #fff;
-  }
 
-  @media screen and (min-width: 1440px) {
-    right: -30px;
-  }
+
 
   display: flex;
   position: absolute;
@@ -187,6 +184,7 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
+
 `;
 
 export const ErrorMessage = styled.div`
@@ -196,6 +194,7 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Form = styled.form`
+
   display: flex;
 
   flex-direction: column;
@@ -206,4 +205,6 @@ export const Form = styled.form`
   @media screen and (min-width: 768px) {
     width: 336px;
   }
+
 `;
+

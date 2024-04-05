@@ -27,9 +27,14 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    isAuth && navigate('/home');
-  }, [isAuth, navigate]);
+   useEffect(() => {
+     isAuth && navigate('/home');
+   }, [isAuth, navigate]);
+
+  const [showPassword, setShowPassword] = useState(false); 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState); 
+  };
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -66,6 +71,7 @@ const SignInComponent = () => {
       }
     },
   });
+
 
   return (
     <DesktopBg>
@@ -133,6 +139,7 @@ const SignInComponent = () => {
         </SignInGlobalContainer>
       </Section>
     </DesktopBg>
+
   );
 };
 

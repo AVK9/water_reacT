@@ -18,7 +18,7 @@ import {
 } from './SettingModalForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
-import { refreshThunk } from '../../redux/auth/authThunk';
+// import { refreshThunk } from '../../redux/auth/authThunk';
 import { useFormik } from 'formik';
 
 const SettingModalForm = ({ closeModal }) => {

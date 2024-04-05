@@ -9,7 +9,7 @@ export const SignUpGlobalContainer = styled.section`
   padding-top: 24px;
   display: flex;
   flex-direction: column-reverse;
-  padding: 32px;
+  margin: 0 auto;
 
   @media screen and (min-width: 1440px) {
      background-image: url(${desktopWater});
@@ -35,7 +35,7 @@ export const SignUpContainer = styled.div`
     background-image: url(${tabWater});
     width: 786px;
     height: 658px;
-    background-position: -30px;
+    background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
     };
@@ -92,6 +92,8 @@ export const SignUpInput = styled.input`
   background: var(--primery-color-white);
   outline: none;
 
+ 
+
   @media screen and (min-width: 768px) {
     border: 1px solid ${props => (props.error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
@@ -130,15 +132,24 @@ export const SignUpButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  color: #76d7f0;
+
+  
+    display: flex;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+
+  svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #407bff;
+      background-color: #fff;
+      
+     
+    }
 `;
 
 export const ErrorMessage = styled.div`
@@ -146,3 +157,18 @@ export const ErrorMessage = styled.div`
   margin-bottom: 10px;
 `;
 
+export const Form = styled.form`
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 16px;
+  width: 280px;
+  @media screen and (min-width: 768px) {
+    width: 336px;
+  }
+  @media screen and (min-width: 1440px) {
+    width: 384px;
+    margin-right: 104px;
+  }
+`;

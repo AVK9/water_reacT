@@ -13,13 +13,17 @@ import {
   SignUpwater,
   TogglePasswordButton,
   ErrorMessage,
+  Form,
 } from './SignUpPage.styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import sprite from '../../assets/img/sprite.svg';
 import { Link } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
+
+
+
+
 
 const SignUpComponent = () => {
   const dispatch = useDispatch();
@@ -81,7 +85,11 @@ const SignUpComponent = () => {
         <SignUpwater></SignUpwater>
         <SignUpContainer>
           <SignUpTitle>Sign Up</SignUpTitle>
-          <form onSubmit={formik.handleSubmit}>
+
+          <Form onSubmit={formik.handleSubmit}>
+
+        
+
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -108,9 +116,11 @@ const SignUpComponent = () => {
                 error={formik.touched.password && formik.errors.password}
               />
               <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
-                <FontAwesomeIcon
-                  icon={formik.values.passwordVisible ? faEyeSlash : faEye}
-                />
+             
+
+              <svg>
+                  <use href={`${sprite}#icon-eye-slash`} />
+                </svg>
               </TogglePasswordButton>
             </div>
             {formik.touched.password && formik.errors.password && (
@@ -132,9 +142,9 @@ const SignUpComponent = () => {
                 type="button"
                 onClick={toggleRepeatPasswordVisibility}
               >
-                <FontAwesomeIcon
-                  icon={formik.values.repeatPasswordVisible ? faEyeSlash : faEye}
-                />
+               <svg>
+                  <use href={`${sprite}#icon-eye-slash`} />
+                </svg>
               </TogglePasswordButton>
             </div>
             {formik.touched.repeatPassword && formik.errors.repeatPassword && (
@@ -147,7 +157,11 @@ const SignUpComponent = () => {
             <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>
               Sign In
             </Link>
-          </form>
+
+          </Form>
+
+         
+
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

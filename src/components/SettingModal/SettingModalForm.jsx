@@ -13,63 +13,68 @@ import {
   RadioWrapper,
   StyledButton,
   StyledLabel,
+  TextError,
 } from './SettingModalForm.styled';
-import { toast } from 'react-toastify';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
-import { changeUserData } from '../../redux/auth/authThunk';
+import { refreshThunk } from '../../redux/auth/authThunk';
 import { useFormik } from 'formik';
 
+const SettingModalForm = ({ closeModal }) => {
+  const profile = useSelector(profileSelector);
+  const userEmail = profile.email;
+  const userName = userEmail ? userEmail.split('@')[0] : '';
 
 
+  const userGender = profile.gender;
+  console.log('profile =>', profile);
 
-const SettingModalForm = () => {
- const userName = useSelector(profileSelector)
-  const [gender, setGender] = useState();
-  const [email, setEmail] = useState();
-  const[name,setName] = useState();
-  let [password, setPassword] = useState('');
-  const [newPassword = '', setNewPassword] = useState('');
-  const [confirmPassword = '', setConfirmPassword] = useState('');
- 
-  let isSubmit = true;
+
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
-const dispatch = useDispatch();
 
-  // const handleChangePassword = (e) => {
-  //   setConfirmPassword(e.target.value);
-  // };
+  const dispatch = useDispatch();
 
-  // const handleChangeNewPassword = (e) => {
-  //   setNewPassword(e.target.value);
-  // };
-
-  // const handleChangeOldPassword = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // const handleChangeName = (e) => {
-  //   setName(e.target.value);
-  // }
-
-  // const handleChangeEmail = (e) => {
-  //   setEmail(e.target.value);
-  // }
-
-  // const handleChangeGender = (e) => {
-  //   setGender(e.target.value);
-  // }
-
-  const handleSubmit = async ({ name },{resetForm}) => {
-    if (newPassword === "") {
-      await dispatch(changeUserData({name}))
-    }else{
-      await dispatch(changeUserData({name, newPassword}))
+  const handleSubmit = async (
+    { name, email, gender, password, newPassword },
+    { resetForm }
+  ) => {
+    if (newPassword === '') {
+      await dispatch(refreshThunk({ name, email, gender }));
+    } else {
+      await dispatch(
+        refreshThunk({ name, email, gender, password, newPassword })
+      );
     }
-    resetForm()
+    resetForm();
+    closeModal();
+    // const handleChangePassword = (e) => {
+    //   setConfirmPassword(e.target.value);
+    // };
+
+    // const handleChangeNewPassword = (e) => {
+    //   setNewPassword(e.target.value);
+    // };
+
+    // const handleChangeOldPassword = (e) => {
+    //   setPassword(e.target.value);
+    // };
+
+    // const handleChangeName = (e) => {
+    //   setName(e.target.value);
+    // }
+
+    // const handleChangeEmail = (e) => {
+    //   setEmail(e.target.value);
+    // }
+
+    // const handleChangeGender = (e) => {
+    //   setGender(e.target.value);
+    // }
+
     // e.preventDefault();
     // if (password && !newPassword) {
     //   toast.error('Please enter new password');
@@ -86,17 +91,25 @@ const dispatch = useDispatch();
     // isSubmit = false;
     // setNewPassword(newPassword);
     // toast.success('Update successfully');
+
   };
   const handleMouseDownPassword = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   const formik = useFormik({
     initialValues: {
-      name: userName
+      name: userName,
+      gender: userGender,
+      email: userEmail,
+      password: '',
+      newPassword: '',
+      confirmPassword: '',
     },
-    onSubmit: handleSubmit
-  })
+    onSubmit: handleSubmit,
+  });
+
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormContainer>
@@ -109,8 +122,11 @@ const dispatch = useDispatch();
                   type="radio"  
                   name="gender"
                   value="female"
-                  onChange=""
-                  checked={gender === 'female'}
+
+                  onChange={formik.handleChange}
+                  checked={formik.values.gender === 'female'}
+
+
                 />
                 <span>Woman</span>
               </label>
@@ -121,8 +137,10 @@ const dispatch = useDispatch();
                   type="radio"
                   name="gender"
                   value="male"
-                  onChange=""
-                  checked={gender === 'male'}
+
+                  onChange={formik.handleChange}
+                  checked={formik.values.gender === 'male'}
+
                 />
                 <span>Man</span>
               </label>
@@ -131,6 +149,10 @@ const dispatch = useDispatch();
           <LabelName>Your name</LabelName>
           <FieldWrapper>
             <Input
+              style={
+                formik.touched.name &&
+                formik.errors.name && { borderColor: '#EF5050' }
+              }
               type="text"
               name="name"
               onChange={formik.handleChange}
@@ -140,20 +162,33 @@ const dispatch = useDispatch();
               autoComplete="username"
               required
             />
+            {formik.touched.name && formik.errors.name && (
+              <FormText>{formik.errors.name}</FormText>
+            )}
           </FieldWrapper>
           <LabelName>Email</LabelName>
           <FieldWrapper>
             <Input
+              style={
+                formik.touched.email &&
+                formik.errors.email && { borderColor: '#EF5050' }
+              }
               type="email"
               name="email"
               id="InputEmail1"
               aria-describedby="emailHelp"
-              onChange=""
-              value={email}
+
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              onblur={formik.handleBlur}
+
               placeholder="Email"
               autoComplete="email"
               required
             />
+            {formik.touched.email && formik.errors.email && (
+              <TextError>{formik.errors.email}</TextError>
+            )}
           </FieldWrapper>
         </div>
         <div>
@@ -161,19 +196,34 @@ const dispatch = useDispatch();
           <FieldWrapper>
             <FormText>Outdate password:</FormText>
             <PasswordWrapper>
-              <EyeButton onClick={() => setIsShowPassword(!isShowPassword)}>
+              <EyeButton
+                onClick={() => setIsShowPassword(!isShowPassword)}
+                onMouseDown={handleMouseDownPassword}
+              >
                 <svg>
                   <use href={`${sprite}#icon-eye-slash`} />
                 </svg>
               </EyeButton>
               <Input
+                style={
+                  formik.touched.password &&
+                  formik.errors.password && {
+                    borderColor: '#EF5050',
+                  }
+                }
                 type={isShowPassword ? 'text' : 'password'}
                 name="password"
-                onChange=""
-                value={password}
+
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                onBlur={formik.handleBlur}
+
                 id="exampleInputPassword1"
                 placeholder="password"
               />
+              {formik.touched.password && formik.errors.password && (
+                <TextError>{formik.errors.password}</TextError>
+              )}
             </PasswordWrapper>
           </FieldWrapper>
           <FieldWrapper>
@@ -191,7 +241,9 @@ const dispatch = useDispatch();
                   type={isShowNewPassword ? 'text' : 'password'}
                   name="newPassword"
                   onChange=""
-                  value={newPassword}
+
+                  value="{newPassword}"
+
                   id="exampleInputPassword2"
                   placeholder="New Password"
                 />
@@ -215,7 +267,9 @@ const dispatch = useDispatch();
                   type={isShowConfirmPassword ? 'text' : 'password'}
                   name="repeatPassword"
                   onChange=""
-                  value={confirmPassword}
+
+                  value="{confirmPassword}"
+
                   id="exampleInputPassword3"
                   placeholder="Repeat new password"
                 />
@@ -225,7 +279,7 @@ const dispatch = useDispatch();
         </div>
       </FormContainer>
 
-      <StyledButton disabled={!isSubmit} type="submit">
+      <StyledButton disabled="{!isSubmit}" type="submit">
         Save
       </StyledButton>
     </Form>

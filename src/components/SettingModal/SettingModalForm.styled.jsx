@@ -113,6 +113,7 @@ export const EyeButton = styled.span`
     width: 16px;
     height: 16px;
     fill: transparent;
+
     stroke: #407BFF;
     stroke-width: 1px;
     
@@ -186,5 +187,14 @@ export const StyledButton = styled.button`
   @media screen and (min-width: 1440px) {
     float: right;
   }
+`;
+
+
+export const TextError = styled.p`
+  position: absolute;
+  font-size: 14px;
+  color: #ef5050;
+  font-weight: 400;
+  line-height: 128.5%;
 `;
 

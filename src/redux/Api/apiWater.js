@@ -45,30 +45,15 @@ export const delWaterApi = async (delId) => {
   return data;
 };
 
-// export const getWaterApi = async () => {
-//   console.log(api());
-//   const { data } = await api('/today');
-//   return data;
-// };
-
-// export const addWaterApi = async (body, token) => {
-//   console.log('body =>', body);
-//   console.log('token =>', token);
-//   const { data } = await api.post('/api/water', body, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   console.log(data);
-//   return data;
-// };
-
-// export const addWaters = async (newWater) => {
-//   const { data } = await axios.post('/water', newWater, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
-//   return data;
-// };
+export const changeWaterApi = async ({ _id, waterAmount, date }) => {
+  const { data } = await axios.put(
+    `/api/water/${_id}`,
+    { waterAmount, date },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+  return data;
+};

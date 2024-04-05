@@ -105,6 +105,8 @@ export const EyeButton = styled.span`
   right: 8px;
   transform: translateY(-50%);
   cursor: pointer;
+ 
+  
 
   svg {
     display: block;
@@ -112,8 +114,10 @@ export const EyeButton = styled.span`
     height: 16px;
     fill: transparent;
 
-    stroke: #407bff;
+    stroke: #407BFF;
     stroke-width: 1px;
+    
+    
   }
 `;
 
@@ -185,6 +189,7 @@ export const StyledButton = styled.button`
   }
 `;
 
+
 export const TextError = styled.p`
   position: absolute;
   font-size: 14px;
@@ -192,3 +197,4 @@ export const TextError = styled.p`
   font-weight: 400;
   line-height: 128.5%;
 `;
+

@@ -14,21 +14,32 @@ import {
   StyledButton,
   StyledLabel,
   TextError,
-  TextError,
 } from './SettingModalForm.styled';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
+<<<<<<< Updated upstream
+import { refreshThunk } from '../../redux/auth/authThunk';
+=======
 // import { refreshThunk } from '../../redux/auth/authThunk';
+>>>>>>> Stashed changes
 import { useFormik } from 'formik';
 
 const SettingModalForm = ({ closeModal }) => {
   const profile = useSelector(profileSelector);
+  const userEmail = profile.email;
+  const userName = userEmail ? userEmail.split('@')[0] : '';
 
+
+  const userGender = profile.gender;
   console.log('profile =>', profile);
+
+
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleSubmit = async (
@@ -67,6 +78,7 @@ const SettingModalForm = ({ closeModal }) => {
     // const handleChangeGender = (e) => {
     //   setGender(e.target.value);
     // }
+
     // e.preventDefault();
     // if (password && !newPassword) {
     //   toast.error('Please enter new password');
@@ -83,6 +95,7 @@ const SettingModalForm = ({ closeModal }) => {
     // isSubmit = false;
     // setNewPassword(newPassword);
     // toast.success('Update successfully');
+
   };
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
@@ -90,15 +103,17 @@ const SettingModalForm = ({ closeModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      gender: '',
-      email: '',
+      name: userName,
+      gender: userGender,
+      email: userEmail,
       password: '',
       newPassword: '',
       confirmPassword: '',
     },
     onSubmit: handleSubmit,
   });
+
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormContainer>
@@ -108,11 +123,14 @@ const SettingModalForm = ({ closeModal }) => {
             <RadioWrapper>
               <label>
                 <input
-                  type="radio"
+                  type="radio"  
                   name="gender"
                   value="female"
+
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'female'}
+
+
                 />
                 <span>Woman</span>
               </label>
@@ -123,8 +141,10 @@ const SettingModalForm = ({ closeModal }) => {
                   type="radio"
                   name="gender"
                   value="male"
+
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'male'}
+
                 />
                 <span>Man</span>
               </label>
@@ -137,15 +157,8 @@ const SettingModalForm = ({ closeModal }) => {
                 formik.touched.name &&
                 formik.errors.name && { borderColor: '#EF5050' }
               }
-              style={
-                formik.touched.name &&
-                formik.errors.name && { borderColor: '#EF5050' }
-              }
               type="text"
               name="name"
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              onblur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.name}
               onblur={formik.handleBlur}
@@ -153,9 +166,6 @@ const SettingModalForm = ({ closeModal }) => {
               autoComplete="username"
               required
             />
-            {formik.touched.name && formik.errors.name && (
-              <FormText>{formik.errors.name}</FormText>
-            )}
             {formik.touched.name && formik.errors.name && (
               <FormText>{formik.errors.name}</FormText>
             )}
@@ -167,24 +177,19 @@ const SettingModalForm = ({ closeModal }) => {
                 formik.touched.email &&
                 formik.errors.email && { borderColor: '#EF5050' }
               }
-              style={
-                formik.touched.email &&
-                formik.errors.email && { borderColor: '#EF5050' }
-              }
               type="email"
               name="email"
               id="InputEmail1"
               aria-describedby="emailHelp"
+
               onChange={formik.handleChange}
               value={formik.values.email}
               onblur={formik.handleBlur}
+
               placeholder="Email"
               autoComplete="email"
               required
             />
-            {formik.touched.email && formik.errors.email && (
-              <TextError>{formik.errors.email}</TextError>
-            )}
             {formik.touched.email && formik.errors.email && (
               <TextError>{formik.errors.email}</TextError>
             )}
@@ -195,10 +200,6 @@ const SettingModalForm = ({ closeModal }) => {
           <FieldWrapper>
             <FormText>Outdate password:</FormText>
             <PasswordWrapper>
-              <EyeButton
-                onClick={() => setIsShowPassword(!isShowPassword)}
-                onMouseDown={handleMouseDownPassword}
-              >
               <EyeButton
                 onClick={() => setIsShowPassword(!isShowPassword)}
                 onMouseDown={handleMouseDownPassword}
@@ -214,23 +215,16 @@ const SettingModalForm = ({ closeModal }) => {
                     borderColor: '#EF5050',
                   }
                 }
-                style={
-                  formik.touched.password &&
-                  formik.errors.password && {
-                    borderColor: '#EF5050',
-                  }
-                }
                 type={isShowPassword ? 'text' : 'password'}
                 name="password"
+
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
+
                 id="exampleInputPassword1"
                 placeholder="password"
               />
-              {formik.touched.password && formik.errors.password && (
-                <TextError>{formik.errors.password}</TextError>
-              )}
               {formik.touched.password && formik.errors.password && (
                 <TextError>{formik.errors.password}</TextError>
               )}
@@ -251,7 +245,9 @@ const SettingModalForm = ({ closeModal }) => {
                   type={isShowNewPassword ? 'text' : 'password'}
                   name="newPassword"
                   onChange=""
+
                   value="{newPassword}"
+
                   id="exampleInputPassword2"
                   placeholder="New Password"
                 />
@@ -275,7 +271,9 @@ const SettingModalForm = ({ closeModal }) => {
                   type={isShowConfirmPassword ? 'text' : 'password'}
                   name="repeatPassword"
                   onChange=""
+
                   value="{confirmPassword}"
+
                   id="exampleInputPassword3"
                   placeholder="Repeat new password"
                 />
@@ -285,7 +283,6 @@ const SettingModalForm = ({ closeModal }) => {
         </div>
       </FormContainer>
 
-      <StyledButton disabled="{!isSubmit}" type="submit">
       <StyledButton disabled="{!isSubmit}" type="submit">
         Save
       </StyledButton>

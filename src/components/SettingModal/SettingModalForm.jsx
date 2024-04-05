@@ -22,10 +22,7 @@ import { useFormik } from 'formik';
 
 const SettingModalForm = ({ closeModal }) => {
   const profile = useSelector(profileSelector);
-  const userEmail = profile.email;
-  const userName = userEmail ? userEmail.split('@')[0] : '';
 
-  const userGender = profile.gender;
   console.log('profile =>', profile);
 
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -92,9 +89,9 @@ const SettingModalForm = ({ closeModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: userName,
-      gender: userGender,
-      email: userEmail,
+      name: '',
+      gender: '',
+      email: '',
       password: '',
       newPassword: '',
       confirmPassword: '',

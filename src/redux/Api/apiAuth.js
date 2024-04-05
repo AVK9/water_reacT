@@ -1,20 +1,23 @@
-import { api } from './api';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com';
 
 export const setTokenApi = (token) => {
-  api.defaults.headers.common['Authorization'] = token;
+  console.log('setTokenApiLOOOO =>', token);
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const signUpApi = async (body) => {
-  const { data } = await api.post('/api/auth/signup', body);
+  const { data } = await axios.post('/api/auth/signup', body);
   return data;
 };
 
 export const loginApi = async (body) => {
-  const { data } = await api.post('/api/auth/signin', body);
+  const { data } = await axios.post('/api/auth/signin', body);
   return data;
 };
 export const refreshApi = async (token) => {
-  const { data } = await api('/users/current', {
+  const { data } = await axios('/users/current', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -23,5 +26,9 @@ export const refreshApi = async (token) => {
 };
 
 export const loginOutApi = async () => {
-  await api.post('/api/auth/signout');
+  await axios.post('/api/auth/signout', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 };

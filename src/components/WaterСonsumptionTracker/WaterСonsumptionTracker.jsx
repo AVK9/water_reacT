@@ -18,6 +18,7 @@ const WaterConsumptionTracker = () => {
       <Title>Water consumption tracker</Title>
       <Subtitle>Record daily water intake and track</Subtitle>
       <TitleTracker>Tracker Benefits</TitleTracker>
+
       <ListTrackers>
         <ItemTracker>
           <svg width={32} height={32}>
@@ -38,6 +39,7 @@ const WaterConsumptionTracker = () => {
           <TextTracker>Personal rate setting</TextTracker>
         </ItemTracker>
       </ListTrackers>
+      
       <Link to="/signup">
         <ButtonTracker type="button">Try Tracker</ButtonTracker>
       </Link>

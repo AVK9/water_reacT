@@ -8,20 +8,11 @@ export const ContainerUserLogoModal = styled.div`
   background-color: var(--primery-color-white);
   border-radius: 10px;
   box-shadow: 0 4px 14px rgba(64, 123, 255, 0.2);
-  max-width: 118px;
+  min-width: 118px;
   z-index: 10;
-  position: fixed;
-  top: 48px;
-  right: 20px;
-
-  @media screen and (min-width: 768px) {
-    top: 58px;
-    right: 32px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    right: 112px;
-  }
+  position: absolute;
+  top: 32px;
+  right: 0;
 `;
 
 export const ButtonsUserLogoModal = styled.button`

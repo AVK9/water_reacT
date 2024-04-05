@@ -1,12 +1,6 @@
 import { styled } from 'styled-components';
 
-export const TrackerContainer = styled.div`
-  margin: 0 20px;
-
-  @media screen and (min-width: 420px) {
-    margin: 0;
-  }
-`;
+export const TrackerContainer = styled.div``;
 
 export const Title = styled.h1`
   color: var(--primery-color-black);
@@ -32,6 +26,7 @@ export const Subtitle = styled.h2`
 export const TitleTracker = styled.h3`
   color: var(--primery-color-black);
   font-size: 18px;
+  font-weight: 500;
   margin-bottom: 12px;
 `;
 
@@ -64,6 +59,7 @@ export const TextTracker = styled.p`
 
 export const ButtonTracker = styled.button`
   font-size: 16px;
+  font-weight: 500;
   color: var(--primery-color-white);
   background-color: var(--primery-color-blue);
   box-shadow: 0 4px 8px rgba(64, 123, 255, 0.34);

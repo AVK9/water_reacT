@@ -85,7 +85,11 @@ const SignUpComponent = () => {
         <SignUpwater></SignUpwater>
         <SignUpContainer>
           <SignUpTitle>Sign Up</SignUpTitle>
+
           <Form onSubmit={formik.handleSubmit}>
+
+        
+
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -153,7 +157,11 @@ const SignUpComponent = () => {
             <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>
               Sign In
             </Link>
+
           </Form>
+
+         
+
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

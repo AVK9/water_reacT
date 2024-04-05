@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -193,6 +193,17 @@ export const Button = styled.button`
   transition: all 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98) 0s;
   margin-top: 24px;
 
+  &:hover,
+  &:focus {
+    box-shadow: rgba(64, 123, 255, 0.5) 0px 8px 16px 0px;
+    outline: none;
+  }
+
+  &:active {
+    background-color: rgb(50, 100, 200);
+    box-shadow: rgba(64, 123, 255, 0.7) 0px 4px 8px 0px;
+  }
+
   @media screen and (min-width: 768px) {
     width: 160px;
     margin-left: auto;
@@ -263,4 +274,34 @@ export const CustomRadioInner = styled.span`
   background-color: var(--primery-color-blue);
   opacity: 0;
   transition: opacity 0.3s ease;
+`;
+/**
+  |============================
+  | ErrorMessage
+  |============================
+*/
+const shake = keyframes`
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 10px;
+  font-size: 0.8em;
+  font-family: Arial, sans-serif;
+  animation: ${shake} 0.5s ease-in;
 `;

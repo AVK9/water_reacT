@@ -5,6 +5,7 @@ const UserAuth = () => {
   return (
     <StyledLink to="/signin">
       <TextLink>Sign In</TextLink>
+      
       <IconWrapper>
         <use xlinkHref={`${sprite}#icon-user`} />
       </IconWrapper>

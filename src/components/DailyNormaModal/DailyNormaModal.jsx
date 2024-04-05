@@ -26,6 +26,7 @@ import {
   RadioInput,
   CustomRadio,
   CustomRadioInner,
+  ErrorMessage,
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose }) {
@@ -33,13 +34,29 @@ function DailyNormaModal({ onClose }) {
   const [weight, setWeight] = useState('0');
   const [activityTime, setActivityTime] = useState('0');
   const [waterIntake, setWaterIntake] = useState(0.0);
-  const [plannedIntake, setPlannedIntake] = useState('0');
+  const [plannedIntake, setPlannedIntake] = useState('0.0');
   const [isOpen, setIsOpen] = useState(false);
+  const [weightError, setWeightError] = useState('');
+  const [activityTimeError, setActivityTimeError] = useState('');
+  const [plannedIntakeError, setPlannedIntakeError] = useState('');
 
   const handleKeyPress = (event) => {
-    const keyCode = event.keyCode || event.which;
-    const keyValue = String.fromCharCode(keyCode);
-    if (!/\d/.test(keyValue)) event.preventDefault();
+    const keyValue = event.key;
+    if (
+      (!/\d/.test(keyValue) &&
+        ![
+          'Backspace',
+          'Delete',
+          'ArrowLeft',
+          'ArrowRight',
+          'Tab',
+          'ArrowUp',
+          'ArrowDown',
+        ].includes(keyValue)) ||
+      keyValue.toLowerCase() === 'e'
+    ) {
+      event.preventDefault();
+    }
   };
 
   const calculateWaterIntake = (gender, weight, activityTime) => {
@@ -145,7 +162,16 @@ function DailyNormaModal({ onClose }) {
                   min="0"
                   value={weight}
                   onChange={(e) => {
-                    if (e.target.value <= 200) {
+                    if (e.target.value > 300) {
+                      setWeightError(
+                        'Weight must be less than or equal to 300'
+                      );
+                      setWeight('');
+                    } else if (e.target.value === '') {
+                      setWeightError('Weight is a required field');
+                      setWeight('');
+                    } else {
+                      setWeightError('');
                       setWeight(e.target.value);
                       calculateWaterIntake(
                         gender,
@@ -154,9 +180,10 @@ function DailyNormaModal({ onClose }) {
                       );
                     }
                   }}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   required
                 />
+                {weightError && <ErrorMessage>{weightError}</ErrorMessage>}
               </Label>
               <Label>
                 The time of active participation in sports or other activities
@@ -166,14 +193,23 @@ function DailyNormaModal({ onClose }) {
                   min="0"
                   value={activityTime}
                   onChange={(e) => {
-                    if (e.target.value <= 20) {
+                    if (e.target.value > 12) {
+                      setActivityTimeError(
+                        'Activity time must be less than or equal to 12'
+                      );
+                      setActivityTime('');
+                    } else {
+                      setActivityTimeError('');
                       setActivityTime(e.target.value);
                       calculateWaterIntake(gender, weight, e.target.value);
                     }
                   }}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   required
                 />
+                {activityTimeError && (
+                  <ErrorMessage>{activityTimeError}</ErrorMessage>
+                )}
               </Label>
               <LabelAmount>
                 <LabelSpan>
@@ -190,12 +226,27 @@ function DailyNormaModal({ onClose }) {
               </LabelMuch>
               <InputValue
                 type="number"
+                step="0.1"
                 min="0"
                 value={plannedIntake}
-                onChange={(e) => setPlannedIntake(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value > 15) {
+                    setPlannedIntakeError(
+                      'Rate must be less than or equal to 15'
+                    );
+                    setPlannedIntake('');
+                  } else {
+                    setPlannedIntakeError('');
+                    setPlannedIntake(e.target.value);
+                  }
+                }}
+                onKeyDown={handleKeyPress}
                 required
               />
             </Label>
+            {plannedIntakeError && (
+              <ErrorMessage>{plannedIntakeError}</ErrorMessage>
+            )}
             <Button type="submit">Save</Button>
           </Form>
         </NormaContainer>

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -15,7 +15,14 @@ import {
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
-import { addWaterThunk, getWaterThunk } from '../../redux/water/waterThunk';
+// import { DateTime } from 'luxon';
+
+import {
+  addWaterThunk,
+  changeWaterThunk,
+  delWaterThunk,
+  getWaterThunk,
+} from '../../redux/water/waterThunk';
 import {
   selectError,
   selectLoading,
@@ -25,23 +32,22 @@ import { Loader } from '../Loader/Loader';
 
 const TodayWaterList = () => {
   // const [dayWaterList, setDayWaterList] = useState('');
-  const formatOfTime = 'HH:mm:ss';
-  const date = new Date();
-  const waterAmount = 170;
-  const waterAmountCauntDD = [
-    { waterAmountD: '150', dates: '15.00 PM' },
-    { waterAmountD: '200', dates: '14.00 PM' },
-    { waterAmountD: '250', dates: '16.00 PM' },
-    { waterAmountD: '200', dates: '14.00 PM' },
-    { waterAmountD: '250', dates: '16.00 PM' },
-    { waterAmountD: '300', dates: '16.30 PM' },
-    { waterAmountD: '300', dates: '16.30 PM' },
-    { waterAmountD: '200', dates: '17.00 PM' },
-  ];
+
+  // const date = new Date();
+  // const date = DateTime.now().setZone('Europe/Kiev');
+  const now = new Date();
+  const date = dateFns.sub(now, { minutes: -180 });
+  // const now = DateTime.now();
+  // const date = now.setZone(now.offset - 180, { keepLocalTime: true });
+  // const timezoneOffset = 'kyivTimeZone';
+  // console.log('nowdate =>', date);
+
+  const waterAmount = 25;
+
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-
+  //, timezoneOffset: '+0300'
   const addWater = () => {
     const body = { date, waterAmount };
     console.log('bodybody =>', body);
@@ -50,10 +56,12 @@ const TodayWaterList = () => {
   useEffect(() => {
     dispatch(getWaterThunk());
   }, [dispatch]);
+
   // setDayWaterList(useSelector(selectStateWaterDayList));
 
   const dayWaterList = useSelector(selectStateWaterDayList);
 
+  // const selectDay = useSelector(selectSelectDay);
   // console.log('dayWaterList =>', dayWaterList.waterRecords.length);
   // console.log('dayWaterList =>', dayWaterLists);
   return (
@@ -72,10 +80,20 @@ const TodayWaterList = () => {
                   </IconWrapper>
                   <WaterAmount>{waterAmount} ml</WaterAmount>
                   <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
-                  <IconWrapperStr>
+                  <IconWrapperStr
+                    onClick={() => {
+                      dispatch(changeWaterThunk({ _id, waterAmount, date }));
+                      dispatch(getWaterThunk());
+                    }}
+                  >
                     <use href={`${sprite}#icon-pencil-square`} />
                   </IconWrapperStr>
-                  <IconWrapperTrash>
+                  <IconWrapperTrash
+                    onClick={() => {
+                      dispatch(delWaterThunk(_id));
+                      dispatch(getWaterThunk());
+                    }}
+                  >
                     <use href={`${sprite}#icon-trash`} />
                   </IconWrapperTrash>
                 </WaterAmountBox>

@@ -32,7 +32,7 @@ const SignInComponent = () => {
       email: '',
       password: '',
     },
-    validate: values => {
+    validate: (values) => {
       const errors = {};
 
       if (!values.email || !values.email.includes('@')) {
@@ -45,7 +45,7 @@ const SignInComponent = () => {
 
       return errors;
     },
-    onSubmit: values => {
+    onSubmit: (values) => {
       dispatch(loginThunk({ email: values.email, password: values.password }));
     },
   });
@@ -59,7 +59,11 @@ const SignInComponent = () => {
       <SignInwater></SignInwater>
       <SignInContainer>
         <SignInTitle>Sign In</SignInTitle>
+
         <Form onSubmit={formik.handleSubmit}>
+
+       
+
           <SignInLabel>Enter your email</SignInLabel>
           <SignInInput
             type="email"
@@ -70,7 +74,6 @@ const SignInComponent = () => {
             onBlur={formik.handleBlur}
             autoComplete="email"
             error={formik.touched.email && formik.errors.email}
-            
           />
           {formik.touched.email && formik.errors.email && (
             <ErrorMessage>{formik.errors.email}</ErrorMessage>
@@ -87,10 +90,14 @@ const SignInComponent = () => {
               onBlur={formik.handleBlur}
               error={formik.touched.password && formik.errors.password}
             />
+
             <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
               <svg>
                 <use href={`${sprite}#icon-eye-slash`} />
               </svg>
+
+           
+
             </TogglePasswordButton>
           </div>
           {formik.touched.password && formik.errors.password && (
@@ -100,7 +107,11 @@ const SignInComponent = () => {
           <SignInButton type="submit" disabled={!formik.isValid}>
             Sign In
           </SignInButton>
+
         </Form>
+
+       
+
         <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
           Sign Up
         </Link>

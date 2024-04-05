@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   addWaterApi,
+  changeWaterApi,
   delWaterApi,
   getWaterApi,
+  getWaterSelectDayApi,
   setTokenApi,
 } from '../Api/apiWater.js';
 
@@ -12,6 +14,17 @@ export const getWaterThunk = createAsyncThunk(
     try {
       setTokenApi(getState().auth.token);
       return await getWaterApi();
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+export const getWaterDayThunk = createAsyncThunk(
+  'waterAmount/getWaterDay',
+  async (date, { rejectWithValue, getState }) => {
+    try {
+      setTokenApi(getState().auth.token);
+      return await getWaterSelectDayApi(date);
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
@@ -35,6 +48,19 @@ export const delWaterThunk = createAsyncThunk(
     try {
       const data = await delWaterApi(delId);
       return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const changeWaterThunk = createAsyncThunk(
+  'waterAmount/changeWater',
+  async (body, { rejectWithValue, getState }) => {
+    try {
+      console.log('changeWaterThunk:', body);
+      setTokenApi(getState().auth.token);
+      return await changeWaterApi(body);
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }

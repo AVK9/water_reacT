@@ -23,15 +23,12 @@ const UserLogoutModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuth) {
-      navigate('/welcome');
-    }
-  }, [isAuth, navigate]);
-
   const handleLogout = () => {
     dispatch(loginOutThunk());
     onClose();
+    if (isAuth) {
+      navigate('/welcome');
+    }
   };
   
   return (

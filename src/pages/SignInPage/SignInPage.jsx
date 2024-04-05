@@ -13,7 +13,7 @@ import {
   ErrorMessage,
   Form,
 } from './SignInPage.styled';
-import sprite from '../../assets/img/sprite.svg';
+import sprite from '../../assets/img/sprite.svg'; // Шлях до вашого спрайту
 import { Link, useNavigate } from 'react-router-dom';
 import { loginThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
@@ -23,14 +23,13 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    isAuth && navigate('/home');
-  }, [isAuth, navigate]);
+   useEffect(() => {
+     isAuth && navigate('/home');
+   }, [isAuth, navigate]);
 
-  const [showPassword, setShowPassword] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false); 
   const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
+    setShowPassword((prevState) => !prevState); 
   };
 
   const formik = useFormik({
@@ -80,7 +79,7 @@ const SignInComponent = () => {
           <SignInLabel>Enter your password</SignInLabel>
           <div style={{ position: 'relative' }}>
             <SignInInput
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? 'text' : 'password'} 
               name="password"
               placeholder="Password"
               value={formik.values.password}
@@ -92,6 +91,7 @@ const SignInComponent = () => {
               type="button"
               onClick={togglePasswordVisibility}
             >
+              
               <svg>
                 <use
                   href={`${sprite}#${

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   loginApi,
   loginOutApi,
-  refreshApi,
+  currentApi,
   setTokenApi,
   signUpApi,
 } from '../Api/apiAuth';
@@ -29,11 +29,15 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-export const refreshThunk = createAsyncThunk(
+export const currentThunk = createAsyncThunk(
   'auth/refresh',
   async (_, { rejectWithValue, getState }) => {
     try {
-      return await refreshApi(getState().auth.token);
+      const token = getState().auth.token; 
+      if (token) {
+        setTokenApi(token); 
+        return await currentApi(getState().auth.profile.email);
+      }
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }

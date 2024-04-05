@@ -20,7 +20,6 @@ export const SignInGlobalContainer = styled.section`
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
     background-image: url(${desktopWater});
-    
   }
 `;
 
@@ -104,7 +103,7 @@ export const SignInInput = styled.input`
   }
 
   @media screen and (min-width: 1440px) {
-    border: 1px solid #d7e3ff;
+    border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
     padding: 12px 10px;
     width: 384px;

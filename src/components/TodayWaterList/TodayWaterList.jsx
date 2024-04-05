@@ -19,6 +19,7 @@ import * as dateFns from 'date-fns';
 
 import {
   addWaterThunk,
+  changeWaterThunk,
   delWaterThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
@@ -73,22 +74,26 @@ const TodayWaterList = () => {
           {dayWaterList.length ? (
             <DayDrinkBox>
               {dayWaterList.map(({ _id, waterAmount, date }) => (
-                <WaterAmountBox
-                  key={_id}
-                  onClick={() => {
-                    dispatch(delWaterThunk(_id));
-                    dispatch(getWaterThunk());
-                  }}
-                >
+                <WaterAmountBox key={_id}>
                   <IconWrapper>
                     <use href={`${sprite}#icon-glas-water`} />
                   </IconWrapper>
                   <WaterAmount>{waterAmount} ml</WaterAmount>
                   <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
-                  <IconWrapperStr>
+                  <IconWrapperStr
+                    onClick={() => {
+                      dispatch(changeWaterThunk({ _id, waterAmount, date }));
+                      dispatch(getWaterThunk());
+                    }}
+                  >
                     <use href={`${sprite}#icon-pencil-square`} />
                   </IconWrapperStr>
-                  <IconWrapperTrash>
+                  <IconWrapperTrash
+                    onClick={() => {
+                      dispatch(delWaterThunk(_id));
+                      dispatch(getWaterThunk());
+                    }}
+                  >
                     <use href={`${sprite}#icon-trash`} />
                   </IconWrapperTrash>
                 </WaterAmountBox>

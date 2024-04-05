@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   addWaterApi,
+  changeWaterApi,
   delWaterApi,
   getWaterApi,
   getWaterSelectDayApi,
@@ -47,6 +48,19 @@ export const delWaterThunk = createAsyncThunk(
     try {
       const data = await delWaterApi(delId);
       return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const changeWaterThunk = createAsyncThunk(
+  'waterAmount/changeWater',
+  async (body, { rejectWithValue, getState }) => {
+    try {
+      console.log('changeWaterThunk:', body);
+      setTokenApi(getState().auth.token);
+      return await changeWaterApi(body);
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }

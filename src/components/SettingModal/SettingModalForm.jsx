@@ -15,6 +15,7 @@ import {
   StyledLabel,
   TextError,
 } from './SettingModalForm.styled';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
 import { refreshThunk } from '../../redux/auth/authThunk';
@@ -25,12 +26,16 @@ const SettingModalForm = ({ closeModal }) => {
   const userEmail = profile.email;
   const userName = userEmail ? userEmail.split('@')[0] : '';
 
+
   const userGender = profile.gender;
   console.log('profile =>', profile);
+
+
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleSubmit = async (
@@ -69,6 +74,7 @@ const SettingModalForm = ({ closeModal }) => {
     // const handleChangeGender = (e) => {
     //   setGender(e.target.value);
     // }
+
     // e.preventDefault();
     // if (password && !newPassword) {
     //   toast.error('Please enter new password');
@@ -85,6 +91,7 @@ const SettingModalForm = ({ closeModal }) => {
     // isSubmit = false;
     // setNewPassword(newPassword);
     // toast.success('Update successfully');
+
   };
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
@@ -101,6 +108,8 @@ const SettingModalForm = ({ closeModal }) => {
     },
     onSubmit: handleSubmit,
   });
+
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormContainer>
@@ -110,11 +119,14 @@ const SettingModalForm = ({ closeModal }) => {
             <RadioWrapper>
               <label>
                 <input
-                  type="radio"
+                  type="radio"  
                   name="gender"
                   value="female"
+
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'female'}
+
+
                 />
                 <span>Woman</span>
               </label>
@@ -125,8 +137,10 @@ const SettingModalForm = ({ closeModal }) => {
                   type="radio"
                   name="gender"
                   value="male"
+
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'male'}
+
                 />
                 <span>Man</span>
               </label>
@@ -163,9 +177,11 @@ const SettingModalForm = ({ closeModal }) => {
               name="email"
               id="InputEmail1"
               aria-describedby="emailHelp"
+
               onChange={formik.handleChange}
               value={formik.values.email}
               onblur={formik.handleBlur}
+
               placeholder="Email"
               autoComplete="email"
               required
@@ -197,9 +213,11 @@ const SettingModalForm = ({ closeModal }) => {
                 }
                 type={isShowPassword ? 'text' : 'password'}
                 name="password"
+
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
+
                 id="exampleInputPassword1"
                 placeholder="password"
               />
@@ -223,7 +241,9 @@ const SettingModalForm = ({ closeModal }) => {
                   type={isShowNewPassword ? 'text' : 'password'}
                   name="newPassword"
                   onChange=""
+
                   value="{newPassword}"
+
                   id="exampleInputPassword2"
                   placeholder="New Password"
                 />
@@ -247,7 +267,9 @@ const SettingModalForm = ({ closeModal }) => {
                   type={isShowConfirmPassword ? 'text' : 'password'}
                   name="repeatPassword"
                   onChange=""
+
                   value="{confirmPassword}"
+
                   id="exampleInputPassword3"
                   placeholder="Repeat new password"
                 />

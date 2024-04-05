@@ -16,6 +16,7 @@ import {
   Form,
 } from './SignUpPage.styled';
 import sprite from '../../assets/img/sprite.svg';
+
 import { Link } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
@@ -163,7 +164,7 @@ const SignUpComponent = () => {
             </SignUpButton>
             <Link
               to="/signin"
-              style={{ color: 'blue', textDecoration: 'none' }}
+              style={{ color: ' #407bff', textDecoration: 'none' }}
             >
               Sign In
             </Link>

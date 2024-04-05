@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -12,9 +13,9 @@ import {
   TogglePasswordButton,
   ErrorMessage,
   Form,
-  DesktopBg
+  DesktopBg,
 } from './SignInPage.styled';
-import sprite from '../../assets/img/sprite.svg'; 
+import sprite from '../../assets/img/sprite.svg';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
@@ -26,13 +27,14 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-   useEffect(() => {
-     isAuth && navigate('/home');
-   }, [isAuth, navigate]);
+  useEffect(() => {
+    isAuth && navigate('/home');
+  }, [isAuth, navigate]);
 
-  const [showPassword, setShowPassword] = useState(false); 
+
+  const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState); 
+    setShowPassword((prevState) => !prevState);
   };
 
   const formik = useFormik({
@@ -55,7 +57,9 @@ const SignInComponent = () => {
     },
     onSubmit: async (values) => {
       try {
-        await dispatch(loginThunk({ email: values.email, password: values.password }));
+        await dispatch(
+          loginThunk({ email: values.email, password: values.password })
+        );
         await dispatch(currentThunk());
       } catch (error) {
         console.error('Error during login:', error);
@@ -70,6 +74,7 @@ const SignInComponent = () => {
           <SignInwater></SignInwater>
           <SignInContainer>
             <SignInTitle>Sign In</SignInTitle>
+
             <Form onSubmit={formik.handleSubmit}>
               <SignInLabel>Enter your email</SignInLabel>
               <SignInInput
@@ -113,7 +118,7 @@ const SignInComponent = () => {
               {formik.touched.password && formik.errors.password && (
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
-
+             
               <SignInButton type="submit" disabled={!formik.isValid}>
                 Sign In
               </SignInButton>

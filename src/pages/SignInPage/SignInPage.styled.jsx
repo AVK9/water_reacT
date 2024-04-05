@@ -5,10 +5,7 @@ import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
 
-
-export const DesktopBg = styled.div`
- 
-`;
+export const DesktopBg = styled.div``;
 
 export const SignInGlobalContainer = styled.section`
   display: flex;
@@ -79,6 +76,10 @@ export const SignInTitle = styled.h2`
   font-size: 26px;
   line-height: 1.23077;
   color: var(--primery-color-black);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.23077;
+  color: var(--primery-color-black);
 `;
 
 export const SignInLabel = styled.label`
@@ -123,6 +124,7 @@ export const SignInButton = styled.button`
   padding: 10px;
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+
   background: var(--primery-color-blue);
   color: var(--primery-color-white);
   border: none;
@@ -186,4 +188,3 @@ export const Form = styled.form`
     width: 336px;
   }
 `;
-

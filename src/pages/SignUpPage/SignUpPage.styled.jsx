@@ -4,11 +4,9 @@ import mobilWater from '../../assets/img/mobile-woter.png';
 import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
-
 export const SignUpGlobalContainer = styled.section`
   display: flex;
   flex-direction: column-reverse;
-
 
   padding-top: 24px;
 
@@ -17,7 +15,6 @@ export const SignUpGlobalContainer = styled.section`
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
     background-image: url(${desktopWater});
-    
   }
 `;
 
@@ -42,7 +39,7 @@ export const SignUpContainer = styled.div`
 
   @media screen and (min-width: 1440px) {
     background-image: none;
-    
+
     padding-top: 135px;
     padding-left: 840px;
 
@@ -61,9 +58,17 @@ export const SignUpwater = styled.div`
   width: 280px;
   height: 210px;
   background-position: center center;
+  background-image: url(${mobilWater});
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 280px;
+  height: 210px;
+  background-position: center center;
 
   @media screen and (min-width: 768px) {
-    background-image: none;
+    @media screen and (min-width: 768px) {
+      background-image: none;
+    }
   }
 `;
 
@@ -94,10 +99,9 @@ export const SignUpInput = styled.input`
   background: var(--primery-color-white);
   outline: none;
 
- 
-
   @media screen and (min-width: 768px) {
     border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
+
     border-radius: 6px;
     padding: 12px 10px;
     width: 336px;
@@ -119,6 +123,7 @@ export const SignUpButton = styled.button`
   padding: 10px;
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: var(--primery-color-blue);
   background: var(--primery-color-blue);
   color: var(--primery-color-white);
   border: none;
@@ -147,7 +152,6 @@ export const SignUpButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
-
   display: flex;
   position: absolute;
   right: 10px;
@@ -166,35 +170,34 @@ export const TogglePasswordButton = styled.button`
     right: -30px;
   }
 
-
-  
-    display: flex;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    
+  display: flex;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 
   svg {
-      width: 16px;
-      height: 16px;
-      fill: none;
-      stroke: #407bff;
-      background-color: #fff;
-      
-     
-    }
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #407bff;
+    background-color: #fff;
+  }
+
+  @media screen and (min-width: 1440px) {
+    right: -30px;
+  }
 `;
 
 export const ErrorMessage = styled.div`
   -webkit-text-fill-color: red;
+
   margin-bottom: 10px;
 `;
 
-
-
 export const Form = styled.form`
-    display: flex;
+  display: flex;
+
   flex-direction: column;
   justify-content: center;
 
@@ -203,5 +206,4 @@ export const Form = styled.form`
   @media screen and (min-width: 768px) {
     width: 336px;
   }
-
 `;

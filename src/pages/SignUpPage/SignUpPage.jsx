@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -16,14 +17,11 @@ import {
   Form,
 } from './SignUpPage.styled';
 import sprite from '../../assets/img/sprite.svg';
+
 import { Link } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
-
-
-
-
 
 const SignUpComponent = () => {
   const dispatch = useDispatch();
@@ -53,6 +51,7 @@ const SignUpComponent = () => {
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(signUpThunk({ email: values.email, password: values.password }))
+
         .then((response) => {
           setSubmitting(false);
           if (response.error && response.error === 'Email already exists') {
@@ -61,6 +60,7 @@ const SignUpComponent = () => {
             navigate('/home');
           }
         })
+
         .catch((error) => {
           console.error('Error:', error);
           setSubmitting(false);
@@ -68,15 +68,18 @@ const SignUpComponent = () => {
     },
   });
 
+
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
+
   };
 
   const toggleRepeatPasswordVisibility = () => {
     setShowRepeatPassword((prevState) => !prevState);
+
   };
 
   return (
@@ -106,6 +109,7 @@ const SignUpComponent = () => {
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showPassword ? 'text' : 'password'}
+
                 name="password"
                 placeholder="Password"
                 value={formik.values.password}
@@ -136,6 +140,7 @@ const SignUpComponent = () => {
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showRepeatPassword ? 'text' : 'password'}
+
                 name="repeatPassword"
                 placeholder="Repeat Password"
                 value={formik.values.repeatPassword}
@@ -144,6 +149,7 @@ const SignUpComponent = () => {
                 error={
                   formik.touched.repeatPassword && formik.errors.repeatPassword
                 }
+
               />
               <TogglePasswordButton
                 type="button"
@@ -164,6 +170,7 @@ const SignUpComponent = () => {
               <ErrorMessage>{formik.errors.repeatPassword}</ErrorMessage>
             )}
 
+
             <SignUpButton
               type="submit"
               disabled={!formik.isValid || formik.isSubmitting}
@@ -172,11 +179,12 @@ const SignUpComponent = () => {
             </SignUpButton>
             <Link
               to="/signin"
-              style={{ color: 'blue', textDecoration: 'none' }}
+
+              style={{ color: ' #407bff', textDecoration: 'none' }}
+
             >
               Sign In
             </Link>
-
           </Form>
 
         </SignUpContainer>

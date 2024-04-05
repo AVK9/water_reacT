@@ -5,20 +5,23 @@ import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
 
+
+export const DesktopBg = styled.div``;
+
 export const SignInGlobalContainer = styled.section`
 
   display: flex;
   flex-direction: column-reverse;
-  padding-left: 20px;
-  padding-right: 20px;
+
   padding-top: 24px;
 
 
   @media screen and (min-width: 768px) {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
+    display: flex;
+    flex-direction: column-reverse;
 
+    padding-top: 24px;
+  }
 
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
@@ -42,6 +45,8 @@ export const SignInContainer = styled.div`
     background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
+
+  }
 
 
   @media screen and (min-width: 1440px) {
@@ -76,6 +81,7 @@ export const SignInTitle = styled.h2`
   font-size: 26px;
   line-height: 1.23077;
   color: var(--primery-color-black);
+
 `;
 
 export const SignInLabel = styled.label`
@@ -120,6 +126,7 @@ export const SignInButton = styled.button`
   padding: 10px;
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+
   background: var(--primery-color-blue);
   color: var(--primery-color-white);
   border: none;
@@ -158,7 +165,9 @@ export const TogglePasswordButton = styled.button`
   svg {
     width: 16px;
     height: 16px;
-    fill: none;
+
+    fill: transparent;
+
     stroke: #407bff;
     background-color: #fff;
   }

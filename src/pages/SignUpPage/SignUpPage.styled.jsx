@@ -10,15 +10,15 @@ export const SignUpGlobalContainer = styled.section`
   flex-direction: column-reverse;
 
 
-
   padding-top: 24px;
 
+  margin: 0 auto;
 
 
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
     background-image: url(${desktopWater});
-    
+
   }
 `;
 
@@ -36,13 +36,15 @@ export const SignUpContainer = styled.div`
     width: 786px;
     height: 658px;
     background-position: -35px;
+    background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
   }
 
+
   @media screen and (min-width: 1440px) {
     background-image: none;
-    
+
     padding-top: 135px;
     padding-left: 840px;
 
@@ -61,9 +63,18 @@ export const SignUpwater = styled.div`
   width: 280px;
   height: 210px;
   background-position: center center;
+  background-image: url(${mobilWater});
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 280px;
+  height: 210px;
+  background-position: center center;
 
   @media screen and (min-width: 768px) {
-    background-image: none;
+    @media screen and (min-width: 768px) {
+      background-image: none;
+    }
+
   }
 `;
 
@@ -94,10 +105,9 @@ export const SignUpInput = styled.input`
   background: var(--primery-color-white);
   outline: none;
 
- 
-
   @media screen and (min-width: 768px) {
     border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
+
     border-radius: 6px;
     padding: 12px 10px;
     width: 336px;
@@ -120,6 +130,7 @@ export const SignUpButton = styled.button`
 
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background: var(--primery-color-blue);
+
   color: var(--primery-color-white);
   border: none;
   border-radius: 10px;
@@ -147,6 +158,13 @@ export const SignUpButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
+  display: flex;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+
 
 
   display: flex;
@@ -167,16 +185,15 @@ export const TogglePasswordButton = styled.button`
     right: -30px;
   }
 
-
 `;
 
 export const ErrorMessage = styled.div`
   -webkit-text-fill-color: red;
+
   margin-bottom: 10px;
 `;
 
 export const Form = styled.form`
-
 
   display: flex;
 
@@ -189,7 +206,5 @@ export const Form = styled.form`
     width: 336px;
   }
 
-
 `;
-
 

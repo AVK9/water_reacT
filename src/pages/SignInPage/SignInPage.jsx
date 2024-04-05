@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -23,9 +23,14 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    isAuth && navigate('/home');
-  }, [isAuth, navigate]);
+   useEffect(() => {
+     isAuth && navigate('/home');
+   }, [isAuth, navigate]);
+
+  const [showPassword, setShowPassword] = useState(false); 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState); 
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -55,9 +60,6 @@ const SignInComponent = () => {
     },
   });
 
-  const togglePasswordVisibility = () => {
-    formik.setFieldValue('passwordVisible', !formik.values.passwordVisible);
-  };
 
   return (
     <SignInGlobalContainer>
@@ -66,8 +68,6 @@ const SignInComponent = () => {
         <SignInTitle>Sign In</SignInTitle>
 
         <Form onSubmit={formik.handleSubmit}>
-
-       
 
           <SignInLabel>Enter your email</SignInLabel>
           <SignInInput
@@ -87,7 +87,7 @@ const SignInComponent = () => {
           <SignInLabel>Enter your password</SignInLabel>
           <div style={{ position: 'relative' }}>
             <SignInInput
-              type={formik.values.passwordVisible ? 'text' : 'password'}
+              type={showPassword ? 'text' : 'password'} 
               name="password"
               placeholder="Password"
               value={formik.values.password}
@@ -96,12 +96,18 @@ const SignInComponent = () => {
               error={formik.touched.password && formik.errors.password}
             />
 
-            <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
+            <TogglePasswordButton
+              type="button"
+              onClick={togglePasswordVisibility}
+            >
+              
               <svg>
-                <use href={`${sprite}#icon-eye-slash`} />
+                <use
+                  href={`${sprite}#${
+                    showPassword ? 'icon-eye' : 'icon-eye-slash'
+                  }`}
+                />
               </svg>
-
-           
 
             </TogglePasswordButton>
           </div>
@@ -115,7 +121,7 @@ const SignInComponent = () => {
 
         </Form>
 
-       
+
 
         <Link to="/signup" style={{ color: 'blue', textDecoration: 'none' }}>
           Sign Up

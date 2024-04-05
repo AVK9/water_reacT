@@ -36,9 +36,11 @@ export const currentThunk = createAsyncThunk(
   'auth/refresh',
   async (_, { rejectWithValue, getState }) => {
     try {
+
       const token = getState().auth.token;
       if (token) {
         setTokenApi(token);
+
         return await currentApi(getState().auth.profile.email);
       }
     } catch (error) {

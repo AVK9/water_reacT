@@ -11,6 +11,7 @@ import {
 } from './waterHandlers';
 import {
   addWaterThunk,
+  changeWaterThunk,
   delWaterThunk,
   getWaterDayThunk,
   getWaterThunk,
@@ -31,6 +32,7 @@ const waterSlice = createSlice({
       .addCase(addWaterThunk.fulfilled, handleAddWater)
       .addCase(getWaterDayThunk.fulfilled, handleAddWater)
       .addCase(delWaterThunk.fulfilled, handleDelWater)
+      .addCase(changeWaterThunk.fulfilled, handleGetWater)
       .addMatcher(({ type }) => type.endsWith('/pendihg'), handlePending)
       .addMatcher(({ type }) => type.endsWith('/fulfilled'), handleFulfilled)
       .addMatcher(({ type }) => type.endsWith('/rejected'), handleRejected);

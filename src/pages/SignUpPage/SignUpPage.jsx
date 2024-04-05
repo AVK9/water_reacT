@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -13,13 +13,17 @@ import {
   SignUpwater,
   TogglePasswordButton,
   ErrorMessage,
+  Form,
 } from './SignUpPage.styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import sprite from '../../assets/img/sprite.svg';
 import { Link } from 'react-router-dom';
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
+
+
+
+
 
 const SignUpComponent = () => {
   const dispatch = useDispatch();
@@ -49,7 +53,7 @@ const SignUpComponent = () => {
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(signUpThunk({ email: values.email, password: values.password }))
-        .then(response => {
+        .then((response) => {
           setSubmitting(false);
           if (response.error && response.error === 'Email already exists') {
             formik.setFieldError('email', 'This email is already registered');
@@ -57,22 +61,22 @@ const SignUpComponent = () => {
             navigate('/home');
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error:', error);
           setSubmitting(false);
         });
     },
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
   const togglePasswordVisibility = () => {
-    formik.setFieldValue('passwordVisible', !formik.values.passwordVisible);
+    setShowPassword((prevState) => !prevState);
   };
 
   const toggleRepeatPasswordVisibility = () => {
-    formik.setFieldValue(
-      'repeatPasswordVisible',
-      !formik.values.repeatPasswordVisible
-    );
+    setShowRepeatPassword((prevState) => !prevState);
   };
 
   return (
@@ -81,7 +85,9 @@ const SignUpComponent = () => {
         <SignUpwater></SignUpwater>
         <SignUpContainer>
           <SignUpTitle>Sign Up</SignUpTitle>
-          <form onSubmit={formik.handleSubmit}>
+
+          <Form onSubmit={formik.handleSubmit}>
+
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -99,7 +105,7 @@ const SignUpComponent = () => {
             <SignUpLabel>Enter your password</SignUpLabel>
             <div style={{ position: 'relative' }}>
               <SignUpInput
-                type={formik.values.passwordVisible ? 'text' : 'password'}
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Password"
                 value={formik.values.password}
@@ -107,10 +113,19 @@ const SignUpComponent = () => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.password && formik.errors.password}
               />
-              <TogglePasswordButton type="button" onClick={togglePasswordVisibility}>
-                <FontAwesomeIcon
-                  icon={formik.values.passwordVisible ? faEyeSlash : faEye}
-                />
+
+              <TogglePasswordButton
+                type="button"
+                onClick={togglePasswordVisibility}
+              >
+                <svg>
+                  <use
+                    href={`${sprite}#${
+                      showPassword ? 'icon-eye' : 'icon-eye-slash'
+                    }`}
+                  />
+
+                </svg>
               </TogglePasswordButton>
             </div>
             {formik.touched.password && formik.errors.password && (
@@ -120,34 +135,50 @@ const SignUpComponent = () => {
             <SignUpLabel>Repeat password</SignUpLabel>
             <div style={{ position: 'relative' }}>
               <SignUpInput
-                type={formik.values.repeatPasswordVisible ? 'text' : 'password'}
+                type={showRepeatPassword ? 'text' : 'password'}
                 name="repeatPassword"
                 placeholder="Repeat Password"
                 value={formik.values.repeatPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.repeatPassword && formik.errors.repeatPassword}
+                error={
+                  formik.touched.repeatPassword && formik.errors.repeatPassword
+                }
               />
               <TogglePasswordButton
                 type="button"
                 onClick={toggleRepeatPasswordVisibility}
               >
-                <FontAwesomeIcon
-                  icon={formik.values.repeatPasswordVisible ? faEyeSlash : faEye}
-                />
+
+                <svg>
+                  <use
+                    href={`${sprite}#${
+                      showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'
+                    }`}
+                  />
+
+                </svg>
               </TogglePasswordButton>
             </div>
             {formik.touched.repeatPassword && formik.errors.repeatPassword && (
               <ErrorMessage>{formik.errors.repeatPassword}</ErrorMessage>
             )}
 
-            <SignUpButton type="submit" disabled={!formik.isValid || formik.isSubmitting}>
+            <SignUpButton
+              type="submit"
+              disabled={!formik.isValid || formik.isSubmitting}
+            >
               Sign Up
             </SignUpButton>
-            <Link to="/signin" style={{ color: 'blue', textDecoration: 'none' }}>
+            <Link
+              to="/signin"
+              style={{ color: 'blue', textDecoration: 'none' }}
+            >
               Sign In
             </Link>
-          </form>
+
+          </Form>
+
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

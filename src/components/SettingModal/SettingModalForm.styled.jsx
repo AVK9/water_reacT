@@ -111,6 +111,7 @@ export const EyeButton = styled.span`
     width: 16px;
     height: 16px;
     fill: transparent;
+
     stroke: #407bff;
     stroke-width: 1px;
   }

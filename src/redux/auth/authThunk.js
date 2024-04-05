@@ -2,10 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   loginApi,
   loginOutApi,
-  refreshApi,
+  currentApi,
   setTokenApi,
   signUpApi,
 } from '../Api/apiAuth';
+
+/* import axios from 'axios'; */
 
 import { api } from '../Api/api';
 
@@ -31,11 +33,16 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-export const refreshThunk = createAsyncThunk(
+export const currentThunk = createAsyncThunk(
   'auth/refresh',
   async (_, { rejectWithValue, getState }) => {
     try {
-      return await refreshApi(getState().auth.token);
+      const token = getState().auth.token;
+      if (token) {
+        setTokenApi(token);
+
+        return await currentApi(getState().auth.profile.email);
+      }
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
@@ -58,7 +65,19 @@ export const UpdateAvatarThunk = createAsyncThunk(
   'auth/avatar',
   async (userData, { rejectWithValue }) => {
     try {
-      const { data } = await api.patch('/users/avatars', userData);
+      const data = await UpdateAvatar(userData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const changeUserData = createAsyncThunk(
+  'auth/changeUserData',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await api.patch('/users', user);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);

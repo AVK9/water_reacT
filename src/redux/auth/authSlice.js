@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginOutThunk, loginThunk, refreshThunk, signUpThunk } from "./authThunk";
-import { handleFulfilled, handleLoginOut, handlePending, handleRefresh, handleRejected, handleSignUp } from "./handlers";
+import { loginOutThunk, loginThunk, currentThunk, signUpThunk } from "./authThunk";
+import { handleFulfilled, handleLoginOut, handlePending, handleCurrent, handleRejected, handleSignUp, handleLogin } from "./handlers";
 const initialState = {
     isLoading: false,
     error: '',
     token: '',
-    profile: null,
+    profile: {
+        email: null,
+        userName: null,
+        avatarURL: '',
+        gender: 'undefined',
+        waterRate: 0,
+    },
 }
 const authSlice = createSlice({
     name: 'auth',
@@ -13,11 +19,17 @@ const authSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(signUpThunk.fulfilled, handleSignUp)
-            .addCase(loginThunk.fulfilled, handleSignUp)
-            .addCase(refreshThunk.fulfilled, handleRefresh)
-            .addCase(refreshThunk.rejected, (state) => {
+            .addCase(loginThunk.fulfilled, handleLogin)
+            .addCase(currentThunk.fulfilled, handleCurrent)
+            .addCase(currentThunk.rejected, (state) => {
                 state.token = ''
-                state.profile = null
+                state.profile = {
+                    email: null,
+                    userName: null,
+                    avatarURL: '',
+                    gender: 'undefined',
+                    waterRate: 0,
+                }
                 // localStorage.clear()
             })
 

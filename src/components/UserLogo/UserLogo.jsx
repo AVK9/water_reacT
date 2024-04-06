@@ -26,7 +26,7 @@ const UserLogo = () => {
 
   return (
     <ContainerButton>
-      <ButtonUserLogo type='button' onClick={!isUserModalOpen ? handleOpenUserModal : handleCloseUserModal}>
+      <ButtonUserLogo type='button' onClick={handleOpenUserModal}>
         <UserName>{userName}</UserName>
 
         <AvatarContainer>
@@ -37,13 +37,13 @@ const UserLogo = () => {
               </Avatar>
           }
           
-          <IconWrapper>
+          <IconWrapper isOpen={isUserModalOpen}>
             <use xlinkHref={`${sprite}#icon-chevron-double-up`}></use>
           </IconWrapper>
         </AvatarContainer>
       </ButtonUserLogo>
 
-      {isUserModalOpen && <UserLogoModal onOpen={handleOpenUserModal} />}
+      {isUserModalOpen && <UserLogoModal onClose={handleCloseUserModal} />}
     </ContainerButton>
   );;
 };

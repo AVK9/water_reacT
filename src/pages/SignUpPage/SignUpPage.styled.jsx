@@ -30,7 +30,7 @@ export const SignUpContainer = styled.div`
   @media screen and (min-width: 768px) {
     position: relative;
     background-image: url(${tabWater});
-    width: 786px;
+    width: 720px;
     height: 658px;
     background-position: -35px;
     background-position: -35px;
@@ -145,6 +145,11 @@ export const SignUpButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
+  display: flex;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 
   display: flex;
   position: absolute;
@@ -157,6 +162,7 @@ export const TogglePasswordButton = styled.button`
     height: 16px;
 
     fill: transparent;
+
     stroke: #407bff;
     background-color: #fff;
   }
@@ -164,10 +170,6 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
-
-
-
-
 `;
 
 export const ErrorMessage = styled.div`

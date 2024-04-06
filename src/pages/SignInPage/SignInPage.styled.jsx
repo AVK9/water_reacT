@@ -5,13 +5,16 @@ import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
 
+
 export const DesktopBg = styled.div``;
 
 export const SignInGlobalContainer = styled.section`
+
   display: flex;
   flex-direction: column-reverse;
 
   padding-top: 24px;
+
 
   @media screen and (min-width: 768px) {
     display: flex;
@@ -37,7 +40,7 @@ export const SignInContainer = styled.div`
   @media screen and (min-width: 768px) {
     position: relative;
     background-image: url(${tabWater});
-    width: 786px;
+    width: 720px;
     height: 658px;
     background-position: -35px;
     background-position-y: -70px;
@@ -76,6 +79,7 @@ export const SignInTitle = styled.h2`
   font-size: 26px;
   line-height: 1.23077;
   color: var(--primery-color-black);
+
 `;
 
 export const SignInLabel = styled.label`
@@ -149,6 +153,7 @@ export const SignInButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
+
   display: flex;
   position: absolute;
   right: 10px;
@@ -168,6 +173,7 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
+
 `;
 
 export const ErrorMessage = styled.div`
@@ -176,9 +182,11 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Form = styled.form`
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 
   gap: 16px;
   width: 280px;

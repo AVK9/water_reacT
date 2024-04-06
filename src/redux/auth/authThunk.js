@@ -5,13 +5,8 @@ import {
   currentApi,
   setTokenApi,
   signUpApi,
+  UpdateAvatar,
 } from '../Api/apiAuth';
-
-
-
-/* import axios from 'axios'; */
-
-import { api } from '../Api/api';
 
 export const signUpThunk = createAsyncThunk(
   'auth/signUp',
@@ -39,7 +34,6 @@ export const currentThunk = createAsyncThunk(
   'auth/refresh',
   async (_, { rejectWithValue, getState }) => {
     try {
-
       const token = getState().auth.token;
       if (token) {
         setTokenApi(token);
@@ -65,31 +59,13 @@ export const loginOutThunk = createAsyncThunk(
 );
 
 export const UpdateAvatarThunk = createAsyncThunk(
-  'auth/avatar',
-  async (userData, { rejectWithValue }) => {
+  'auth/updateAvatar',
+  async (newPhotoFile, { rejectWithValue }) => {
     try {
-
-
-      const data = await UpdateAvatar(userData);
-      return data;
+      const AvatarUrl = await UpdateAvatar(newPhotoFile);
+      return AvatarUrl;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }
   }
 );
-
-
-export const changeUserData = createAsyncThunk(
-  'auth/changeUserData',
-  async (user, { rejectWithValue }) => {
-    try {
-      const { data } = await api.patch('/users', user);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.response.data.error);
-    }
-  }
-
-
-);
-

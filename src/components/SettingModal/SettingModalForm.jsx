@@ -16,83 +16,63 @@ import {
   TextError,
 } from './SettingModalForm.styled';
 
+import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { profileSelector } from '../../redux/auth/selectors';
-// import { refreshThunk } from '../../redux/auth/authThunk';
 import { useFormik } from 'formik';
+import { currentThunk } from '../../redux/auth/authThunk';
 
 const SettingModalForm = ({ closeModal }) => {
-  const profile = useSelector(profileSelector);
-  const userEmail = profile.email;
-  const userName = userEmail ? userEmail.split('@')[0] : '';
-
-
-  const userGender = profile.gender;
-  console.log('profile =>', profile);
-
-
-
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isShowNewPassword, setIsShowNewPassword] = useState(false);
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
-
+  const userEmail = useSelector((state) => state.auth.profile.email);
+  const userGender = useSelector((state) => state.auth.profile.gender);
+  const userName = useSelector((state) => state.auth.profile.userName);
   const dispatch = useDispatch();
 
-  const handleSubmit = async (
-    { name, email, gender, password, newPassword },
-    { resetForm }
-  ) => {
-    if (newPassword === '') {
-      await dispatch(refreshThunk({ name, email, gender }));
-    } else {
-      await dispatch(
-        refreshThunk({ name, email, gender, password, newPassword })
-      );
-    }
-    resetForm();
-    closeModal();
-    // const handleChangePassword = (e) => {
-    //   setConfirmPassword(e.target.value);
-    // };
+  const [isShowNewPassword, setIsShowNewPassword] = useState(false);
+  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+  const [isShowOldPassword, setIsShowOldPassword] = useState(false);
 
-    // const handleChangeNewPassword = (e) => {
-    //   setNewPassword(e.target.value);
-    // };
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // const handleChangeOldPassword = (e) => {
-    //   setPassword(e.target.value);
-    // };
+  const UserSettingShema = yup.object().shape({
+    gender: yup.string().required(),
+    name: yup
+      .string()
+      .max(32, 'max length 32')
+      .matches(
+        /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ]+$/,
+        'Name should only contain letters (Latin, Ukrainian or Cyrillic)'
+      ),
+    email: yup.string().matches(emailPattern, 'Email is not valid'),
+    oldPassword: yup
+      .string()
+      .min(8, 'Password must be at least 6 characters')
+      .max(64, 'Max length 64')
+      .when('newPassword', (newPassword, field) =>
+        newPassword[0] ? field.required() : field
+      ),
+    newPassword: yup
+      .string()
+      .min(8, 'Password must be at least 6 characters')
+      .max(64, 'Max length 64')
+      .nullable()
+      .test(
+        'differentPassword',
+        'The new password must differ from the old one.',
+        function (value) {
+          const oldPassword = this.resolve(yup.ref('oldPassword'));
+          return !oldPassword || value !== oldPassword;
+        }
+      ),
+    repeatPassword: yup
+      .string()
+      .min(8, 'Password must be at least 6 characters')
+      .max(64, 'Max length 64')
+      .test('commonPassword', 'Passwords do not match.', function (value) {
+        const newPassword = this.resolve(yup.ref('newPassword'));
+        return !newPassword || String(value) === String(newPassword);
+      }),
+  });
 
-    // const handleChangeName = (e) => {
-    //   setName(e.target.value);
-    // }
-
-    // const handleChangeEmail = (e) => {
-    //   setEmail(e.target.value);
-    // }
-
-    // const handleChangeGender = (e) => {
-    //   setGender(e.target.value);
-    // }
-
-    // e.preventDefault();
-    // if (password && !newPassword) {
-    //   toast.error('Please enter new password');
-    //   return;
-    // }
-    // if (!password && newPassword) {
-    //   toast.error('Please enter old password');
-    //   return;
-    // }
-    // if (newPassword !== confirmPassword) {
-    //   toast.error('Passwords do not match');
-    //   return;
-    // }
-    // isSubmit = false;
-    // setNewPassword(newPassword);
-    // toast.success('Update successfully');
-
-  };
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
@@ -102,16 +82,28 @@ const SettingModalForm = ({ closeModal }) => {
       name: userName,
       gender: userGender,
       email: userEmail,
-      password: '',
+      oldPassword: '',
       newPassword: '',
       confirmPassword: '',
     },
-    onSubmit: handleSubmit,
+    validationSchema: UserSettingShema,
+    onSubmit: (values) => {
+      dispatch(
+        currentThunk({
+          gender: values.gender,
+          userName: values.name,
+          email: values.email,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        })
+      )
+        .unwrap()
+        .then(() => closeModal());
+    },
   });
 
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={formik.handleSubmit}>
       <FormContainer>
         <div>
           <StyledLabel>Your gender identity:</StyledLabel>
@@ -119,14 +111,11 @@ const SettingModalForm = ({ closeModal }) => {
             <RadioWrapper>
               <label>
                 <input
-                  type="radio"  
+                  type="radio"
                   name="gender"
                   value="female"
-
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'female'}
-
-
                 />
                 <span>Woman</span>
               </label>
@@ -137,10 +126,8 @@ const SettingModalForm = ({ closeModal }) => {
                   type="radio"
                   name="gender"
                   value="male"
-
                   onChange={formik.handleChange}
                   checked={formik.values.gender === 'male'}
-
                 />
                 <span>Man</span>
               </label>
@@ -149,10 +136,6 @@ const SettingModalForm = ({ closeModal }) => {
           <LabelName>Your name</LabelName>
           <FieldWrapper>
             <Input
-              style={
-                formik.touched.name &&
-                formik.errors.name && { borderColor: '#EF5050' }
-              }
               type="text"
               name="name"
               onChange={formik.handleChange}
@@ -160,31 +143,25 @@ const SettingModalForm = ({ closeModal }) => {
               onblur={formik.handleBlur}
               placeholder="Name"
               autoComplete="username"
-              required
+              error={formik.touched.name && formik.errors.name}
             />
             {formik.touched.name && formik.errors.name && (
-              <FormText>{formik.errors.name}</FormText>
+              <TextError>{formik.errors.name}</TextError>
             )}
           </FieldWrapper>
           <LabelName>Email</LabelName>
           <FieldWrapper>
             <Input
-              style={
-                formik.touched.email &&
-                formik.errors.email && { borderColor: '#EF5050' }
-              }
               type="email"
               name="email"
               id="InputEmail1"
               aria-describedby="emailHelp"
-
               onChange={formik.handleChange}
               value={formik.values.email}
               onblur={formik.handleBlur}
-
               placeholder="Email"
               autoComplete="email"
-              required
+              $error={formik.touched.email && formik.errors.email}
             />
             {formik.touched.email && formik.errors.email && (
               <TextError>{formik.errors.email}</TextError>
@@ -197,32 +174,31 @@ const SettingModalForm = ({ closeModal }) => {
             <FormText>Outdate password:</FormText>
             <PasswordWrapper>
               <EyeButton
-                onClick={() => setIsShowPassword(!isShowPassword)}
+                onClick={() => setIsShowOldPassword(!isShowOldPassword)}
                 onMouseDown={handleMouseDownPassword}
               >
                 <svg>
-                  <use href={`${sprite}#icon-eye-slash`} />
+                  <use
+                    href={`${sprite}#${
+                      isShowOldPassword ? 'icon-eye' : 'icon-eye-slash'
+                    }`}
+                  />
                 </svg>
               </EyeButton>
               <Input
                 style={
-                  formik.touched.password &&
-                  formik.errors.password && {
-                    borderColor: '#EF5050',
-                  }
+                  formik.touched.oldPassword &&
+                  formik.errors.oldPassword && { borderColor: '#EF5050 ' }
                 }
-                type={isShowPassword ? 'text' : 'password'}
-                name="password"
-
+                type={isShowOldPassword ? 'text' : 'password'}
+                id="oldPassword"
                 onChange={formik.handleChange}
-                value={formik.values.password}
+                value={formik.values.oldPassword}
                 onBlur={formik.handleBlur}
-
-                id="exampleInputPassword1"
-                placeholder="password"
+                placeholder="Old password"
               />
-              {formik.touched.password && formik.errors.password && (
-                <TextError>{formik.errors.password}</TextError>
+              {formik.touched.oldPassword && formik.errors.oldPassword && (
+                <TextError>{formik.errors.oldPassword}</TextError>
               )}
             </PasswordWrapper>
           </FieldWrapper>
@@ -232,21 +208,31 @@ const SettingModalForm = ({ closeModal }) => {
               <PasswordWrapper>
                 <EyeButton
                   onClick={() => setIsShowNewPassword(!isShowNewPassword)}
+                  onMouseDown={handleMouseDownPassword}
                 >
                   <svg>
-                    <use href={`${sprite}#icon-eye-slash`} />
+                    <use
+                      href={`${sprite}#${
+                        isShowNewPassword ? 'icon-eye' : 'icon-eye-slash'
+                      }`}
+                    />
                   </svg>
                 </EyeButton>
                 <Input
+                  style={
+                    formik.touched.newPassword &&
+                    formik.errors.newPassword && { borderColor: '#EF5050 ' }
+                  }
                   type={isShowNewPassword ? 'text' : 'password'}
-                  name="newPassword"
-                  onChange=""
-
-                  value="{newPassword}"
-
-                  id="exampleInputPassword2"
+                  onChange={formik.handleChange}
+                  value={formik.values.newPassword}
+                  onBlur={formik.handleBlur}
+                  id="newPassword"
                   placeholder="New Password"
                 />
+                {formik.touched.newPassword && formik.errors.newPassword && (
+                  <TextError>{formik.errors.newPassword}</TextError>
+                )}
               </PasswordWrapper>
             </div>
           </FieldWrapper>
@@ -258,28 +244,41 @@ const SettingModalForm = ({ closeModal }) => {
                   onClick={() =>
                     setIsShowConfirmPassword(!isShowConfirmPassword)
                   }
+                  onMouseDown={handleMouseDownPassword}
                 >
                   <svg>
-                    <use href={`${sprite}#icon-eye-slash`} />
+                    <use
+                      href={`${sprite}#${
+                        isShowConfirmPassword ? 'icon-eye' : 'icon-eye-slash'
+                      }`}
+                    />
                   </svg>
                 </EyeButton>
                 <Input
+                  style={
+                    formik.touched.repeatPassword &&
+                    formik.errors.repeatPassword && {
+                      borderColor: '#EF5050 ',
+                    }
+                  }
                   type={isShowConfirmPassword ? 'text' : 'password'}
-                  name="repeatPassword"
-                  onChange=""
-
-                  value="{confirmPassword}"
-
-                  id="exampleInputPassword3"
+                  id="repeatPassword"
+                  onChange={formik.handleChange}
+                  value={formik.values.repeatPassword}
+                  onBlur={formik.handleBlur}
                   placeholder="Repeat new password"
                 />
+                {formik.touched.repeatPassword &&
+                  formik.errors.repeatPassword && (
+                    <TextError>{formik.errors.repeatPassword}</TextError>
+                  )}
               </PasswordWrapper>
             </div>
           </FieldWrapper>
         </div>
       </FormContainer>
 
-      <StyledButton disabled="{!isSubmit}" type="submit">
+      <StyledButton disabled={!formik.isValid} type="submit">
         Save
       </StyledButton>
     </Form>

@@ -6,7 +6,9 @@ import {
 } from '../auth/handlers';
 import {
   handleAddWater,
+  handleChangeWater,
   handleDelWater,
+  handleGetMonthWater,
   handleGetWater,
 } from './waterHandlers';
 import {
@@ -14,12 +16,13 @@ import {
   changeWaterThunk,
   delWaterThunk,
   getWaterDayThunk,
+  getWaterMonthThunk,
   getWaterThunk,
 } from './waterThunk';
 const initialState = {
   month: [],
   dayWaterList: [],
-  selectDay: null,
+  selectDay: '',
   isLoading: false,
   error: null,
 };
@@ -30,9 +33,10 @@ const waterSlice = createSlice({
     builder
       .addCase(getWaterThunk.fulfilled, handleGetWater)
       .addCase(addWaterThunk.fulfilled, handleAddWater)
-      .addCase(getWaterDayThunk.fulfilled, handleAddWater)
+      .addCase(getWaterDayThunk.fulfilled, handleGetWater)
+      .addCase(getWaterMonthThunk.fulfilled, handleGetMonthWater)
       .addCase(delWaterThunk.fulfilled, handleDelWater)
-      .addCase(changeWaterThunk.fulfilled, handleGetWater)
+      .addCase(changeWaterThunk.fulfilled, handleChangeWater)
       .addMatcher(({ type }) => type.endsWith('/pendihg'), handlePending)
       .addMatcher(({ type }) => type.endsWith('/fulfilled'), handleFulfilled)
       .addMatcher(({ type }) => type.endsWith('/rejected'), handleRejected);

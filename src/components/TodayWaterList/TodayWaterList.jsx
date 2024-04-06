@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -21,6 +21,7 @@ import {
   addWaterThunk,
   changeWaterThunk,
   delWaterThunk,
+  getWaterDayThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
 import {
@@ -30,8 +31,13 @@ import {
 } from '../../redux/water/waterSelectors';
 import { Loader } from '../Loader/Loader';
 
+const formatOfYear = 'yyy';
+const formatOfManth = 'MMM';
+const formatOfWeek = 'eee';
+const formatOfDay = 'd';
+
 const TodayWaterList = () => {
-  // const [dayWaterList, setDayWaterList] = useState('');
+  // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
   // const date = DateTime.now().setZone('Europe/Kiev');
@@ -54,22 +60,38 @@ const TodayWaterList = () => {
     dispatch(addWaterThunk(body));
   };
   useEffect(() => {
-    dispatch(getWaterThunk());
+    // dispatch(getWaterThunk());
+    dispatch(getWaterDayThunk());
   }, [dispatch]);
 
   // setDayWaterList(useSelector(selectStateWaterDayList));
 
   const dayWaterList = useSelector(selectStateWaterDayList);
-
+  // console.log('dayWaterList =>', dayWaterList[0].date);
+  // console.log(
+  //   'dayWaterList =>',
+  //   dateFns.format(dayWaterList[0].date, formatOfDay)
+  // );
+  // console.log(
+  //   'dayWaterList =>',
+  //   dateFns.format(dayWaterList[0].date, formatOfManth)
+  // );
   // const selectDay = useSelector(selectSelectDay);
   // console.log('dayWaterList =>', dayWaterList.waterRecords.length);
   // console.log('dayWaterList =>', dayWaterLists);
+  // if (now === dayWaterList[0].date)
+  // const [today, setToday] = useState(dayWaterList[0].date);
+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
-        <Header>Today</Header>
+        <Header>
+          Today
+          {/* {!dayWaterList[0].date ? 'sdf' : 'Today'} */}
+        </Header>
+        {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
@@ -91,7 +113,7 @@ const TodayWaterList = () => {
                   <IconWrapperTrash
                     onClick={() => {
                       dispatch(delWaterThunk(_id));
-                      dispatch(getWaterThunk());
+                      dispatch(getWaterDayThunk());
                     }}
                   >
                     <use href={`${sprite}#icon-trash`} />

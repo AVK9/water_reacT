@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-
+export const selectStateWaterMonthList = (state) => state.water.month;
 export const selectStateWaterDayList = (state) => state.water.dayWaterList;
 export const selectSelectDay = (state) => state.water.selectDay;
 export const selectStateContacts = (state) => state.contacts.contacts;

@@ -40,14 +40,12 @@ export const SignInContainer = styled.div`
   @media screen and (min-width: 768px) {
     position: relative;
     background-image: url(${tabWater});
-    width: 786px;
+    width: 720px;
     height: 658px;
     background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
-
   }
-
 
   @media screen and (min-width: 1440px) {
     background-image: none;

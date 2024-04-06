@@ -9,16 +9,13 @@ export const SignUpGlobalContainer = styled.section`
   display: flex;
   flex-direction: column-reverse;
 
-
   padding-top: 24px;
 
   margin: 0 auto;
 
-
   @media screen and (min-width: 1440px) {
     background-repeat: no-repeat;
     background-image: url(${desktopWater});
-
   }
 `;
 
@@ -33,14 +30,13 @@ export const SignUpContainer = styled.div`
   @media screen and (min-width: 768px) {
     position: relative;
     background-image: url(${tabWater});
-    width: 786px;
+    width: 720px;
     height: 658px;
     background-position: -35px;
     background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
   }
-
 
   @media screen and (min-width: 1440px) {
     background-image: none;
@@ -63,18 +59,9 @@ export const SignUpwater = styled.div`
   width: 280px;
   height: 210px;
   background-position: center center;
-  background-image: url(${mobilWater});
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 280px;
-  height: 210px;
-  background-position: center center;
 
   @media screen and (min-width: 768px) {
-    @media screen and (min-width: 768px) {
-      background-image: none;
-    }
-
+    background-image: none;
   }
 `;
 
@@ -164,9 +151,6 @@ export const TogglePasswordButton = styled.button`
   top: 50%;
   transform: translateY(-50%);
 
-
-
-
   display: flex;
   position: absolute;
   right: 10px;
@@ -176,7 +160,9 @@ export const TogglePasswordButton = styled.button`
   svg {
     width: 16px;
     height: 16px;
-    fill: none;
+
+    fill: transparent;
+
     stroke: #407bff;
     background-color: #fff;
   }
@@ -184,7 +170,6 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
-
 `;
 
 export const ErrorMessage = styled.div`
@@ -194,7 +179,6 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Form = styled.form`
-
   display: flex;
 
   flex-direction: column;
@@ -205,6 +189,4 @@ export const Form = styled.form`
   @media screen and (min-width: 768px) {
     width: 336px;
   }
-
 `;
-

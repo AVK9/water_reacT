@@ -180,7 +180,7 @@ const SignUpComponent = () => {
             <Link
               to="/signin"
 
-              style={{ color: ' #407bff', textDecoration: 'none' }}
+              style={{ color: 'red', textDecoration: 'none' }}
 
             >
               Sign In

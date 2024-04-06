@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+
+
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -27,9 +30,11 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    isAuth && navigate('/home');
-  }, [isAuth, navigate]);
+   useEffect(() => {
+     isAuth && navigate('/home');
+   }, [isAuth, navigate]);
+
+
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -67,6 +72,7 @@ const SignInComponent = () => {
     },
   });
 
+
   return (
     <DesktopBg>
       <Section>
@@ -90,6 +96,7 @@ const SignInComponent = () => {
               {formik.touched.email && formik.errors.email && (
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               )}
+
 
               <SignInLabel>Enter your password</SignInLabel>
               <div style={{ position: 'relative' }}>
@@ -133,6 +140,7 @@ const SignInComponent = () => {
         </SignInGlobalContainer>
       </Section>
     </DesktopBg>
+
   );
 };
 

@@ -76,10 +76,6 @@ export const SignInTitle = styled.h2`
   font-size: 26px;
   line-height: 1.23077;
   color: var(--primery-color-black);
-  font-weight: 500;
-  font-size: 26px;
-  line-height: 1.23077;
-  color: var(--primery-color-black);
 `;
 
 export const SignInLabel = styled.label`
@@ -162,7 +158,9 @@ export const TogglePasswordButton = styled.button`
   svg {
     width: 16px;
     height: 16px;
+
     fill: transparent;
+
     stroke: #407bff;
     background-color: #fff;
   }

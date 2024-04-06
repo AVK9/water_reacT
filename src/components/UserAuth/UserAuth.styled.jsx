@@ -10,7 +10,7 @@ export const StyledLink = styled(Link)`
 export const TextLink = styled.p`
   color: var(--primery-color-blue);
   font-size: 16px;
-  transition: color 250ms linear;
+  transition: color 500ms ease-in-out;
 
   &:hover {
     color: var(--secondary-color-5);

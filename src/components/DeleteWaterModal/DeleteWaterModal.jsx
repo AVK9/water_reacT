@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { loginOutThunk } from '../../redux/auth/authThunk';
-import { isAuthSelector } from '../../redux/auth/selectors';
+// import { useSelector, useDispatch } from 'react-redux';
 import { useSpring } from 'react-spring';
 import {
-  OverlayLogoutModal,
-  ContainerLogoutModal,
+  OverlayDeleteModal,
+  ContainerDeleteModal,
   TitleContainer,
-  TitleLogout,
+  TitleDelete,
   ButtonClose,
   IconWrapper,
-  TextLogout,
+  TextDelete,
   ButtonsContainer,
-  ButtonLogout,
+  ButtonDelete,
   ButtonCancel
-} from './UserLogoutModal.styled';
+} from './DeleteWaterModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-const UserLogoutModal = ({ onOpen, onClose }) => {
+const DeleteWaterModal = ({ onOpen, onClose }) => {
   const animation = useSpring({ 
     opacity: onOpen ? 1 : 0,
     config: { tension: 170, friction: 26 },
@@ -28,40 +25,32 @@ const UserLogoutModal = ({ onOpen, onClose }) => {
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
       onClose();
-    }
+    };
   };
-
+  
   useEffect(() => {
     const close = (e) => {
       if (e.code === 'Escape') {
         onClose();
-      }
+      };
     };
-    
+      
     document.addEventListener('keydown', close);
-    
+      
     return () => {
       document.removeEventListener('keydown', close);
     };
   }, [onClose]);
 
-  const isAuth = useSelector(isAuthSelector);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(loginOutThunk());
+  const handleDelete = () => {
     onClose();
-    if (isAuth) {
-      navigate('/welcome');
-    }
   };
   
   return (
-    <OverlayLogoutModal style={animation} onClick={handleBackdropClick}>
-      <ContainerLogoutModal style={animation}>
+    <OverlayDeleteModal style={animation} onClick={handleBackdropClick}>
+      <ContainerDeleteModal style={animation}>
         <TitleContainer>
-          <TitleLogout>Log out</TitleLogout>
+          <TitleDelete>Delete entry</TitleDelete>
 
           <ButtonClose type='button' onClick={onClose}>
             <IconWrapper>
@@ -70,15 +59,15 @@ const UserLogoutModal = ({ onOpen, onClose }) => {
           </ButtonClose>
         </TitleContainer>
 
-        <TextLogout>Do you really want to leave?</TextLogout>
+        <TextDelete>Are you sure you want to delete the entry?</TextDelete>
 
         <ButtonsContainer>
-          <ButtonLogout type='button' onClick={handleLogout}>Log out</ButtonLogout>
+          <ButtonDelete type='button' onClick={handleDelete}>Delete</ButtonDelete>
           <ButtonCancel type='button' onClick={onClose}>Cancel</ButtonCancel>
         </ButtonsContainer>
-      </ContainerLogoutModal>
-    </OverlayLogoutModal>
+      </ContainerDeleteModal>
+    </OverlayDeleteModal>
   );
 };
 
-export default UserLogoutModal;
+export default DeleteWaterModal;

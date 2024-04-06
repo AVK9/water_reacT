@@ -37,6 +37,12 @@ export const Avatar = styled.div`
   align-items: center;
 `;
 
+export const AvatarImage = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+`;
+
 export const Initials = styled.span`
   color: var(--primery-color-black);
   font-size: 16px;

@@ -9,7 +9,7 @@ const initialState = {
         email: null,
         userName: null,
         avatarURL: '',
-        gender: 'undefined',
+        gender: '',
         waterRate: 0,
     },
 }
@@ -27,7 +27,7 @@ const authSlice = createSlice({
                     email: null,
                     userName: null,
                     avatarURL: '',
-                    gender: 'undefined',
+                    gender: '',
                     waterRate: 0,
                 }
                 // localStorage.clear()

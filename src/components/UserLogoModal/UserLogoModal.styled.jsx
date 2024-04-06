@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
+import { animated } from "react-spring";
 
-export const ContainerUserLogoModal = styled.div`
+export const ContainerUserLogoModal = styled(animated.div)`
   display: flex;
   flex-direction: column;
   gap: 16px;

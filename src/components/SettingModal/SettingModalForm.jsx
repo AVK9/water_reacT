@@ -13,58 +13,103 @@ import {
   RadioWrapper,
   StyledButton,
   StyledLabel,
+  TextError,
 } from './SettingModalForm.styled';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { profileSelector } from '../../redux/auth/selectors';
+// import { refreshThunk } from '../../redux/auth/authThunk';
+import { useFormik } from 'formik';
+
+const SettingModalForm = ({ closeModal }) => {
+  const profile = useSelector(profileSelector);
+  const userEmail = profile.email;
+  const userName = userEmail ? userEmail.split('@')[0] : '';
 
 
-const SettingModalForm = () => {
-  let [password, setPassword] = useState('');
-  const [newPassword = '', setNewPassword] = useState('');
-  const [confirmPassword = '', setConfirmPassword] = useState('');
-  const dispatch = useDispatch();
-  let isSubmit = true;
+  const userGender = profile.gender;
+  console.log('profile =>', profile);
+
+
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
 
-  const state = {
-    password: password,
-    newPassword: newPassword,
-  };
+  const dispatch = useDispatch();
 
-  const handleChangePassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
+  const handleSubmit = async (
+    { name, email, gender, password, newPassword },
+    { resetForm }
+  ) => {
+    if (newPassword === '') {
+      await dispatch(refreshThunk({ name, email, gender }));
+    } else {
+      await dispatch(
+        refreshThunk({ name, email, gender, password, newPassword })
+      );
+    }
+    resetForm();
+    closeModal();
+    // const handleChangePassword = (e) => {
+    //   setConfirmPassword(e.target.value);
+    // };
 
-  const handleChangeNewPassword = (e) => {
-    setNewPassword(e.target.value);
-  };
+    // const handleChangeNewPassword = (e) => {
+    //   setNewPassword(e.target.value);
+    // };
 
-  const handleChangeOldPassword = (e) => {
-    setPassword(e.target.value);
-  };
+    // const handleChangeOldPassword = (e) => {
+    //   setPassword(e.target.value);
+    // };
 
-  const handleSubmit = (e) => {
+    // const handleChangeName = (e) => {
+    //   setName(e.target.value);
+    // }
+
+    // const handleChangeEmail = (e) => {
+    //   setEmail(e.target.value);
+    // }
+
+    // const handleChangeGender = (e) => {
+    //   setGender(e.target.value);
+    // }
+
+    // e.preventDefault();
+    // if (password && !newPassword) {
+    //   toast.error('Please enter new password');
+    //   return;
+    // }
+    // if (!password && newPassword) {
+    //   toast.error('Please enter old password');
+    //   return;
+    // }
+    // if (newPassword !== confirmPassword) {
+    //   toast.error('Passwords do not match');
+    //   return;
+    // }
+    // isSubmit = false;
+    // setNewPassword(newPassword);
+    // toast.success('Update successfully');
+
+  };
+  const handleMouseDownPassword = (e) => {
     e.preventDefault();
-    if (password && !newPassword) {
-      toast.error('Please enter new password');
-      return;
-    }
-    if (!password && newPassword) {
-      toast.error('Please enter old password');
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-    isSubmit = false;
-    setNewPassword(newPassword);
-    dispatch(state);
-    toast.success('Update successfully');
   };
+
+  const formik = useFormik({
+    initialValues: {
+      name: userName,
+      gender: userGender,
+      email: userEmail,
+      password: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    onSubmit: handleSubmit,
+  });
+
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormContainer>
@@ -74,11 +119,14 @@ const SettingModalForm = () => {
             <RadioWrapper>
               <label>
                 <input
-                  type="radio"
+                  type="radio"  
                   name="gender"
                   value="female"
-                  onChange=""
-                  checked="female"
+
+                  onChange={formik.handleChange}
+                  checked={formik.values.gender === 'female'}
+
+
                 />
                 <span>Woman</span>
               </label>
@@ -89,8 +137,10 @@ const SettingModalForm = () => {
                   type="radio"
                   name="gender"
                   value="male"
-                  onChange=""
-                  checked="male"
+
+                  onChange={formik.handleChange}
+                  checked={formik.values.gender === 'male'}
+
                 />
                 <span>Man</span>
               </label>
@@ -99,28 +149,46 @@ const SettingModalForm = () => {
           <LabelName>Your name</LabelName>
           <FieldWrapper>
             <Input
+              style={
+                formik.touched.name &&
+                formik.errors.name && { borderColor: '#EF5050' }
+              }
               type="text"
               name="name"
-              onChange=""
-              value=""
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              onblur={formik.handleBlur}
               placeholder="Name"
               autoComplete="username"
               required
             />
+            {formik.touched.name && formik.errors.name && (
+              <FormText>{formik.errors.name}</FormText>
+            )}
           </FieldWrapper>
           <LabelName>Email</LabelName>
           <FieldWrapper>
             <Input
+              style={
+                formik.touched.email &&
+                formik.errors.email && { borderColor: '#EF5050' }
+              }
               type="email"
               name="email"
               id="InputEmail1"
               aria-describedby="emailHelp"
-              onChange=""
-              value=""
+
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              onblur={formik.handleBlur}
+
               placeholder="Email"
               autoComplete="email"
               required
             />
+            {formik.touched.email && formik.errors.email && (
+              <TextError>{formik.errors.email}</TextError>
+            )}
           </FieldWrapper>
         </div>
         <div>
@@ -128,19 +196,34 @@ const SettingModalForm = () => {
           <FieldWrapper>
             <FormText>Outdate password:</FormText>
             <PasswordWrapper>
-              <EyeButton onClick={() => setIsShowPassword(!isShowPassword)}>
+              <EyeButton
+                onClick={() => setIsShowPassword(!isShowPassword)}
+                onMouseDown={handleMouseDownPassword}
+              >
                 <svg>
                   <use href={`${sprite}#icon-eye-slash`} />
                 </svg>
               </EyeButton>
               <Input
+                style={
+                  formik.touched.password &&
+                  formik.errors.password && {
+                    borderColor: '#EF5050',
+                  }
+                }
                 type={isShowPassword ? 'text' : 'password'}
                 name="password"
-                onChange={handleChangeOldPassword}
-                value={password}
+
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                onBlur={formik.handleBlur}
+
                 id="exampleInputPassword1"
                 placeholder="password"
               />
+              {formik.touched.password && formik.errors.password && (
+                <TextError>{formik.errors.password}</TextError>
+              )}
             </PasswordWrapper>
           </FieldWrapper>
           <FieldWrapper>
@@ -157,8 +240,10 @@ const SettingModalForm = () => {
                 <Input
                   type={isShowNewPassword ? 'text' : 'password'}
                   name="newPassword"
-                  onChange={handleChangeNewPassword}
-                  value={newPassword}
+                  onChange=""
+
+                  value="{newPassword}"
+
                   id="exampleInputPassword2"
                   placeholder="New Password"
                 />
@@ -181,8 +266,10 @@ const SettingModalForm = () => {
                 <Input
                   type={isShowConfirmPassword ? 'text' : 'password'}
                   name="repeatPassword"
-                  onChange={handleChangePassword}
-                  value={confirmPassword}
+                  onChange=""
+
+                  value="{confirmPassword}"
+
                   id="exampleInputPassword3"
                   placeholder="Repeat new password"
                 />
@@ -192,7 +279,7 @@ const SettingModalForm = () => {
         </div>
       </FormContainer>
 
-      <StyledButton disabled={!isSubmit} type="submit">
+      <StyledButton disabled="{!isSubmit}" type="submit">
         Save
       </StyledButton>
     </Form>

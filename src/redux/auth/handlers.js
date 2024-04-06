@@ -14,17 +14,42 @@ export const handleRejected = (state, { payload }) => {
 
 export const handleSignUp = (state, { payload }) => {
     state.token = payload.token
-    state.profile = payload.user
+    state.profile = state.profile = {
+        email: payload.email,
+        userName: payload.userName,
+        avatarURL: payload.avatarURL,
+        gender: payload.gender,
+        waterRate: payload.waterRate,
+    }
 }
 export const handleLoginOut = (state) => {
     state.token = ''
-    state.profile = null
+    state.profile = {
+        email: null,
+        userName: null,
+        avatarURL: "",
+        gender: 'undefined',
+        waterRate: 0,
+    }
 }
 
 export const handleLogin = (state, { payload }) => {
     state.token = payload.token
-    state.profile = payload.user
+    state.profile = state.profile = {
+        email: payload.email,
+        userName: payload.userName,
+        avatarURL: payload.avatarURL,
+        gender: payload.gender,
+        waterRate: payload.waterRate,
+    }
 }
-export const handleRefresh = (state, { payload }) => {
-    state.profile = payload
+
+export const handleCurrent = (state, { payload }) => {
+    state.profile = state.profile = {
+        email: payload.email,
+        userName: payload.userName,
+        avatarURL: payload.avatarURL,
+        gender: payload.gender,
+        waterRate: payload.waterRate,
+    }
 }

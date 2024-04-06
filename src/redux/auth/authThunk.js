@@ -6,7 +6,10 @@ import {
   setTokenApi,
   signUpApi,
   UpdateAvatar,
+  updateWaterRateApi,
 } from '../Api/apiAuth';
+
+import { api } from '../Api/api';
 
 export const signUpThunk = createAsyncThunk(
   'auth/signUp',
@@ -64,6 +67,31 @@ export const UpdateAvatarThunk = createAsyncThunk(
     try {
       const AvatarUrl = await UpdateAvatar(newPhotoFile);
       return AvatarUrl;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const changeUserData = createAsyncThunk(
+  'auth/changeUserData',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await api.patch('/users', user);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const updateWaterRateThunk = createAsyncThunk(
+  'auth/updateWaterRate',
+  async (waterRate, { rejectWithValue, getState }) => {
+    try {
+      setTokenApi(getState().auth.token);
+      const data = await updateWaterRateApi(waterRate);
+      return data;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }

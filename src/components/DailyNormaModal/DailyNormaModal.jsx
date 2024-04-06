@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateWaterRateThunk } from '../../redux/auth/authThunk';
+
 import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
@@ -29,7 +32,7 @@ import {
   ErrorMessage,
 } from './DailyNormaModal.styled';
 
-function DailyNormaModal({ onClose }) {
+function DailyNormaModal({ onClose, setDailyNorm }) {
   const [gender, setGender] = useState('girl');
   const [weight, setWeight] = useState('0');
   const [activityTime, setActivityTime] = useState('0');
@@ -39,6 +42,7 @@ function DailyNormaModal({ onClose }) {
   const [weightError, setWeightError] = useState('');
   const [activityTimeError, setActivityTimeError] = useState('');
   const [plannedIntakeError, setPlannedIntakeError] = useState('');
+  const dispatch = useDispatch();
 
   const handleKeyPress = (event) => {
     const keyValue = event.key;
@@ -69,16 +73,49 @@ function DailyNormaModal({ onClose }) {
     setWaterIntake(intake.toFixed(2));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!weight || !activityTime || weight === '0' || activityTime === '0') {
+      if (!weight || weight === '0')
+        setWeightError('Weight is a required field and cannot be zero');
+      if (!activityTime || activityTime === '0')
+        setActivityTimeError(
+          'Activity time is a required field and cannot be zero'
+        );
+      return;
+    }
+
+    try {
+      let intake =
+        plannedIntake && parseFloat(plannedIntake) !== 0
+          ? plannedIntake
+          : waterIntake;
+      await dispatch(updateWaterRateThunk(intake));
+      if (typeof intake === 'string') {
+        setDailyNorm(parseFloat(intake));
+      } else if (typeof intake === 'number') {
+        setDailyNorm(intake);
+      } else {
+        console.error('intake is not a number:', intake);
+      }
+      handleClose();
+    } catch (error) {
+      console.error('Error during water rate update:', error);
+    }
+  };
+
+  useEffect(() => {
     calculateWaterIntake(gender, weight, activityTime);
-    // Here can add the code to send the data to the backend
+  }, [gender, weight, activityTime]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
   };
 
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
-      setIsOpen(false);
-      onClose();
+      handleClose();
     }
   };
 
@@ -95,7 +132,7 @@ function DailyNormaModal({ onClose }) {
       <ModalNorma isOpen={isOpen}>
         <NormaContainer>
           <Title>My daily norma</Title>
-          <CloseBtn onClick={onClose}>
+          <CloseBtn onClick={handleClose}>
             <svg>
               <use href={`${sprite}#icon-close`} />
             </svg>

@@ -105,16 +105,20 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
       } else {
         console.error('waterIntake is not a number:', waterIntake);
       }
-      onClose();
+      handleClose();
     } catch (error) {
       console.error('Error during water rate update:', error);
     }
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
+  };
+
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
-      setIsOpen(false);
-      onClose();
+      handleClose();
     }
   };
 
@@ -131,7 +135,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
       <ModalNorma isOpen={isOpen}>
         <NormaContainer>
           <Title>My daily norma</Title>
-          <CloseBtn onClick={onClose}>
+          <CloseBtn onClick={handleClose}>
             <svg>
               <use href={`${sprite}#icon-close`} />
             </svg>

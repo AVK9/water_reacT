@@ -19,7 +19,6 @@ export const loginApi = async (body) => {
 
 export const currentApi = async (email) => {
   const { data } = await axios.get('/api/users/current', {
-
     headers: {
       email: email,
     },
@@ -31,7 +30,6 @@ export const UpdateAvatar = async (avatar) => {
   const { data } = await axios.patch('/api/users/avatars', avatar, {
     headers: {
       'Content-Type': 'multipart/form-data',
-
     },
   });
   return data;
@@ -43,4 +41,12 @@ export const loginOutApi = async () => {
       'Content-Type': 'application/json',
     },
   });
+};
+
+export const updateWaterRateApi = async (waterRate) => {
+  if (!axios.defaults.headers.common.Authorization) {
+    throw new Error('User is not authorized');
+  }
+  const { data } = await axios.patch('/api/users/waterrate', { waterRate });
+  return data;
 };

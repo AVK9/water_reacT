@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateWaterRateThunk } from '../../redux/auth/authThunk';
+
 import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
@@ -39,6 +42,7 @@ function DailyNormaModal({ onClose }) {
   const [weightError, setWeightError] = useState('');
   const [activityTimeError, setActivityTimeError] = useState('');
   const [plannedIntakeError, setPlannedIntakeError] = useState('');
+  const dispatch = useDispatch();
 
   const handleKeyPress = (event) => {
     const keyValue = event.key;
@@ -69,10 +73,35 @@ function DailyNormaModal({ onClose }) {
     setWaterIntake(intake.toFixed(2));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    calculateWaterIntake(gender, weight, activityTime);
-    // Here can add the code to send the data to the backend
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (
+      !weight ||
+      !activityTime ||
+      !plannedIntake ||
+      weight === '0' ||
+      activityTime === '0' ||
+      plannedIntake === '0'
+    ) {
+      if (!weight || weight === '0')
+        setWeightError('Weight is a required field and cannot be zero');
+      if (!activityTime || activityTime === '0')
+        setActivityTimeError(
+          'Activity time is a required field and cannot be zero'
+        );
+      if (!plannedIntake || plannedIntake === '0')
+        setPlannedIntakeError(
+          'Planned intake is a required field and cannot be zero'
+        );
+      return;
+    }
+
+    try {
+      await dispatch(updateWaterRateThunk(waterIntake));
+      onClose();
+    } catch (error) {
+      console.error('Error during water rate update:', error);
+    }
   };
 
   const handleBackdropClick = (event) => {

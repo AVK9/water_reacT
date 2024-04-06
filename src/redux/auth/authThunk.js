@@ -5,11 +5,8 @@ import {
   currentApi,
   setTokenApi,
   signUpApi,
+  updateWaterRateApi,
 } from '../Api/apiAuth';
-
-
-
-/* import axios from 'axios'; */
 
 import { api } from '../Api/api';
 
@@ -39,7 +36,6 @@ export const currentThunk = createAsyncThunk(
   'auth/refresh',
   async (_, { rejectWithValue, getState }) => {
     try {
-
       const token = getState().auth.token;
       if (token) {
         setTokenApi(token);
@@ -68,8 +64,6 @@ export const UpdateAvatarThunk = createAsyncThunk(
   'auth/avatar',
   async (userData, { rejectWithValue }) => {
     try {
-
-
       const data = await UpdateAvatar(userData);
       return data;
     } catch (error) {
@@ -77,7 +71,6 @@ export const UpdateAvatarThunk = createAsyncThunk(
     }
   }
 );
-
 
 export const changeUserData = createAsyncThunk(
   'auth/changeUserData',
@@ -89,7 +82,17 @@ export const changeUserData = createAsyncThunk(
       return rejectWithValue(error.response.data.error);
     }
   }
-
-
 );
 
+export const updateWaterRateThunk = createAsyncThunk(
+  'auth/updateWaterRate',
+  async (waterRate, { rejectWithValue, getState }) => {
+    try {
+      setTokenApi(getState().auth.token);
+      const data = await updateWaterRateApi(waterRate);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);

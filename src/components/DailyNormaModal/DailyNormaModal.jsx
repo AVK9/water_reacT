@@ -75,41 +75,38 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      !weight ||
-      !activityTime ||
-      !plannedIntake ||
-      weight === '0' ||
-      activityTime === '0' ||
-      plannedIntake === '0'
-    ) {
+    if (!weight || !activityTime || weight === '0' || activityTime === '0') {
       if (!weight || weight === '0')
         setWeightError('Weight is a required field and cannot be zero');
       if (!activityTime || activityTime === '0')
         setActivityTimeError(
           'Activity time is a required field and cannot be zero'
         );
-      if (!plannedIntake || plannedIntake === '0')
-        setPlannedIntakeError(
-          'Planned intake is a required field and cannot be zero'
-        );
       return;
     }
 
     try {
-      await dispatch(updateWaterRateThunk(waterIntake));
-      if (typeof waterIntake === 'string') {
-        setDailyNorm(parseFloat(waterIntake));
-      } else if (typeof waterIntake === 'number') {
-        setDailyNorm(waterIntake);
+      let intake =
+        plannedIntake && parseFloat(plannedIntake) !== 0
+          ? plannedIntake
+          : waterIntake;
+      await dispatch(updateWaterRateThunk(intake));
+      if (typeof intake === 'string') {
+        setDailyNorm(parseFloat(intake));
+      } else if (typeof intake === 'number') {
+        setDailyNorm(intake);
       } else {
-        console.error('waterIntake is not a number:', waterIntake);
+        console.error('intake is not a number:', intake);
       }
       handleClose();
     } catch (error) {
       console.error('Error during water rate update:', error);
     }
   };
+
+  useEffect(() => {
+    calculateWaterIntake(gender, weight, activityTime);
+  }, [gender, weight, activityTime]);
 
   const handleClose = () => {
     setIsOpen(false);

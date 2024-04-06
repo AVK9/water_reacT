@@ -3,7 +3,6 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://water-backend-4k0b.onrender.com';
 
 export const setTokenApi = (token) => {
-  console.log('setTokenApi =>', token);
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -27,13 +26,40 @@ export const getWaterApi = async () => {
   return data;
 };
 export const getWaterSelectDayApi = async (body) => {
-  console.log('bodybody', body);
-  const { data } = await axios.get('/api/water/date', body, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return data;
+  if (body) {
+    const { data } = await axios.get(`/api/water/today?date=${body}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return data;
+  }
+  return;
+};
+// export const getWaterSelectDayApi = async (body) => {
+//   try {
+//     console.log('bodybody', body);
+//     const { data } = await axios.get(`/api/water/today?date=${body}`, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return data;
+//   } catch (error) {
+//     console.error('Виникла помилка при виконанні запиту:', error);
+//   }
+// };
+
+export const getWaterMonthApi = async (body) => {
+  if (body) {
+    const { data } = await axios.get(`/api/water/month?date=${body}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return data;
+  }
+  return;
 };
 
 export const delWaterApi = async (delId) => {

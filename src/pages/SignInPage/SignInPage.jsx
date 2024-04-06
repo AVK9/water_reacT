@@ -27,15 +27,9 @@ const SignInComponent = () => {
   const isAuth = useSelector(isAuthSelector);
   const navigate = useNavigate();
 
-   useEffect(() => {
-     isAuth && navigate('/home');
-   }, [isAuth, navigate]);
-
-  const [showPassword, setShowPassword] = useState(false); 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState); 
-  };
-
+  useEffect(() => {
+    isAuth && navigate('/home');
+  }, [isAuth, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -71,7 +65,6 @@ const SignInComponent = () => {
       }
     },
   });
-
 
   return (
     <DesktopBg>
@@ -124,7 +117,7 @@ const SignInComponent = () => {
               {formik.touched.password && formik.errors.password && (
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
-             
+
               <SignInButton type="submit" disabled={!formik.isValid}>
                 Sign In
               </SignInButton>
@@ -139,7 +132,6 @@ const SignInComponent = () => {
         </SignInGlobalContainer>
       </Section>
     </DesktopBg>
-
   );
 };
 

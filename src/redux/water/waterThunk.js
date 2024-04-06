@@ -4,6 +4,7 @@ import {
   changeWaterApi,
   delWaterApi,
   getWaterApi,
+  getWaterMonthApi,
   getWaterSelectDayApi,
   setTokenApi,
 } from '../Api/apiWater.js';
@@ -23,6 +24,7 @@ export const getWaterDayThunk = createAsyncThunk(
   'waterAmount/getWaterDay',
   async (date, { rejectWithValue, getState }) => {
     try {
+      // const date = getState().water.selectDay;
       setTokenApi(getState().auth.token);
       return await getWaterSelectDayApi(date);
     } catch (error) {
@@ -30,6 +32,19 @@ export const getWaterDayThunk = createAsyncThunk(
     }
   }
 );
+
+export const getWaterMonthThunk = createAsyncThunk(
+  'waterAmount/getWaterMonth',
+  async (date, { rejectWithValue, getState }) => {
+    try {
+      setTokenApi(getState().auth.token);
+      return await getWaterMonthApi(date);
+    } catch (error) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 export const addWaterThunk = createAsyncThunk(
   'waterAmount/addWater',
   async (waterAmount, { rejectWithValue, getState }) => {

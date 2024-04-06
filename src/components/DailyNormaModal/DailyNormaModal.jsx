@@ -32,7 +32,7 @@ import {
   ErrorMessage,
 } from './DailyNormaModal.styled';
 
-function DailyNormaModal({ onClose }) {
+function DailyNormaModal({ onClose, setDailyNorm }) {
   const [gender, setGender] = useState('girl');
   const [weight, setWeight] = useState('0');
   const [activityTime, setActivityTime] = useState('0');
@@ -98,6 +98,13 @@ function DailyNormaModal({ onClose }) {
 
     try {
       await dispatch(updateWaterRateThunk(waterIntake));
+      if (typeof waterIntake === 'string') {
+        setDailyNorm(parseFloat(waterIntake));
+      } else if (typeof waterIntake === 'number') {
+        setDailyNorm(waterIntake);
+      } else {
+        console.error('waterIntake is not a number:', waterIntake);
+      }
       onClose();
     } catch (error) {
       console.error('Error during water rate update:', error);

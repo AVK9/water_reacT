@@ -46,7 +46,12 @@ const DailyNorma = () => {
           <EditButton onClick={handleOpenModal}>Edit</EditButton>
         </DailyNormaContent>
       </DailyNormaWrapper>
-      {isModalOpen && <DailyNormaModal onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <DailyNormaModal
+          onClose={handleCloseModal}
+          setDailyNorm={setDailyNorm}
+        />
+      )}
     </>
   );
 };

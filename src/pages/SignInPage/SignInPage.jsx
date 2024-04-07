@@ -35,7 +35,7 @@ const SignInComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isAuth && navigate('/home');
+    isAuth && navigate('/');
   }, [isAuth, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);

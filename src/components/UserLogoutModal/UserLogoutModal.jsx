@@ -61,7 +61,7 @@ const UserLogoutModal = ({ onClose }) => {
     dispatch(loginOutThunk());
     handleClose();
     if (isAuth) {
-      navigate('/welcome');
+      navigate('/');
     }
   };
   

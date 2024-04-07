@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import WaterModal from '../About-waterModal/aboutWaterEdit'
 import {
   AddWaterBox,
   BtnAddWater,
@@ -37,6 +38,11 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const TodayWaterList = () => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [editWaterIntake, setEditWaterIntake] = useState(null);
+
+
   // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
@@ -82,6 +88,18 @@ const TodayWaterList = () => {
   // if (now === dayWaterList[0].date)
   // const [today, setToday] = useState(dayWaterList[0].date);
 
+
+  const handleEditWaterIntake = (waterIntake) => {
+    setEditWaterIntake(waterIntake);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditWaterIntake(null);
+  }
+
+
+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
@@ -95,8 +113,8 @@ const TodayWaterList = () => {
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
-              {dayWaterList.map(({ _id, waterAmount, date }) => (
-                <WaterAmountBox key={_id}>
+              {dayWaterList.map(({ _id, waterAmount, date }, index) => (
+                <WaterAmountBox key={index}>
                   <IconWrapper>
                     <use href={`${sprite}#icon-glas-water`} />
                   </IconWrapper>
@@ -106,6 +124,7 @@ const TodayWaterList = () => {
                     onClick={() => {
                       dispatch(changeWaterThunk({ _id, waterAmount, date }));
                       dispatch(getWaterThunk());
+                      handleEditWaterIntake({ _id, waterAmount, date });
                     }}
                   >
                     <use href={`${sprite}#icon-pencil-square`} />
@@ -154,6 +173,21 @@ const TodayWaterList = () => {
 
           <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
         </AddWaterBox>
+{
+showModal && (
+  <WaterModal
+    waterIntakeId={editWaterIntake?._id}
+    initialValue={editWaterIntake?.waterAmount}
+    initialTime={editWaterIntake?.date.slice(11, 16)}
+    onSave={(updatedAmount, updatedTime) => {
+      dispatch(changeWaterThunk({ _id: editWaterIntake._id, waterAmount: updatedAmount, date: updatedTime }));
+      setShowModal(false);
+      setEditWaterIntake(null);
+    }}
+    onClose={handleCloseModal}
+    editMode
+  />
+)}
       </TodayWaterListBox>
     </>
   );

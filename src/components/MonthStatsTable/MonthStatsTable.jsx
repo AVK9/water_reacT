@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { updateSelectDay } from '../../redux/water/waterThunk';
 import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
 import { nanoid } from 'nanoid';
@@ -25,7 +24,6 @@ import sprite from '../../assets/img/sprite.svg';
 import {
   selectError,
   selectLoading,
-  selectStateWaterDayList,
   selectStateWaterMonthList,
 } from '../../redux/water/waterSelectors';
 import {
@@ -62,7 +60,6 @@ const MonthStatsTable = () => {
     start: startDate,
     end: endDate,
   });
-  // console.log('totalDate', totalDate);
 
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);

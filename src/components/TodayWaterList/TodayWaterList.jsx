@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import WaterModal from '../About-waterModal/aboutWaterEdit';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -15,14 +16,12 @@ import {
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
-import { format, compareAsc } from 'date-fns';
-import { DateTime } from 'luxon';
+import { format } from 'date-fns';
 
 import {
   addWaterThunk,
   changeWaterThunk,
   delWaterThunk,
-  getWaterDayThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
 import {
@@ -31,18 +30,18 @@ import {
   selectSelectDay,
   selectSelectMonth,
   selectStateWaterDayList,
-  selectStateWaterMonthList,
 } from '../../redux/water/waterSelectors';
 import { Loader } from '../Loader/Loader';
 
-const formatOfYear = 'yyy';
 const formatOfManth = 'MMMM';
-const formatOfWeek = 'eee';
-const formatOfDay = 'd';
 
 const TodayWaterList = () => {
   const [header, setHeader] = useState('Today');
   const [day, setDay] = useState('');
+  ///////+
+  const [showModal, setShowModal] = useState(false);
+  const [editWaterIntake, setEditWaterIntake] = useState(null);
+  /////////
   // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
@@ -103,26 +102,33 @@ const TodayWaterList = () => {
   // const sDay = format(selMonth, 'MMMM');
   // console.log('toString', sDay);
   // console.log('selectDay', selectDay.slice(0, 10).toString());
+  ///////////////+
+
+  const handleEditWaterIntake = (waterIntake) => {
+    setEditWaterIntake(waterIntake);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditWaterIntake(null);
+  };
+  ////////////////+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
         <Header>
-          {/* {header} */}
-          {/* Today */}
           {selectDay.slice(0, 10).toString() !== todayDay.toString()
             ? `${headerSelect}  ${month}`
             : 'Today'}
-          {/* {`${selDay}
-          ${selMonth}`} */}
         </Header>
         {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
-              {dayWaterList.map(({ _id, waterAmount, date }) => (
-                <WaterAmountBox key={_id}>
+              {dayWaterList.map(({ _id, waterAmount, date }, index) => (
+                <WaterAmountBox key={index}>
                   <IconWrapper>
                     <use href={`${sprite}#icon-glas-water`} />
                   </IconWrapper>
@@ -132,6 +138,7 @@ const TodayWaterList = () => {
                     onClick={() => {
                       dispatch(changeWaterThunk({ _id, waterAmount, date }));
                       dispatch(getWaterThunk());
+                      handleEditWaterIntake({ _id, waterAmount, date });
                     }}
                   >
                     <use href={`${sprite}#icon-pencil-square`} />
@@ -180,6 +187,26 @@ const TodayWaterList = () => {
 
           <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
         </AddWaterBox>
+        {showModal && (
+          <WaterModal
+            waterIntakeId={editWaterIntake?._id}
+            initialValue={editWaterIntake?.waterAmount}
+            initialTime={editWaterIntake?.date.slice(11, 16)}
+            onSave={(updatedAmount, updatedTime) => {
+              dispatch(
+                changeWaterThunk({
+                  _id: editWaterIntake._id,
+                  waterAmount: updatedAmount,
+                  date: updatedTime,
+                })
+              );
+              setShowModal(false);
+              setEditWaterIntake(null);
+            }}
+            onClose={handleCloseModal}
+            editMode
+          />
+        )}
       </TodayWaterListBox>
     </>
   );

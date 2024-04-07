@@ -1,5 +1,13 @@
 import { styled } from 'styled-components';
 
+export const TransparentOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
 export const ContainerUserLogoModal = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,8 +19,11 @@ export const ContainerUserLogoModal = styled.div`
   min-width: 118px;
   z-index: 10;
   position: absolute;
-  top: 32px;
+  top: ${(props) => (props.isOpen ? '32px' : '-6px')};
   right: 0;
+  overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.8s ease-in-out, top 0.5s ease-in-out;
 `;
 
 export const ButtonsUserLogoModal = styled.button`

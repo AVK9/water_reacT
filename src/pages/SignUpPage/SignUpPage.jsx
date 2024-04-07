@@ -15,10 +15,18 @@ import {
   TogglePasswordButton,
   ErrorMessage,
   Form,
+  FirstWaterBulb,
+  SecondWaterBulb,
+  ThirdWaterBulb,
+  FourthWaterBulb,
+  FifthWaterBulb,
+  StyledLink,
+  TextLink,
 } from './SignUpPage.styled';
+
 import sprite from '../../assets/img/sprite.svg';
 
-import { Link } from 'react-router-dom';
+
 import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
@@ -30,7 +38,7 @@ const SignUpComponent = () => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate('/home');
+      navigate('/');
     }
   }, [isAuth, navigate]);
 
@@ -51,13 +59,12 @@ const SignUpComponent = () => {
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(signUpThunk({ email: values.email, password: values.password }))
-
         .then((response) => {
           setSubmitting(false);
           if (response.error && response.error === 'Email already exists') {
             formik.setFieldError('email', 'This email is already registered');
           } else {
-            navigate('/home');
+            navigate('/');
           }
         })
 
@@ -68,18 +75,15 @@ const SignUpComponent = () => {
     },
   });
 
-
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
-
   };
 
   const toggleRepeatPasswordVisibility = () => {
     setShowRepeatPassword((prevState) => !prevState);
-
   };
 
   return (
@@ -89,8 +93,13 @@ const SignUpComponent = () => {
         <SignUpContainer>
           <SignUpTitle>Sign Up</SignUpTitle>
 
-          <Form onSubmit={formik.handleSubmit}>
+          <FirstWaterBulb />
+          <SecondWaterBulb />
+          <ThirdWaterBulb />
+          <FourthWaterBulb />
+          <FifthWaterBulb />
 
+          <Form onSubmit={formik.handleSubmit}>
             <SignUpLabel>Enter your email</SignUpLabel>
             <SignUpInput
               type="email"
@@ -109,7 +118,6 @@ const SignUpComponent = () => {
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showPassword ? 'text' : 'password'}
-
                 name="password"
                 placeholder="Password"
                 value={formik.values.password}
@@ -128,7 +136,6 @@ const SignUpComponent = () => {
                       showPassword ? 'icon-eye' : 'icon-eye-slash'
                     }`}
                   />
-
                 </svg>
               </TogglePasswordButton>
             </div>
@@ -140,7 +147,6 @@ const SignUpComponent = () => {
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showRepeatPassword ? 'text' : 'password'}
-
                 name="repeatPassword"
                 placeholder="Repeat Password"
                 value={formik.values.repeatPassword}
@@ -149,20 +155,17 @@ const SignUpComponent = () => {
                 error={
                   formik.touched.repeatPassword && formik.errors.repeatPassword
                 }
-
               />
               <TogglePasswordButton
                 type="button"
                 onClick={toggleRepeatPasswordVisibility}
               >
-
                 <svg>
                   <use
                     href={`${sprite}#${
                       showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'
                     }`}
                   />
-
                 </svg>
               </TogglePasswordButton>
             </div>
@@ -170,23 +173,18 @@ const SignUpComponent = () => {
               <ErrorMessage>{formik.errors.repeatPassword}</ErrorMessage>
             )}
 
-
             <SignUpButton
               type="submit"
               disabled={!formik.isValid || formik.isSubmitting}
             >
               Sign Up
             </SignUpButton>
-            <Link
-              to="/signin"
 
-              style={{ color: ' #407bff', textDecoration: 'none' }}
+            <StyledLink to="/signin">
+              <TextLink>Sign In</TextLink>
+            </StyledLink>
 
-            >
-              Sign In
-            </Link>
           </Form>
-
         </SignUpContainer>
       </SignUpGlobalContainer>
     </Section>

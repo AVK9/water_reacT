@@ -4,17 +4,15 @@ import mobilWater from '../../assets/img/mobile-woter.png';
 import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
-
+import { Link } from 'react-router-dom';
 
 export const DesktopBg = styled.div``;
 
 export const SignInGlobalContainer = styled.section`
-
   display: flex;
   flex-direction: column-reverse;
 
   padding-top: 24px;
-
 
   @media screen and (min-width: 768px) {
     display: flex;
@@ -40,14 +38,12 @@ export const SignInContainer = styled.div`
   @media screen and (min-width: 768px) {
     position: relative;
     background-image: url(${tabWater});
-    width: 786px;
+    width: 720px;
     height: 658px;
     background-position: -35px;
     background-position-y: -70px;
     background-repeat: no-repeat;
-
   }
-
 
   @media screen and (min-width: 1440px) {
     background-image: none;
@@ -81,7 +77,6 @@ export const SignInTitle = styled.h2`
   font-size: 26px;
   line-height: 1.23077;
   color: var(--primery-color-black);
-
 `;
 
 export const SignInLabel = styled.label`
@@ -155,7 +150,6 @@ export const SignInButton = styled.button`
 `;
 
 export const TogglePasswordButton = styled.button`
-
   display: flex;
   position: absolute;
   right: 10px;
@@ -175,7 +169,6 @@ export const TogglePasswordButton = styled.button`
   @media screen and (min-width: 1440px) {
     right: -30px;
   }
-
 `;
 
 export const ErrorMessage = styled.div`
@@ -184,15 +177,120 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Form = styled.form`
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 
   gap: 16px;
   width: 280px;
   @media screen and (min-width: 768px) {
     width: 336px;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+`;
+
+export const TextLink = styled.p`
+  color: var(--primery-color-blue);
+  font-size: 16px;
+  transition: color 500ms ease-in-out;
+
+  &:hover {
+    color: var(--secondary-color-5);
+  }
+`;
+
+export const WaterBulb = styled.div`
+  position: absolute;
+
+  background-color: #79b8ff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  animation: waterEffect 5s infinite alternate;
+  @keyframes waterEffect {
+    from {
+      background-color: #407bff;
+    }
+    to {
+      background-color: #f3ecec;
+    }
+  }
+`;
+
+export const FirstWaterBulb = styled(WaterBulb)`
+  @media screen and (min-width: 768px) {
+    top: 210px;
+    left: 500px;
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 180px;
+    left: 480px;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const SecondWaterBulb = styled(WaterBulb)`
+  @media screen and (min-width: 768px) {
+    top: 43%;
+    left: 56%;
+    width: 27px;
+    height: 27px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 47.5%;
+    left: 25.7%;
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+export const ThirdWaterBulb = styled(WaterBulb)`
+  @media screen and (min-width: 768px) {
+    top: 60%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 71%;
+    left: 22%;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const FourthWaterBulb = styled(WaterBulb)`
+  @media screen and (min-width: 768px) {
+    top: 72%;
+    left: 66.5%;
+    width: 27px;
+    height: 27px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 76%;
+    left: 28.6%;
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+export const FifthWaterBulb = styled(WaterBulb)`
+  @media screen and (min-width: 768px) {
+    top: 64.2%;
+    left: 61.4%;
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 87%;
+    left: 31.7%;
+    width: 40px;
+    height: 40px;
   }
 `;

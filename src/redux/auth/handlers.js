@@ -28,7 +28,7 @@ export const handleLoginOut = (state) => {
         email: null,
         userName: null,
         avatarURL: "",
-        gender: 'undefined',
+        gender: '',
         waterRate: 0,
     }
 }

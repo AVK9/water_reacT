@@ -67,7 +67,7 @@ export const ButtonTracker = styled.button`
   border-radius: 10px;
   width: 280px;
   height: 36px;
-  transition: box-shadow 250ms linear;
+  transition: box-shadow 500ms ease-in-out;
 
   &:hover {
     box-shadow: 0 4px 14px rgba(64, 123, 255, 0.54);

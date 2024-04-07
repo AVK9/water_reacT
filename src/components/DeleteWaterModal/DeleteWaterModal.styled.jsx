@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const OverlayLogoutModal = styled.div`
+export const OverlayDeleteModal = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
@@ -10,7 +10,7 @@ export const OverlayLogoutModal = styled.div`
   transition: opacity 0.5s ease-in-out;
 `;
 
-export const ContainerLogoutModal = styled.div`
+export const ContainerDeleteModal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -38,7 +38,7 @@ export const TitleContainer = styled.div`
   align-items: center;
 `;
 
-export const TitleLogout = styled.h3`
+export const TitleDelete = styled.h3`
   color: var(--primery-color-black);
   font-size: 26px;
   font-weight: 500;
@@ -72,7 +72,7 @@ export const IconWrapper = styled.svg`
   fill: var(--primery-color-blue);
 `;
 
-export const TextLogout = styled.p`
+export const TextDelete = styled.p`
   color: var(--primery-color-black);
   font-size: 18px;
   font-weight: 500;
@@ -92,7 +92,7 @@ export const ButtonsContainer = styled.div`
   }
 `;
 
-export const ButtonLogout = styled.button`
+export const ButtonDelete = styled.button`
   font-size: 16px;
   font-weight: 500;
   color: var(--primery-color-white);

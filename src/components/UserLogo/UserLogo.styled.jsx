@@ -8,7 +8,7 @@ export const ButtonUserLogo = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  background: none;
+  background: transparent;
 `;
 
 export const UserName = styled.p`
@@ -37,6 +37,12 @@ export const Avatar = styled.div`
   align-items: center;
 `;
 
+export const AvatarImage = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+`;
+
 export const Initials = styled.span`
   color: var(--primery-color-black);
   font-size: 16px;
@@ -47,4 +53,5 @@ export const IconWrapper = styled.svg`
   width: ${(props) => props.size || '16px'};
   height: ${(props) => props.size || '16px'};
   fill: var(--primery-color-blue);
+  transform: rotate(${(props) => (props.isOpen ? '180deg' : '0')});
 `;

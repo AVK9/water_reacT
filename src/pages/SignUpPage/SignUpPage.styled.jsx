@@ -225,71 +225,76 @@ export const WaterBulb = styled.div`
 `;
 
 export const FirstWaterBulb = styled(WaterBulb)`
-  top: 210px;
-  left: 500px;
-  width: 20px;
-  height: 20px;
-
   @media screen and (min-width: 768px) {
     top: 210px;
     left: 500px;
     width: 20px;
     height: 20px;
   }
+  @media screen and (min-width: 1440px) {
+    top: 180px;
+    left: 480px;
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const SecondWaterBulb = styled(WaterBulb)`
-  top: 43%;
-  left: 56%;
-  width: 27px;
-  height: 27px;
-
   @media screen and (min-width: 768px) {
     top: 43%;
     left: 56%;
     width: 27px;
     height: 27px;
   }
+  @media screen and (min-width: 1440px) {
+    top: 47.5%;
+    left: 25.7%;
+    width: 27px;
+    height: 27px;
+  }
 `;
 
 export const ThirdWaterBulb = styled(WaterBulb)`
-  top: 60%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-
   @media screen and (min-width: 768px) {
     top: 60%;
     left: 50%;
     width: 20px;
     height: 20px;
   }
+  @media screen and (min-width: 1440px) {
+    top: 71%;
+    left: 22%;
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const FourthWaterBulb = styled(WaterBulb)`
-  top: 72%;
-  left: 66.5%;
-  width: 27px;
-  height: 27px;
-
   @media screen and (min-width: 768px) {
     top: 72%;
     left: 66.5%;
     width: 27px;
     height: 27px;
   }
+  @media screen and (min-width: 1440px) {
+    top: 76%;
+    left: 28.6%;
+    width: 27px;
+    height: 27px;
+  }
 `;
 
 export const FifthWaterBulb = styled(WaterBulb)`
-  top: 64.2%;
-  left: 61.4%;
-  width: 20px;
-  height: 20px;
-
   @media screen and (min-width: 768px) {
     top: 64.2%;
     left: 61.4%;
     width: 20px;
     height: 20px;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 87%;
+    left: 31.7%;
+    width: 40px;
+    height: 40px;
   }
 `;

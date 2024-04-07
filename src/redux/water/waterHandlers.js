@@ -1,15 +1,23 @@
 export const handleGetWater = (state, { payload }) => {
   if (payload) {
     state.dayWaterList = payload.waterRecords;
-    state.selectDay = payload.waterRecords[0].date;
+
+    if (payload.waterRecords.length) {
+      state.selectDay = payload.waterRecords[0].date;
+    } else {
+      new Date();
+    }
     console.log('handleGetWater :>> ', payload.waterRecords);
   }
   return;
 };
 export const handleGetMonthWater = (state, { payload }) => {
   state.month = payload;
-
-  state.selectMonth = payload[0].date;
+  if ((state.selectMonth = payload)) {
+    state.selectMonth = payload[0].date;
+  } else {
+    new Date();
+  }
 
   console.log('handleGetMonthWater :>> ', payload);
 };

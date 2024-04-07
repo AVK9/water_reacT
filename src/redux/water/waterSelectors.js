@@ -8,13 +8,11 @@ export const selectFilter = (state) => state.filter.filter;
 export const selectLoading = (state) => state.isLoading;
 export const selectError = (state) => state.error;
 
-export const selectVisibleContacts = createSelector(
-  [selectStateContacts, selectFilter],
-  (contacts, filter) => {
+export const selectVisibleDrinking = createSelector(
+  [selectStateWaterDayList, selectFilter],
+  (dayWaterList, filter) => {
     return filter.length > 0
-      ? contacts.filter((contact) =>
-          contact.name.toLowerCase().includes(filter.toLowerCase())
-        )
-      : contacts;
+      ? dayWaterList.filter((water) => water.includes(filter))
+      : dayWaterList;
   }
 );

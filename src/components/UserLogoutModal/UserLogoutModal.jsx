@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { loginOutThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
-import { useSpring } from 'react-spring';
 import {
   OverlayLogoutModal,
   ContainerLogoutModal,
@@ -18,23 +17,32 @@ import {
 } from './UserLogoutModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-const UserLogoutModal = ({ onOpen, onClose }) => {
-  const animation = useSpring({ 
-    opacity: onOpen ? 1 : 0,
-    config: { tension: 170, friction: 26 },
-    from: { opacity: 0 }
-  });
+const UserLogoutModal = ({ onClose }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
+  };
 
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
-      onClose();
+      handleClose();
     }
   };
 
   useEffect(() => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  useEffect(() => {
     const close = (e) => {
       if (e.code === 'Escape') {
-        onClose();
+        handleClose();
       }
     };
     
@@ -51,19 +59,19 @@ const UserLogoutModal = ({ onOpen, onClose }) => {
 
   const handleLogout = () => {
     dispatch(loginOutThunk());
-    onClose();
+    handleClose();
     if (isAuth) {
       navigate('/welcome');
     }
   };
   
   return (
-    <OverlayLogoutModal style={animation} onClick={handleBackdropClick}>
-      <ContainerLogoutModal style={animation}>
+    <OverlayLogoutModal isOpen={isOpen} onClick={handleBackdropClick}>
+      <ContainerLogoutModal isOpen={isOpen}>
         <TitleContainer>
           <TitleLogout>Log out</TitleLogout>
 
-          <ButtonClose type='button' onClick={onClose}>
+          <ButtonClose type='button' onClick={handleClose}>
             <IconWrapper>
               <use xlinkHref={`${sprite}#icon-close`}></use>
             </IconWrapper>
@@ -74,7 +82,7 @@ const UserLogoutModal = ({ onOpen, onClose }) => {
 
         <ButtonsContainer>
           <ButtonLogout type='button' onClick={handleLogout}>Log out</ButtonLogout>
-          <ButtonCancel type='button' onClick={onClose}>Cancel</ButtonCancel>
+          <ButtonCancel type='button' onClick={handleClose}>Cancel</ButtonCancel>
         </ButtonsContainer>
       </ContainerLogoutModal>
     </OverlayLogoutModal>

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useSelector, useDispatch } from 'react-redux';
-import { useSpring } from 'react-spring';
 import {
   OverlayDeleteModal,
   ContainerDeleteModal,
@@ -15,40 +14,49 @@ import {
 } from './DeleteWaterModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-const DeleteWaterModal = ({ onOpen, onClose }) => {
-  const animation = useSpring({ 
-    opacity: onOpen ? 1 : 0,
-    config: { tension: 170, friction: 26 },
-    from: { opacity: 0 }
-  });
+const DeleteWaterModal = ({ onClose }) => {
+const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
+  };
 
   const handleBackdropClick = (event) => {
     if (event.currentTarget === event.target) {
-      onClose();
-    };
+      handleClose();
+    }
   };
-  
+
+  useEffect(() => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   useEffect(() => {
     const close = (e) => {
       if (e.code === 'Escape') {
-        onClose();
-      };
+        handleClose();
+      }
     };
-      
+    
     document.addEventListener('keydown', close);
-      
+    
     return () => {
       document.removeEventListener('keydown', close);
     };
   }, [onClose]);
 
   const handleDelete = () => {
-    onClose();
+    handleClose();
   };
   
   return (
-    <OverlayDeleteModal style={animation} onClick={handleBackdropClick}>
-      <ContainerDeleteModal style={animation}>
+    <OverlayDeleteModal isOpen={isOpen} onClick={handleBackdropClick}>
+      <ContainerDeleteModal isOpen={isOpen}>
         <TitleContainer>
           <TitleDelete>Delete entry</TitleDelete>
 

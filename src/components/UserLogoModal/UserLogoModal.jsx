@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../SettingModal/Modal/Modal';
 import UserLogoutModal from '../UserLogoutModal/UserLogoutModal';
-import { useSpring } from 'react-spring';
 import {
+  TransparentOverlay,
   ContainerUserLogoModal,
   ButtonsUserLogoModal,
   IconWrapper,
@@ -10,7 +10,7 @@ import {
 } from './UserLogoModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-const UserLogoModal = ({ onOpen }) => {
+const UserLogoModal = ({ onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -19,36 +19,40 @@ const UserLogoModal = ({ onOpen }) => {
   const handleOpenModalLogout = () => setIsModalLogoutOpen(true);
   const handleCloseModalLogout = () => setIsModalLogoutOpen(false);
 
-  const animation = useSpring({ 
-    opacity: onOpen ? 1 : 0,
-    config: { tension: 170, friction: 26 },
-    from: { opacity: 0 }
-  });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
+  };
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
 
   return (
-    <ContainerUserLogoModal style={animation}>
-      <ButtonsUserLogoModal type='button' onClick={handleOpenModal}>
-        <IconWrapper>
-          <use xlinkHref={`${sprite}#icon-cog-6-tooth`}></use>
-        </IconWrapper>
+    <>
+      {isOpen && <TransparentOverlay  onClick={handleClose}/>}
 
-        <ButtonText>Setting</ButtonText>
-      </ButtonsUserLogoModal>
+      <ContainerUserLogoModal isOpen={isOpen}>
+        <ButtonsUserLogoModal type='button' onClick={handleOpenModal}>
+          <IconWrapper>
+            <use xlinkHref={`${sprite}#icon-cog-6-tooth`}></use>
+          </IconWrapper>
+          <ButtonText>Setting</ButtonText>
+        </ButtonsUserLogoModal>
 
-      <ButtonsUserLogoModal type='button' onClick={handleOpenModalLogout}>
-        <IconWrapper>
-          <use xlinkHref={`${sprite}#icon-arrow-right-on-rectangle`}></use>
-        </IconWrapper>
+        <ButtonsUserLogoModal type='button' onClick={handleOpenModalLogout}>
+          <IconWrapper>
+            <use xlinkHref={`${sprite}#icon-arrow-right-on-rectangle`}></use>
+          </IconWrapper>
+          <ButtonText>Log out</ButtonText>
+        </ButtonsUserLogoModal>
 
-        <ButtonText>Log out</ButtonText>
-      </ButtonsUserLogoModal>
-
-      <Modal isOpen={isModalOpen}
-        onClose={() =>handleCloseModal(setIsModalOpen) }>
-      </Modal>
-      
-      {isModalLogoutOpen && <UserLogoutModal onOpen={handleOpenModalLogout} onClose={handleCloseModalLogout} />}
-    </ContainerUserLogoModal>
+        <Modal isOpen={isModalOpen} onClose={() => handleCloseModal(setIsModalOpen)} />
+        {isModalLogoutOpen && <UserLogoutModal onClose={handleCloseModalLogout} />}
+      </ContainerUserLogoModal>
+    </>
   )
 };
 

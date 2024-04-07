@@ -23,6 +23,7 @@ const initialState = {
   month: [],
   dayWaterList: [],
   selectDay: '',
+  selectMonth: '',
   isLoading: false,
   error: null,
 };

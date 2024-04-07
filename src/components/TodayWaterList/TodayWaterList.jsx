@@ -15,7 +15,8 @@ import {
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
-// import { DateTime } from 'luxon';
+import { format, compareAsc } from 'date-fns';
+import { DateTime } from 'luxon';
 
 import {
   addWaterThunk,
@@ -27,28 +28,34 @@ import {
 import {
   selectError,
   selectLoading,
+  selectSelectDay,
+  selectSelectMonth,
   selectStateWaterDayList,
+  selectStateWaterMonthList,
 } from '../../redux/water/waterSelectors';
 import { Loader } from '../Loader/Loader';
 
 const formatOfYear = 'yyy';
-const formatOfManth = 'MMM';
+const formatOfManth = 'MMMM';
 const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const TodayWaterList = () => {
+  const [header, setHeader] = useState('Today');
+  const [day, setDay] = useState('');
   // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
   // const date = DateTime.now().setZone('Europe/Kiev');
   const now = new Date();
   const date = dateFns.sub(now, { minutes: -180 });
+  // setDay(date);
   // const now = DateTime.now();
   // const date = now.setZone(now.offset - 180, { keepLocalTime: true });
   // const timezoneOffset = 'kyivTimeZone';
   // console.log('nowdate =>', date);
 
-  const waterAmount = 25;
+  const waterAmount = 500;
 
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -56,40 +63,59 @@ const TodayWaterList = () => {
   //, timezoneOffset: '+0300'
   const addWater = () => {
     const body = { date, waterAmount };
-    console.log('bodybody =>', body);
     dispatch(addWaterThunk(body));
   };
   useEffect(() => {
     // dispatch(getWaterThunk());
-    dispatch(getWaterDayThunk());
+    // dispatch(getWaterDayThunk());
   }, [dispatch]);
 
-  // setDayWaterList(useSelector(selectStateWaterDayList));
-
   const dayWaterList = useSelector(selectStateWaterDayList);
-  // console.log('dayWaterList =>', dayWaterList[0].date);
-  // console.log(
-  //   'dayWaterList =>',
-  //   dateFns.format(dayWaterList[0].date, formatOfDay)
-  // );
-  // console.log(
-  //   'dayWaterList =>',
-  //   dateFns.format(dayWaterList[0].date, formatOfManth)
-  // );
-  // const selectDay = useSelector(selectSelectDay);
-  // console.log('dayWaterList =>', dayWaterList.waterRecords.length);
-  // console.log('dayWaterList =>', dayWaterLists);
-  // if (now === dayWaterList[0].date)
-  // const [today, setToday] = useState(dayWaterList[0].date);
 
+  const selectDay = useSelector(selectSelectDay);
+  const headerSelect = selectDay.slice(8, 10).toString();
+  const selMonth = useSelector(selectSelectMonth);
+
+  const dateZzZ = selMonth + '-01';
+  let num = dateZzZ;
+  console.log('2222222222222', num);
+  const month = dateFns.format(dateZzZ, formatOfManth);
+  console.log('111111111111111111111111', month);
+  // const formattedDate = datesss.toLocaleString({
+  //   month: 'long',
+  //   day: '2-digit',
+  // });
+  // console.log('formattedDate', datesss);
+  // console.log('selectDay =>', selectDay.slice(0, 10));
+  // setDay(selectDay.slice(0, 10));
+  // let selMonth = '';
+  // if (!selectDay) {
+  //   selMonth = dateFns.format(selectDay.slice(0, 10), formatOfManth);
+  //   return selMonth;
+  // }
+
+  // const selYear = !selectDay
+  //   ? dateFns.format(selectDay.slice(0, 10), formatOfYear)
+  //   : date;
+  // const selDay = dateFns.format(selectDay.slice(0, 10), formatOfDay);
+  const todayDay = format(new Date(), 'yyyy-MM-dd');
+
+  // const sDay = format(selMonth, 'MMMM');
+  // console.log('toString', sDay);
+  // console.log('selectDay', selectDay.slice(0, 10).toString());
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
         <Header>
-          Today
-          {/* {!dayWaterList[0].date ? 'sdf' : 'Today'} */}
+          {/* {header} */}
+          {/* Today */}
+          {selectDay.slice(0, 10).toString() !== todayDay.toString()
+            ? `${headerSelect}  ${month}`
+            : 'Today'}
+          {/* {`${selDay}
+          ${selMonth}`} */}
         </Header>
         {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
@@ -113,7 +139,7 @@ const TodayWaterList = () => {
                   <IconWrapperTrash
                     onClick={() => {
                       dispatch(delWaterThunk(_id));
-                      dispatch(getWaterDayThunk());
+                      // dispatch(getWaterDayThunk());
                     }}
                   >
                     <use href={`${sprite}#icon-trash`} />

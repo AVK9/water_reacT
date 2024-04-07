@@ -29,8 +29,7 @@ export const AvatarContainer = styled.div`
 export const Avatar = styled.div`
   width: 28px;
   height: 28px;
-  background-color: var(--secondary-color-2);
-  border: 1px solid var(--primery-color-black);
+  background-color: var(--primery-color-blue);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -44,7 +43,7 @@ export const AvatarImage = styled.img`
 `;
 
 export const Initials = styled.span`
-  color: var(--primery-color-black);
+  color: var(--secondary-color---5);
   font-size: 16px;
   font-weight: bold;
 `;

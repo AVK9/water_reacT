@@ -16,7 +16,7 @@ export const ModalContent = styled.div`
   flex-direction: column;
   gap: 24px;
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 280px;
@@ -34,6 +34,7 @@ export const ModalContent = styled.div`
   }
 
   @media screen and (min-width: 1440px) {
+    top: 50%;
     width: 1008px;
   }
 `;
@@ -104,7 +105,7 @@ export const Upload = styled.label`
   gap: 8px;
   cursor: pointer;
   font-size: 14px;
-  color: #407bff;
+  color: var(--primery-color-blue);
 
   & p {
     transition: color 0.25s cubic-bezier(0.64, 0.57, 0.67, 1.53);
@@ -113,10 +114,10 @@ export const Upload = styled.label`
   &:hover,
   &:focus {
     & svg {
-      stroke: #ef5050;
+      stroke: var(--secondary-color-3);
     }
     & p {
-      color: #ef5050;
+      color: var(--secondary-color-3);
     }
   }
 
@@ -124,7 +125,7 @@ export const Upload = styled.label`
     width: 16px;
     height: 16px;
     fill: transparent;
-    stroke: #407bff;
+    stroke: var(--primery-color-blue);
     transition: fill 0.25s cubic-bezier(0.64, 0.57, 0.67, 1.53);
   }
 `;
@@ -133,7 +134,7 @@ export const Avatar = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #d7e3ff;
+  background-color: var(--secondary-color---5);
   background-size: cover;
   background-repeat: no-repeat;
 `;
@@ -150,8 +151,8 @@ export const ContainerAvatar = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 52px;
-    color: #d7e3ff;
-    background-color: #407bff;
+    color: var(--secondary-color---5);
+    background-color: var(--primery-color-blue);
   }
 `;
 
@@ -182,14 +183,14 @@ export const StyledLabel = styled.h3`
   font-size: 18px;
   font-weight: 500;
   line-height: 20px;
-  color: #2f2f2f;
+  color: var(--primery-color-black);
 `;
 
 export const LabelName = styled.label`
   font-size: 18px;
   font-weight: 500;
   line-height: 20px;
-  color: #2f2f2f;
+  color: var(--primery-color-black);
 `;
 
 export const GenderWrapper = styled.div`
@@ -222,8 +223,8 @@ export const RadioWrapper = styled.div`
         margin-right: 5px;
         width: 14px;
         height: 14px;
-        border: 1px solid #407bff;
-        background: #ffffff;
+        border: 1px solid var(--primery-color-blue);
+        background: var(--primery-color-white);
       }
 
       &:after {
@@ -234,7 +235,7 @@ export const RadioWrapper = styled.div`
         left: 4px;
         width: 6px;
         height: 6px;
-        background: #407bff;
+        background: var(--primery-color-blue);
         border-radius: 50%;
         opacity: 0;
         transform: scale(0, 0);
@@ -278,7 +279,7 @@ export const EyeButton = styled.span`
     height: 16px;
     fill: transparent;
 
-    stroke: #407bff;
+    stroke: var(--primery-color-blue);
   }
 
   @media screen and (min-width: 768px) {
@@ -295,16 +296,16 @@ export const Input = styled.input`
   height: 44px;
   padding: 12px 10px;
   border-radius: 6px;
-  border: 1px solid #d7e3ff;
-  color: #407bff;
+  border: 1px solid var(--secondary-color---5);
+  color: var(--primery-color-blue);
   line-height: 20px;
 
   &:focus {
-    outline: 1px solid #d7e3ff;
+    outline: 1px solid var(--secondary-color---5);
   }
 
   &::placeholder {
-    color: #9ebbff;
+    color: var(--secondary-color-4);
   }
 
   @media screen and (min-width: 768px) {
@@ -328,8 +329,8 @@ export const StyledButton = styled.button`
   font-weight: 500;
   line-height: 20px;
   border: none;
-  color: #ffffff;
-  background: #407bff;
+  color: var(--primery-color-white);
+  background: var(--primery-color-blue);
   box-shadow: 0px 4px 8px rgba(64, 123, 255, 0.34);
   border-radius: 10px;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -339,7 +340,7 @@ export const StyledButton = styled.button`
     box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
   }
   &:focus {
-    outline: 1px solid #407bff;
+    outline: 1px solid var(--primery-color-blue);
   }
   &:active {
     box-shadow: none;
@@ -355,7 +356,7 @@ export const StyledButton = styled.button`
 
 export const TextError = styled.p`
   font-size: 14px;
-  color: #ef5050;
+  color: var(--secondary-color-3);
   font-weight: 400;
   line-height: 128.5%;
 `;

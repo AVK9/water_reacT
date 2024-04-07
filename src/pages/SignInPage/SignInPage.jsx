@@ -14,10 +14,17 @@ import {
   ErrorMessage,
   Form,
   DesktopBg,
+  FirstWaterBulb,
+  SecondWaterBulb,
+  ThirdWaterBulb,
+  FourthWaterBulb,
+  FifthWaterBulb,
+  StyledLink,
+  TextLink,
 } from './SignInPage.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
 import { isAuthSelector } from '../../redux/auth/selectors';
 import { Section } from '../../components/Section/Section';
@@ -73,7 +80,11 @@ const SignInComponent = () => {
           <SignInwater></SignInwater>
           <SignInContainer>
             <SignInTitle>Sign In</SignInTitle>
-
+            <FirstWaterBulb />
+            <SecondWaterBulb />
+            <ThirdWaterBulb />
+            <FourthWaterBulb />
+            <FifthWaterBulb />
             <Form onSubmit={formik.handleSubmit}>
               <SignInLabel>Enter your email</SignInLabel>
               <SignInInput
@@ -122,12 +133,9 @@ const SignInComponent = () => {
                 Sign In
               </SignInButton>
             </Form>
-            <Link
-              to="/signup"
-              style={{ color: ' #407bff', textDecoration: 'none' }}
-            >
-              Sign Up
-            </Link>
+            <StyledLink to="/signup">
+              <TextLink>Sign Up</TextLink>
+            </StyledLink>
           </SignInContainer>
         </SignInGlobalContainer>
       </Section>

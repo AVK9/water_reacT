@@ -4,6 +4,7 @@ import mobilWater from '../../assets/img/mobile-woter.png';
 import tabWater from '../../assets/img/BottleforSignin.png';
 import desktopWater from '../../assets/img/desktopWaterIn.png';
 import desktopBac from '../../assets/img/sign-in-up/BackgroundDesktopIn.png';
+import { Link } from 'react-router-dom';
 
 export const SignUpGlobalContainer = styled.section`
   display: flex;
@@ -188,5 +189,107 @@ export const Form = styled.form`
   width: 280px;
   @media screen and (min-width: 768px) {
     width: 336px;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+`;
+
+export const TextLink = styled.p`
+  color: var(--primery-color-blue);
+  font-size: 16px;
+  transition: color 500ms ease-in-out;
+
+  &:hover {
+    color: var(--secondary-color-5);
+  }
+`;
+
+export const WaterBulb = styled.div`
+  position: absolute;
+
+  background-color: #79b8ff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  animation: waterEffect 5s infinite alternate;
+  @keyframes waterEffect {
+    from {
+      background-color: #407bff;
+    }
+    to {
+      background-color: #f3ecec;
+    }
+  }
+`;
+
+export const FirstWaterBulb = styled(WaterBulb)`
+  top: 210px;
+  left: 500px;
+  width: 20px;
+  height: 20px;
+
+  @media screen and (min-width: 768px) {
+    top: 210px;
+    left: 500px;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const SecondWaterBulb = styled(WaterBulb)`
+  top: 43%;
+  left: 56%;
+  width: 27px;
+  height: 27px;
+
+  @media screen and (min-width: 768px) {
+    top: 43%;
+    left: 56%;
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+export const ThirdWaterBulb = styled(WaterBulb)`
+  top: 60%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+
+  @media screen and (min-width: 768px) {
+    top: 60%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+export const FourthWaterBulb = styled(WaterBulb)`
+  top: 72%;
+  left: 66.5%;
+  width: 27px;
+  height: 27px;
+
+  @media screen and (min-width: 768px) {
+    top: 72%;
+    left: 66.5%;
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+export const FifthWaterBulb = styled(WaterBulb)`
+  top: 64.2%;
+  left: 61.4%;
+  width: 20px;
+  height: 20px;
+
+  @media screen and (min-width: 768px) {
+    top: 64.2%;
+    left: 61.4%;
+    width: 20px;
+    height: 20px;
   }
 `;

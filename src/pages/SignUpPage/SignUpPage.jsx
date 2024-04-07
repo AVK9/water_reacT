@@ -87,7 +87,7 @@ const SignUpComponent = () => {
   };
 
   return (
-    <Section>
+    <Section> 
       <SignUpGlobalContainer>
         <SignUpwater></SignUpwater>
         <SignUpContainer>

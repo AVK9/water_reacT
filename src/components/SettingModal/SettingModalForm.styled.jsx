@@ -100,24 +100,19 @@ export const PasswordWrapper = styled.div`
 `;
 
 export const EyeButton = styled.span`
+  display: flex;
   position: absolute;
   top: 50%;
   right: 8px;
   transform: translateY(-50%);
   cursor: pointer;
- 
-  
 
   svg {
-    display: block;
     width: 16px;
     height: 16px;
     fill: transparent;
 
-    stroke: #407BFF;
-    stroke-width: 1px;
-    
-    
+    stroke: #407bff;
   }
 `;
 
@@ -189,7 +184,6 @@ export const StyledButton = styled.button`
   }
 `;
 
-
 export const TextError = styled.p`
   position: absolute;
   font-size: 14px;
@@ -197,4 +191,3 @@ export const TextError = styled.p`
   font-weight: 400;
   line-height: 128.5%;
 `;
-

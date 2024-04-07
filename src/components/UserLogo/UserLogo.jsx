@@ -30,13 +30,10 @@ const UserLogo = () => {
         <UserName>{userName}</UserName>
 
         <AvatarContainer>
-          {
-            avatarURL !== '' ? <AvatarImage src={avatarURL} alt='Avatar' /> :
-              <Avatar>
-                <Initials>{initials}</Initials>
-              </Avatar>
-          }
-          
+          {avatarURL && <AvatarImage src={avatarURL} alt='Avatar' />}
+
+          {!avatarURL && <Avatar><Initials>{initials}</Initials></Avatar>}
+
           <IconWrapper isOpen={isUserModalOpen}>
             <use xlinkHref={`${sprite}#icon-chevron-double-up`}></use>
           </IconWrapper>

@@ -7,6 +7,8 @@ import {
 } from './HomePage.styled';
 import TodayWaterList from '../../components/TodayWaterList/TodayWaterList';
 import { Section } from '../../components/Section/Section';
+
+import DaysGeneralStats from '../../components/DaysGeneralStats/DaysGeneralStats';
 const HomePage = () => {
   return (
     <Background>
@@ -17,6 +19,7 @@ const HomePage = () => {
             <TodayWaterList />
             <MonthStatsTable />
           </WaterControlBox>
+          <DaysGeneralStats />
         </Section>
       </BackgroundBottom>
     </Background>

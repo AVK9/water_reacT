@@ -21,7 +21,6 @@ import { format } from 'date-fns';
 import {
   addWaterThunk,
   changeWaterThunk,
-  delWaterThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
 import {
@@ -29,15 +28,24 @@ import {
   selectLoading,
   selectSelectDay,
   selectSelectMonth,
-  selectStateWaterDayList,
+  // selectStateWaterDayList,
+  selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
-import { Loader } from '../Loader/Loader';
+// import { Loader } from '../Loader/Loader';
+import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 
 const formatOfManth = 'MMMM';
 
 const TodayWaterList = () => {
-  const [header, setHeader] = useState('Today');
-  const [day, setDay] = useState('');
+  const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
+  const [selectItem, setSelectedItem] = useState(null);
+
+  const handleOpenModalDell = (_id) => {
+    setSelectedItem(_id);
+    setDeleteWaterModal(true);
+  };
+  const handleCloseModalDell = () => setDeleteWaterModal(false);
+
   ///////+
   const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
@@ -59,7 +67,7 @@ const TodayWaterList = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-  //, timezoneOffset: '+0300'
+
   const addWater = () => {
     const body = { date, waterAmount };
     dispatch(addWaterThunk(body));
@@ -69,39 +77,17 @@ const TodayWaterList = () => {
     // dispatch(getWaterDayThunk());
   }, [dispatch]);
 
-  const dayWaterList = useSelector(selectStateWaterDayList);
+  // const dayWaterList = useSelector(selectStateWaterDayList);
+  const dayWaterList = useSelector(selectVisibleDrinking);
 
   const selectDay = useSelector(selectSelectDay);
   const headerSelect = selectDay.slice(8, 10).toString();
   const selMonth = useSelector(selectSelectMonth);
+  const fullMonth = selMonth + '-01';
+  const month = dateFns.format(fullMonth, formatOfManth);
 
-  const dateZzZ = selMonth + '-01';
-  let num = dateZzZ;
-  console.log('2222222222222', num);
-  const month = dateFns.format(dateZzZ, formatOfManth);
-  console.log('111111111111111111111111', month);
-  // const formattedDate = datesss.toLocaleString({
-  //   month: 'long',
-  //   day: '2-digit',
-  // });
-  // console.log('formattedDate', datesss);
-  // console.log('selectDay =>', selectDay.slice(0, 10));
-  // setDay(selectDay.slice(0, 10));
-  // let selMonth = '';
-  // if (!selectDay) {
-  //   selMonth = dateFns.format(selectDay.slice(0, 10), formatOfManth);
-  //   return selMonth;
-  // }
-
-  // const selYear = !selectDay
-  //   ? dateFns.format(selectDay.slice(0, 10), formatOfYear)
-  //   : date;
-  // const selDay = dateFns.format(selectDay.slice(0, 10), formatOfDay);
   const todayDay = format(new Date(), 'yyyy-MM-dd');
 
-  // const sDay = format(selMonth, 'MMMM');
-  // console.log('toString', sDay);
-  // console.log('selectDay', selectDay.slice(0, 10).toString());
   ///////////////+
 
   const handleEditWaterIntake = (waterIntake) => {
@@ -144,10 +130,11 @@ const TodayWaterList = () => {
                     <use href={`${sprite}#icon-pencil-square`} />
                   </IconWrapperStr>
                   <IconWrapperTrash
-                    onClick={() => {
-                      dispatch(delWaterThunk(_id));
+                    onClick={
+                      () => handleOpenModalDell(_id)
+                      // dispatch(delWaterThunk(_id));
                       // dispatch(getWaterDayThunk());
-                    }}
+                    }
                   >
                     <use href={`${sprite}#icon-trash`} />
                   </IconWrapperTrash>
@@ -155,7 +142,10 @@ const TodayWaterList = () => {
               ))}
             </DayDrinkBox>
           ) : (
-            <Loader /> || <p>No water</p>
+            <DayDrinkBox>
+              <p>No water</p>
+            </DayDrinkBox>
+            // <Loader /> &&
           )}
 
           {/* <WaterAmountBox>
@@ -206,6 +196,9 @@ const TodayWaterList = () => {
             onClose={handleCloseModal}
             editMode
           />
+        )}
+        {isDeleteWaterModal && (
+          <DeleteWaterModal onClose={handleCloseModalDell} delId={selectItem} />
         )}
       </TodayWaterListBox>
     </>

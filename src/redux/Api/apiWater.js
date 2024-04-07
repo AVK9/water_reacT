@@ -9,7 +9,7 @@ export const setTokenApi = (token) => {
 export const addWaterApi = async (body) => {
   console.log(body);
 
-  const { data } = await axios.post('/api/water', body, {
+  const { data } = await axios.post('/api/water/add', body, {
     headers: {
       'Content-Type': 'application/json',
     },

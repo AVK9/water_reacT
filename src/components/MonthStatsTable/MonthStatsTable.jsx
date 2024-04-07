@@ -122,9 +122,6 @@ const MonthStatsTable = () => {
       return day;
     }
   });
-
-  console.log('updatedCalendar', updatedCalendar);
-
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}

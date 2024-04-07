@@ -29,7 +29,7 @@ export const Upload = styled.label`
   &:hover,
   &:focus {
     & svg {
-      fill: #ef5050;
+      stroke: #ef5050;
     }
     & p {
       color: #ef5050;
@@ -39,7 +39,8 @@ export const Upload = styled.label`
   & svg {
     width: 16px;
     height: 16px;
-    fill: #407bff;
+    fill: transparent;
+    stroke: #407bff;
     transition: fill 0.25s cubic-bezier(0.64, 0.57, 0.67, 1.53);
   }
 `;
@@ -51,4 +52,21 @@ export const Avatar = styled.img`
   background-color: #d7e3ff;
   background-size: cover;
   background-repeat: no-repeat;
+`;
+
+export const ContainerAvatar = styled.div`
+  width: 80px;
+  height: 80px;
+  div {
+    width: auto;
+    height: 100%;
+    background-color: red;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    color: #d7e3ff;
+    background-color: #407bff;
+  }
 `;

@@ -5,6 +5,7 @@ import {
   currentApi,
   setTokenApi,
   signUpApi,
+  UpdateAvatar,
   updateWaterRateApi,
 } from '../Api/apiAuth';
 
@@ -61,11 +62,11 @@ export const loginOutThunk = createAsyncThunk(
 );
 
 export const UpdateAvatarThunk = createAsyncThunk(
-  'auth/avatar',
-  async (userData, { rejectWithValue }) => {
+  'auth/updateAvatar',
+  async (newPhotoFile, { rejectWithValue }) => {
     try {
-      const data = await UpdateAvatar(userData);
-      return data;
+      const AvatarUrl = await UpdateAvatar(newPhotoFile);
+      return AvatarUrl;
     } catch (error) {
       return rejectWithValue(error.response.data.error);
     }

@@ -19,6 +19,8 @@ export const handleGetMonthWater = (state, { payload }) => {
     new Date();
   }
 
+  state.selectMonth = payload[0].date;
+
   console.log('handleGetMonthWater :>> ', payload);
 };
 export const handleAddWater = (state, { payload }) => {

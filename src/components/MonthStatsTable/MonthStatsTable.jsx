@@ -122,7 +122,6 @@ const MonthStatsTable = () => {
       return day;
     }
   });
-
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}

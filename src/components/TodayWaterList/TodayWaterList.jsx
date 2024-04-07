@@ -28,10 +28,10 @@ import {
   selectLoading,
   selectSelectDay,
   selectSelectMonth,
-  selectStateWaterDayList,
+  // selectStateWaterDayList,
   selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
-import { Loader } from '../Loader/Loader';
+// import { Loader } from '../Loader/Loader';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 
 const formatOfManth = 'MMMM';
@@ -45,6 +45,7 @@ const TodayWaterList = () => {
     setDeleteWaterModal(true);
   };
   const handleCloseModalDell = () => setDeleteWaterModal(false);
+
   ///////+
   const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
@@ -196,7 +197,6 @@ const TodayWaterList = () => {
             editMode
           />
         )}
-
         {isDeleteWaterModal && (
           <DeleteWaterModal onClose={handleCloseModalDell} delId={selectItem} />
         )}

@@ -1,15 +1,16 @@
 import { styled } from "styled-components";
-import { animated } from "react-spring";
 
-export const OverlayDeleteModal = styled(animated.div)`
+export const OverlayDeleteModal = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 10;
   overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 `;
 
-export const ContainerDeleteModal = styled(animated.div)`
+export const ContainerDeleteModal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -23,6 +24,8 @@ export const ContainerDeleteModal = styled(animated.div)`
   border-radius: 10px;
   background: var(--primery-color-white);
   overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 
   @media screen and (min-width: 768px) {
     width: 592px;
@@ -42,7 +45,25 @@ export const TitleDelete = styled.h3`
 `;
 
 export const ButtonClose = styled.button`
-  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+
+  &:hover {
+    background: rgba(13, 92, 132, 0.1);
+    border-radius: 50%;
+    transition: background 0.3s ease;
+    transform: scale(0.85);
+    transition: transform 0.3s ease;
+  }
+
+  &:active {
+    transform: scale(1.45);
+    transition: transform 0.3s ease;
+  }
 `;
 
 export const IconWrapper = styled.svg`

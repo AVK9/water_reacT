@@ -179,9 +179,11 @@ const SignUpComponent = () => {
             >
               Sign Up
             </SignUpButton>
+
             <StyledLink to="/signin">
               <TextLink>Sign In</TextLink>
             </StyledLink>
+
           </Form>
         </SignUpContainer>
       </SignUpGlobalContainer>

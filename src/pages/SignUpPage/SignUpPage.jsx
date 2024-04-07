@@ -38,7 +38,7 @@ const SignUpComponent = () => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate('/home');
+      navigate('/');
     }
   }, [isAuth, navigate]);
 
@@ -64,7 +64,7 @@ const SignUpComponent = () => {
           if (response.error && response.error === 'Email already exists') {
             formik.setFieldError('email', 'This email is already registered');
           } else {
-            navigate('/home');
+            navigate('/');
           }
         })
 

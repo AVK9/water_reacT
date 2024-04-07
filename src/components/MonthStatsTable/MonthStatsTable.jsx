@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { updateSelectDay } from '../../redux/water/waterThunk';
 import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
 import { nanoid } from 'nanoid';
@@ -23,13 +22,15 @@ import {
 } from './MonthStatsTable.styled';
 import sprite from '../../assets/img/sprite.svg';
 import {
-  selectStateWaterDayList,
+  selectError,
+  selectLoading,
   selectStateWaterMonthList,
 } from '../../redux/water/waterSelectors';
 import {
   getWaterDayThunk,
   getWaterMonthThunk,
 } from '../../redux/water/waterThunk';
+import { Loader } from '../Loader/Loader';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -60,6 +61,9 @@ const MonthStatsTable = () => {
     end: endDate,
   });
 
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
   const weeks = ((date) => {
     const weeks = [];
     for (let day = 0; day <= 6; day++) {
@@ -74,113 +78,130 @@ const MonthStatsTable = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (today) {
-      dispatch(getWaterDayThunk(selectDate));
       dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
     }
   }, [selectDate]);
 
-  const tasks = [
-    { id: 1, date: '2024-04-05', title: 'Task 1' },
-    { id: 2, date: '2024-04-06', title: 'Task 2' },
-    { id: 3, date: '2024-04-05', title: 'Task 3' },
-    { id: 4, date: '2024-04-07', title: 'Task 4' },
-  ];
+  useEffect(() => {
+    dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
+  }, [selectMonth]);
 
-  const daysInMonth = 30; // Задаємо кількість днів у місяці (можна взяти з Date API)
-  const tasksByDay = Array.from({ length: daysInMonth }, (_, index) => {
-    const date = new Date(2024, 3, index + 1); // 2024-04-01, 2024-04-02, ...
-    const formattedDate = date.toISOString().split('T')[0]; // Форматуємо дату у вигляді 'yyyy-mm-dd'
-    console.log('formattedDate :>> ', formattedDate);
-    const tasksForDay = tasks.filter((task) => task.date === formattedDate);
-    return { date: formattedDate, tasks: tasksForDay };
+  const calendrShablon = totalDate.map((day) => {
+    const data = `${dateFns.format(day, formatOfDay)}-${dateFns.format(
+      day,
+      formatOfManthDig
+    )}`;
+    return {
+      id: data,
+      date: day,
+      events: {
+        waterRate: '0',
+        percent: '0',
+        numberRecords: '0',
+      },
+    };
   });
 
-  console.log(tasksByDay);
-
-  useEffect(() => {
-    // dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
-    dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
-  }, [selectDate]);
-
   const monthListWater = useSelector(selectStateWaterMonthList);
-  console.log(monthListWater);
-
-  console.log('totalDate :>> ', totalDate);
-  const tasksForDay222 = monthListWater.filter(
-    (task) => task.dayOfMonth === totalDate
-  );
-  console.log('tasksForDay222 :>> ', tasksForDay222);
-
+  console.log('monthListWater', monthListWater);
+  const updatedCalendar = calendrShablon.map((day) => {
+    const matchingWater = monthListWater.find(
+      (task) => `${task.dayOfMonth.toString()}-${selectMonth}` === day.id
+    );
+    if (matchingWater) {
+      return {
+        ...day,
+        events: {
+          ...day.events,
+          waterRate: matchingWater.waterRate,
+          percent: matchingWater.percent,
+          numberRecords: matchingWater.numberRecords,
+        },
+      };
+    } else {
+      return day;
+    }
+  });
   return (
-    <TableContainer>
-      <TableHeaderBox>
-        <MonthSpan>Month</MonthSpan>
-        <MonthStatsControlBox>
-          <BtnMonthBox
-            onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
+    <>
+      {loading && !error && <p>Loading pleasure wait</p>}
+      {error && <p>Error: {error}</p>}
+      <TableContainer>
+        <TableHeaderBox>
+          <MonthSpan>Month</MonthSpan>
+          <MonthStatsControlBox>
+            <BtnMonthBox
+              onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
+            >
+              <IconWrapper>
+                <use href={`${sprite}#icon-chevron-right`} />
+              </IconWrapper>
+            </BtnMonthBox>
+            <CarrentMonthBox>
+              <MonthYearSpan>
+                {dateFns.format(currentDate, formatOfManth)},
+              </MonthYearSpan>
+              <MonthYearSpan>
+                {dateFns.format(currentDate, formatOfYear)}
+              </MonthYearSpan>
+            </CarrentMonthBox>
+            <BtnMonthBox
+              onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
+            >
+              <IconWrapper>
+                <use href={`${sprite}#icon-chevron-left`} />
+              </IconWrapper>
+            </BtnMonthBox>
+          </MonthStatsControlBox>
+        </TableHeaderBox>
+        {updatedCalendar.length ? (
+          <CalendarTab
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(7, 0fr)',
+              gap: '22px 4px',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            <IconWrapper>
-              <use href={`${sprite}#icon-chevron-right`} />
-            </IconWrapper>
-          </BtnMonthBox>
-          <CarrentMonthBox>
-            <MonthYearSpan>
-              {dateFns.format(currentDate, formatOfManth)},
-            </MonthYearSpan>
-            <MonthYearSpan>
-              {dateFns.format(currentDate, formatOfYear)}
-            </MonthYearSpan>
-          </CarrentMonthBox>
-          <BtnMonthBox
-            onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
-          >
-            <IconWrapper>
-              <use href={`${sprite}#icon-chevron-left`} />
-            </IconWrapper>
-          </BtnMonthBox>
-        </MonthStatsControlBox>
-      </TableHeaderBox>
-      <CalendarTab
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(7, 0fr)',
-          gap: '22px 4px',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {weeks.map((week) => (
-          <DayOfWeekSpan key={nanoid()}>
-            {dateFns.format(week, formatOfWeek)}
-          </DayOfWeekSpan>
-        ))}
-        {totalDate.map((date) => (
-          <ContainerData key={nanoid()}>
-            <CalendarData>
-              <span
-                style={{
-                  color: !dateFns.isSameMonth(date, currentDate)
-                    ? 'gray'
-                    : isSelectedDate(date)
-                    ? 'blue'
-                    : isToday(date)
-                    ? 'green'
-                    : dateFns.isWeekend(date, currentDate)
-                    ? 'red'
-                    : '',
-                }}
-                onClick={() => {
-                  setSelectDate(date);
-                }}
-              >
-                {dateFns.format(date, formatOfDay)}
-              </span>
-            </CalendarData>
-            <PersentRateWoter>0%</PersentRateWoter>
-          </ContainerData>
-        ))}
-      </CalendarTab>
-    </TableContainer>
+            {weeks.map((week) => (
+              <DayOfWeekSpan key={nanoid()}>
+                {dateFns.format(week, formatOfWeek)}
+              </DayOfWeekSpan>
+            ))}
+            {updatedCalendar.map(
+              ({ id, date, events: { waterRate, percent, numberRecords } }) => (
+                <ContainerData key={id}>
+                  <CalendarData>
+                    <span
+                      style={{
+                        color: !dateFns.isSameMonth(date, currentDate)
+                          ? 'gray'
+                          : isSelectedDate(date)
+                          ? 'blue'
+                          : isToday(date)
+                          ? 'green'
+                          : dateFns.isWeekend(date, currentDate)
+                          ? 'red'
+                          : '',
+                      }}
+                      onClick={() => {
+                        setSelectDate(date);
+                      }}
+                    >
+                      {dateFns.format(date, formatOfDay)}
+                    </span>
+                  </CalendarData>
+                  <PersentRateWoter>{percent} %</PersentRateWoter>
+                </ContainerData>
+              )
+            )}
+          </CalendarTab>
+        ) : (
+          <Loader /> || <p>No water</p>
+        )}
+      </TableContainer>
+    </>
   );
 };
 

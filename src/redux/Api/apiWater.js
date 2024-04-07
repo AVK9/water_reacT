@@ -9,7 +9,7 @@ export const setTokenApi = (token) => {
 export const addWaterApi = async (body) => {
   console.log(body);
 
-  const { data } = await axios.post('/api/water', body, {
+  const { data } = await axios.post('/api/water/add', body, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -26,15 +26,13 @@ export const getWaterApi = async () => {
   return data;
 };
 export const getWaterSelectDayApi = async (body) => {
-  if (body) {
-    const { data } = await axios.get(`/api/water/today?date=${body}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return data;
-  }
-  return;
+  console.log('bodybody', body);
+  const { data } = await axios.get(`/api/water/today?date=${body}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return data;
 };
 // export const getWaterSelectDayApi = async (body) => {
 //   try {

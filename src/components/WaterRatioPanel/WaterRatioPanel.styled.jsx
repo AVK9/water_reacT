@@ -16,7 +16,7 @@ export const StatusContainer = styled.div`
       padding-bottom: 10px;
     }
     @media screen and (min-width: 1440px) {
-      width: 178px;
+
     }
   }
 
@@ -142,7 +142,9 @@ export const Button = styled.button`
     height: 24px;
     fill: transparent;
     stroke: #fff;
+
     stroke-width: 2px;
+
   }
   @media screen and (min-width: 768px) {
     font-size: 18px;
@@ -151,7 +153,11 @@ export const Button = styled.button`
     height: 44px;
   }
   @media screen and (min-width: 1440px) {
+
+   
+
     width: 384px;
     height: 44px;
+
   }
 `;

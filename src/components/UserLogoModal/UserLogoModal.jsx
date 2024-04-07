@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '../SettingModal/Modal/Modal';
+import SettingModal from '../SettingModal/SettingModal';
 import UserLogoutModal from '../UserLogoutModal/UserLogoutModal';
 import {
   TransparentOverlay,
@@ -11,9 +11,9 @@ import {
 import sprite from '../../assets/img/sprite.svg';
 
 const UserLogoModal = ({ onClose }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
+  const handleOpenSettingModal = () => setIsSettingModalOpen(true);
+  const handleCloseSettingModal = () => setIsSettingModalOpen(false);
 
   const [isModalLogoutOpen, setIsModalLogoutOpen] = useState(false);
   const handleOpenModalLogout = () => setIsModalLogoutOpen(true);
@@ -35,7 +35,7 @@ const UserLogoModal = ({ onClose }) => {
       {isOpen && <TransparentOverlay  onClick={handleClose}/>}
 
       <ContainerUserLogoModal isOpen={isOpen}>
-        <ButtonsUserLogoModal type='button' onClick={handleOpenModal}>
+        <ButtonsUserLogoModal type='button' onClick={handleOpenSettingModal}>
           <IconWrapper>
             <use xlinkHref={`${sprite}#icon-cog-6-tooth`}></use>
           </IconWrapper>
@@ -49,7 +49,7 @@ const UserLogoModal = ({ onClose }) => {
           <ButtonText>Log out</ButtonText>
         </ButtonsUserLogoModal>
 
-        <Modal isOpen={isModalOpen} onClose={() => handleCloseModal(setIsModalOpen)} />
+        {isSettingModalOpen && <SettingModal onClose={handleCloseSettingModal} />}
         {isModalLogoutOpen && <UserLogoutModal onClose={handleCloseModalLogout} />}
       </ContainerUserLogoModal>
     </>

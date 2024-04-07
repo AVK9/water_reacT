@@ -26,12 +26,17 @@ export const currentApi = async (email) => {
   return data;
 };
 
-export const UpdateAvatar = async (avatar) => {
+export const updateAvatarApi = async (avatar) => {
   const { data } = await axios.patch('/api/users/avatars', avatar, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return data;
+};
+
+export const changeUserDataApi = async (body) => {
+  const { data } = await axios.patch('/api/users', body);
   return data;
 };
 

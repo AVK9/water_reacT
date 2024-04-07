@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import WaterModal from '../About-waterModal/aboutWaterEdit'
+import WaterModal from '../About-waterModal/aboutWaterEdit';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -16,45 +16,45 @@ import {
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
-// import { DateTime } from 'luxon';
+import { format } from 'date-fns';
 
 import {
   addWaterThunk,
   changeWaterThunk,
   delWaterThunk,
-  getWaterDayThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
 import {
   selectError,
   selectLoading,
+  selectSelectDay,
+  selectSelectMonth,
   selectStateWaterDayList,
 } from '../../redux/water/waterSelectors';
 import { Loader } from '../Loader/Loader';
 
-const formatOfYear = 'yyy';
-const formatOfManth = 'MMM';
-const formatOfWeek = 'eee';
-const formatOfDay = 'd';
+const formatOfManth = 'MMMM';
 
 const TodayWaterList = () => {
-
+  const [header, setHeader] = useState('Today');
+  const [day, setDay] = useState('');
+  ///////+
   const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
-
-
+  /////////
   // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
   // const date = DateTime.now().setZone('Europe/Kiev');
   const now = new Date();
   const date = dateFns.sub(now, { minutes: -180 });
+  // setDay(date);
   // const now = DateTime.now();
   // const date = now.setZone(now.offset - 180, { keepLocalTime: true });
   // const timezoneOffset = 'kyivTimeZone';
   // console.log('nowdate =>', date);
 
-  const waterAmount = 25;
+  const waterAmount = 500;
 
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -62,32 +62,47 @@ const TodayWaterList = () => {
   //, timezoneOffset: '+0300'
   const addWater = () => {
     const body = { date, waterAmount };
-    console.log('bodybody =>', body);
     dispatch(addWaterThunk(body));
   };
   useEffect(() => {
     // dispatch(getWaterThunk());
-    dispatch(getWaterDayThunk());
+    // dispatch(getWaterDayThunk());
   }, [dispatch]);
 
-  // setDayWaterList(useSelector(selectStateWaterDayList));
-
   const dayWaterList = useSelector(selectStateWaterDayList);
-  // console.log('dayWaterList =>', dayWaterList[0].date);
-  // console.log(
-  //   'dayWaterList =>',
-  //   dateFns.format(dayWaterList[0].date, formatOfDay)
-  // );
-  // console.log(
-  //   'dayWaterList =>',
-  //   dateFns.format(dayWaterList[0].date, formatOfManth)
-  // );
-  // const selectDay = useSelector(selectSelectDay);
-  // console.log('dayWaterList =>', dayWaterList.waterRecords.length);
-  // console.log('dayWaterList =>', dayWaterLists);
-  // if (now === dayWaterList[0].date)
-  // const [today, setToday] = useState(dayWaterList[0].date);
 
+  const selectDay = useSelector(selectSelectDay);
+  const headerSelect = selectDay.slice(8, 10).toString();
+  const selMonth = useSelector(selectSelectMonth);
+
+  const dateZzZ = selMonth + '-01';
+  let num = dateZzZ;
+  console.log('2222222222222', num);
+  const month = dateFns.format(dateZzZ, formatOfManth);
+  console.log('111111111111111111111111', month);
+  // const formattedDate = datesss.toLocaleString({
+  //   month: 'long',
+  //   day: '2-digit',
+  // });
+  // console.log('formattedDate', datesss);
+  // console.log('selectDay =>', selectDay.slice(0, 10));
+  // setDay(selectDay.slice(0, 10));
+  // let selMonth = '';
+  // if (!selectDay) {
+  //   selMonth = dateFns.format(selectDay.slice(0, 10), formatOfManth);
+  //   return selMonth;
+  // }
+
+  // const selYear = !selectDay
+  //   ? dateFns.format(selectDay.slice(0, 10), formatOfYear)
+  //   : date;
+  // const selDay = dateFns.format(selectDay.slice(0, 10), formatOfDay);
+  const todayDay = format(new Date(), 'yyyy-MM-dd');
+
+  // const sDay = format(selMonth, 'MMMM');
+  // console.log('toString', sDay);
+  // console.log('selectDay', selectDay.slice(0, 10).toString());
+  ///////////////+
 
   const handleEditWaterIntake = (waterIntake) => {
     setEditWaterIntake(waterIntake);
@@ -96,18 +111,17 @@ const TodayWaterList = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setEditWaterIntake(null);
-  }
-
-
-
+  };
+  ////////////////+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
         <Header>
-          Today
-          {/* {!dayWaterList[0].date ? 'sdf' : 'Today'} */}
+          {selectDay.slice(0, 10).toString() !== todayDay.toString()
+            ? `${headerSelect}  ${month}`
+            : 'Today'}
         </Header>
         {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
@@ -132,7 +146,7 @@ const TodayWaterList = () => {
                   <IconWrapperTrash
                     onClick={() => {
                       dispatch(delWaterThunk(_id));
-                      dispatch(getWaterDayThunk());
+                      // dispatch(getWaterDayThunk());
                     }}
                   >
                     <use href={`${sprite}#icon-trash`} />
@@ -173,21 +187,26 @@ const TodayWaterList = () => {
 
           <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
         </AddWaterBox>
-{
-showModal && (
-  <WaterModal
-    waterIntakeId={editWaterIntake?._id}
-    initialValue={editWaterIntake?.waterAmount}
-    initialTime={editWaterIntake?.date.slice(11, 16)}
-    onSave={(updatedAmount, updatedTime) => {
-      dispatch(changeWaterThunk({ _id: editWaterIntake._id, waterAmount: updatedAmount, date: updatedTime }));
-      setShowModal(false);
-      setEditWaterIntake(null);
-    }}
-    onClose={handleCloseModal}
-    editMode
-  />
-)}
+        {showModal && (
+          <WaterModal
+            waterIntakeId={editWaterIntake?._id}
+            initialValue={editWaterIntake?.waterAmount}
+            initialTime={editWaterIntake?.date.slice(11, 16)}
+            onSave={(updatedAmount, updatedTime) => {
+              dispatch(
+                changeWaterThunk({
+                  _id: editWaterIntake._id,
+                  waterAmount: updatedAmount,
+                  date: updatedTime,
+                })
+              );
+              setShowModal(false);
+              setEditWaterIntake(null);
+            }}
+            onClose={handleCloseModal}
+            editMode
+          />
+        )}
       </TodayWaterListBox>
     </>
   );

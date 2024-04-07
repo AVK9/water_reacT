@@ -9,6 +9,8 @@ export const handleGetWater = (state, { payload }) => {
 export const handleGetMonthWater = (state, { payload }) => {
   state.month = payload;
 
+  state.selectMonth = payload[0].date;
+
   console.log('handleGetMonthWater :>> ', payload);
 };
 export const handleAddWater = (state, { payload }) => {

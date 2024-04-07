@@ -7,14 +7,15 @@ import {
 } from './HomePage.styled';
 import TodayWaterList from '../../components/TodayWaterList/TodayWaterList';
 import { Section } from '../../components/Section/Section';
-
 import DaysGeneralStats from '../../components/DaysGeneralStats/DaysGeneralStats';
+import WaterRatioPanel from '../../components/WaterRatioPanel/WaterRatioPanel';
 const HomePage = () => {
   return (
     <Background>
       <BackgroundBottom>
         <Section>
           <DailyNorma />
+          <WaterRatioPanel/> 
           <WaterControlBox>
             <TodayWaterList />
             <MonthStatsTable />

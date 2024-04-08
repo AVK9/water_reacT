@@ -3,7 +3,10 @@ import DailyNorma from '../../components/DailyNorma/DailyNorma';
 import {
   WaterControlBox,
   Background,
-  BackgroundBottom,
+  HomeBox,
+  Bottle,
+  ElemBox,
+  Compare,
 } from './HomePage.styled';
 import TodayWaterList from '../../components/TodayWaterList/TodayWaterList';
 import { Section } from '../../components/Section/Section';
@@ -11,16 +14,21 @@ import WaterRatioPanel from '../../components/WaterRatioPanel/WaterRatioPanel';
 const HomePage = () => {
   return (
     <Background>
-      <BackgroundBottom>
-        <Section>
-          <DailyNorma />
-          <WaterRatioPanel />
+      <Section>
+        <HomeBox>
+          <Compare>
+            <ElemBox>
+              <DailyNorma />
+              <Bottle />
+            </ElemBox>
+            <WaterRatioPanel />
+          </Compare>
           <WaterControlBox>
             <TodayWaterList />
             <MonthStatsTable />
           </WaterControlBox>
-        </Section>
-      </BackgroundBottom>
+        </HomeBox>
+      </Section>
     </Background>
   );
 };

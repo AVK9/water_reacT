@@ -50,6 +50,7 @@ const DeleteWaterModal = ({ onClose, delId }) => {
     return () => {
       document.removeEventListener('keydown', close);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose]);
 
   const handleDelete = () => {

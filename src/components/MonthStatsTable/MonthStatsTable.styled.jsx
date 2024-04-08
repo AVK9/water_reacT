@@ -5,13 +5,6 @@ export const TableContainer = styled.div`
   width: 264px;
   height: 506px;
   position: relative;
-    @media screen and (min-width: 768px) {
-    width: 100%;
-   
-  }
-
-  @media screen and (min-width: 1440px) {
-    width: 100%;
 `;
 export const TableHeaderBox = styled.div`
   display: flex;
@@ -68,7 +61,7 @@ export const DayOfWeekSpan = styled.span`
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
-  /* text-align: center; */
+  text-align: center;
   color: var(--secondary-color-4);
 `;
 export const MonthStatsControlBox = styled.div`

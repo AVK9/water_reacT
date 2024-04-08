@@ -79,7 +79,7 @@ export const Bottle = styled.img`
     width: 738px;
     height: 548px;
 
-    margin-bottom: 44px;
+    margin-bottom: 24px;
     margin-left: 0;
     margin-right: 0;
     background-image: -webkit-image-set(
@@ -98,7 +98,7 @@ export const WaterControlBox = styled.div`
   margin-top: 38px;
   border-radius: 10px;
   padding: 24px 8px;
-  width: 100%
+  width: 280px;
   height: 836px;
   box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
   background: var(--secondary-color-2);
@@ -106,12 +106,13 @@ export const WaterControlBox = styled.div`
   @media screen and (min-width: 768px) {
     padding: 32px 24px;
     width: 704px;
-    height: 790px;
+    height: 688px;
   }
 
   @media screen and (min-width: 1440px) {
     /* margin-right: 32; */
     margin-top: 0;
     width: 592px;
+    height: 680px;
   }
 `;

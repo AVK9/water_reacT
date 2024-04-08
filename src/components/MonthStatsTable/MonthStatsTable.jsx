@@ -215,7 +215,7 @@ const MonthStatsTable = () => {
           <Loader /> || <p>No water</p>
         )}
         {isWaterModalRate && (
-          <DaysGeneralStats selectDayInfo={...selectDayInfo} onClose={handleCloseModalRate} />
+          <DaysGeneralStats selectDayInfo={selectDayInfo} onClose={handleCloseModalRate} />
         )}
       </TableContainer>
     </>

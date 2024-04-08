@@ -1,19 +1,26 @@
+import * as dateFns from 'date-fns';
+
 import {
-  DataListSpan,
   DataSpan,
   DaysGeneralStatsModal,
   DaysList,
   DaysListItem,
 } from './DaysGeneralStats.styled';
 
-const DaysGeneralStats = () => {
-  ///
+const formatOfYear = 'yyy';
+const formatOfManth = 'MMM';
+const formatOfManthDig = 'MM';
+const formatOfWeek = 'eee';
+const formatOfDay = 'd';
 
+const DaysGeneralStats = (selectDate) => {
+  ///
+  console.log(selectDate.selectDate);
   return (
     <DaysGeneralStatsModal>
       <DaysList>
         <DaysListItem>
-          <DataListSpan>23, april</DataListSpan>
+          {/* <DataListSpan>{selectDate && selectDate}</DataListSpan> */}
         </DaysListItem>
         <DaysListItem>
           Daily norma:

@@ -163,11 +163,13 @@ const MonthStatsTable = () => {
         {updatedCalendar.length ? (
           <CalendarTab
             style={{
+              // paddingLeft: 25,
               display: 'grid',
               gridTemplateColumns: 'repeat(7, 1fr)',
-              gap: '22px 4px',
+              gap: '10px 4px',
               alignItems: 'center',
               justifyContent: 'center',
+              justifyItems: 'center',
             }}
           >
             {weeks.map((week) => (
@@ -178,9 +180,7 @@ const MonthStatsTable = () => {
             {updatedCalendar.map(
               ({ id, date, events: { percent, waterRate, numberRecords } }) => (
                 <ContainerData key={id}>
-                  <CalendarData
-                  onClick={handleOpenModalRate}
-                  >
+                  <CalendarData onClick={handleOpenModalRate}>
                     <span
                       style={{
                         color: !dateFns.isSameMonth(date, currentDate)
@@ -215,7 +215,10 @@ const MonthStatsTable = () => {
           <Loader /> || <p>No water</p>
         )}
         {isWaterModalRate && (
-          <DaysGeneralStats selectDayInfo={selectDayInfo} onClose={handleCloseModalRate} />
+          <DaysGeneralStats
+            selectDayInfo={selectDayInfo}
+            onClose={handleCloseModalRate}
+          />
         )}
       </TableContainer>
     </>

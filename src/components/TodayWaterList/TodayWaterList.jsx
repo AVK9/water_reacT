@@ -13,6 +13,8 @@ import {
   IconWrapperStr,
   IconWrapperTrash,
   DayDrinkBox,
+  DrinkinfContolBox,
+  DrinkinfInfoBox,
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
@@ -109,35 +111,32 @@ const TodayWaterList = () => {
             ? `${headerSelect}  ${month}`
             : 'Today'}
         </Header>
-        {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
               {dayWaterList.map(({ _id, waterAmount, date }, index) => (
                 <WaterAmountBox key={index}>
-                  <IconWrapper>
-                    <use href={`${sprite}#icon-glas-water`} />
-                  </IconWrapper>
-                  <WaterAmount>{waterAmount} ml</WaterAmount>
-                  <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
-                  <IconWrapperStr
-                    onClick={() => {
-                      dispatch(changeWaterThunk({ _id, waterAmount, date }));
-                      dispatch(getWaterThunk());
-                      handleEditWaterIntake({ _id, waterAmount, date });
-                    }}
-                  >
-                    <use href={`${sprite}#icon-pencil-square`} />
-                  </IconWrapperStr>
-                  <IconWrapperTrash
-                    onClick={
-                      () => handleOpenModalDell(_id)
-                      // dispatch(delWaterThunk(_id));
-                      // dispatch(getWaterDayThunk());
-                    }
-                  >
-                    <use href={`${sprite}#icon-trash`} />
-                  </IconWrapperTrash>
+                  <DrinkinfInfoBox>
+                    <IconWrapper>
+                      <use href={`${sprite}#icon-glas-water`} />
+                    </IconWrapper>
+                    <WaterAmount>{waterAmount} ml</WaterAmount>
+                    <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
+                  </DrinkinfInfoBox>
+                  <DrinkinfContolBox>
+                    <IconWrapperStr
+                      onClick={() => {
+                        dispatch(changeWaterThunk({ _id, waterAmount, date }));
+                        dispatch(getWaterThunk());
+                        handleEditWaterIntake({ _id, waterAmount, date });
+                      }}
+                    >
+                      <use href={`${sprite}#icon-pencil-square`} />
+                    </IconWrapperStr>
+                    <IconWrapperTrash onClick={() => handleOpenModalDell(_id)}>
+                      <use href={`${sprite}#icon-trash`} />
+                    </IconWrapperTrash>
+                  </DrinkinfContolBox>
                 </WaterAmountBox>
               ))}
             </DayDrinkBox>

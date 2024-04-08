@@ -68,7 +68,7 @@ export const DayOfWeekSpan = styled.span`
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
-  text-align: center;
+  /* text-align: center; */
   color: var(--secondary-color-4);
 `;
 export const MonthStatsControlBox = styled.div`

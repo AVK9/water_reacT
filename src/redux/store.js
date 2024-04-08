@@ -12,7 +12,7 @@ import {
 } from 'redux-persist';
 
 import { waterReduser } from './water/waterSlice';
-import { filterReduser } from './contacts/sliceFilter';
+import { filterReduser } from './sliceFilter'
 import { authReduser } from './auth/authSlice';
 
 const persistConfig = {

@@ -98,7 +98,9 @@ export const WaterAmount = styled.span`
   white-space: nowrap;
 `;
 
-export const DrinkinfContolBox = styled.div``;
+export const DrinkinfContolBox = styled.div`
+  ///
+`;
 
 export const DrinkinfInfoBox = styled.div`
   display: flex;

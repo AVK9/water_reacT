@@ -164,7 +164,7 @@ const MonthStatsTable = () => {
           <CalendarTab
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(7, 0fr)',
+              gridTemplateColumns: 'repeat(7, 1fr)',
               gap: '22px 4px',
               alignItems: 'center',
               justifyContent: 'center',

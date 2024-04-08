@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 export const TodayWaterListBox = styled.div`
-  width: 100%;
+  /* /* width: 100%; */
   position: relative;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-position: center top;
-  background-size: contain;
+  background-size: contain; */
 `;
 export const Header = styled.h3`
   font-family: var(--font-family);
@@ -19,8 +19,15 @@ export const AddWaterBox = styled.div`
   width: 264px;
   height: 212px;
   margin-bottom: 24px;
+  /* display: flex; */
 
-  display: flex;
+  @media screen and (min-width: 768px) {
+    width:  656px;
+   height: 260px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 100%;
 `;
 
 export const BtnAddWater = styled.div`
@@ -42,6 +49,13 @@ export const WaterAmountBox = styled.div`
   border-top: 1px solid var(--secondary-color---5);
   display: flex;
   align-items: center;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+   
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 100%;
 `;
 export const IconWrapper = styled.svg`
   width: 26px;
@@ -94,5 +108,11 @@ export const DayDrinkBox = styled.div`
   }
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(175, 0, 0, 0.8);
+  }
+  @media screen and (min-width: 768px) {
+    height: 260px;
+  }
+
+  @media screen and (min-width: 1440px) {
   }
 `;

@@ -5,6 +5,13 @@ export const TableContainer = styled.div`
   width: 264px;
   height: 506px;
   position: relative;
+    @media screen and (min-width: 768px) {
+    width: 100%;
+   
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 100%;
 `;
 export const TableHeaderBox = styled.div`
   display: flex;

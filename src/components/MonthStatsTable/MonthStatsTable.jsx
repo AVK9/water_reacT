@@ -85,12 +85,10 @@ const MonthStatsTable = () => {
     if (today) {
       dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectDate]);
 
   useEffect(() => {
     dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectMonth]);
 
   const calendrShablon = totalDate.map((day) => {

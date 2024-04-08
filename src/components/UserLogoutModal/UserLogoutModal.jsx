@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { loginOutThunk } from '../../redux/auth/authThunk';
-import { isAuthSelector } from '../../redux/auth/selectors';
 import {
   OverlayLogoutModal,
   ContainerLogoutModal,
@@ -53,16 +51,11 @@ const UserLogoutModal = ({ onClose }) => {
     };
   }, [onClose]);
 
-  const isAuth = useSelector(isAuthSelector);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  
   const handleLogout = () => {
     dispatch(loginOutThunk());
     handleClose();
-    if (isAuth) {
-      navigate('/');
-    }
   };
   
   return (

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -26,21 +25,11 @@ import {
 
 import sprite from '../../assets/img/sprite.svg';
 
-
-import { isAuthSelector } from './../../redux/auth/selectors';
 import { signUpThunk } from './../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
 
 const SignUpComponent = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(isAuthSelector);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate('/');
-    }
-  }, [isAuth, navigate]);
 
   const formik = useFormik({
     initialValues: {
@@ -63,8 +52,6 @@ const SignUpComponent = () => {
           setSubmitting(false);
           if (response.error && response.error === 'Email already exists') {
             formik.setFieldError('email', 'This email is already registered');
-          } else {
-            navigate('/');
           }
         })
 

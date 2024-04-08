@@ -33,6 +33,7 @@ import {
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
+import { Loader } from '../Loader/Loader';
 
 const formatOfManth = 'MMMM';
 
@@ -101,7 +102,6 @@ const TodayWaterList = () => {
   ////////////////+
   return (
     <>
-      {loading && !error && <p>Loading pleasure wait</p>}
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
         <Header>
@@ -143,6 +143,7 @@ const TodayWaterList = () => {
             </DayDrinkBox>
           ) : (
             <DayDrinkBox>
+              {loading && <Loader />}
               <p>No water</p>
             </DayDrinkBox>
             // <Loader /> &&

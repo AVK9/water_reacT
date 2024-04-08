@@ -1,41 +1,86 @@
+import { useState, useEffect } from 'react';
 import * as dateFns from 'date-fns';
 
 import {
+  DataListSpan,
   DataSpan,
   DaysGeneralStatsModal,
   DaysList,
   DaysListItem,
+  OverlayDeleteModal,
 } from './DaysGeneralStats.styled';
 
-const formatOfYear = 'yyy';
-const formatOfManth = 'MMM';
-const formatOfManthDig = 'MM';
-const formatOfWeek = 'eee';
-const formatOfDay = 'd';
+const DaysGeneralStats = (selectDayInfo, onClose) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const DaysGeneralStats = (selectDate) => {
-  ///
-  console.log(selectDate.selectDate);
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 500);
+  };
+
+  const handleBackdropClick = (event) => {
+    if (event.currentTarget === event.target) {
+      handleClose();
+    }
+  };
+
+  useEffect(() => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.code === 'Escape') {
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', close);
+
+    return () => {
+      document.removeEventListener('keydown', close);
+    };
+  }, [onClose]);
+
   return (
-    <DaysGeneralStatsModal>
-      <DaysList>
-        <DaysListItem>
-          {/* <DataListSpan>{selectDate && selectDate}</DataListSpan> */}
-        </DaysListItem>
-        <DaysListItem>
-          Daily norma:
-          <DataSpan>2 L</DataSpan>
-        </DaysListItem>
-        <DaysListItem>
-          Fulfillment of the daily norm:
-          <DataSpan>100%</DataSpan>
-        </DaysListItem>
-        <DaysListItem>
-          How many servings of water:
-          <DataSpan>6</DataSpan>
-        </DaysListItem>
-      </DaysList>
-    </DaysGeneralStatsModal>
+    <OverlayDeleteModal isOpen={isOpen} onClick={handleBackdropClick}>
+      <DaysGeneralStatsModal isOpen={isOpen} onClick={onClose}>
+        <DaysList>
+          <DaysListItem>
+            <DataListSpan>
+              {selectDayInfo.date &&
+                dateFns.format(selectDayInfo.date, 'dd, MMMM')}
+            </DataListSpan>
+          </DaysListItem>
+          <DaysListItem>
+            Daily norma:
+            <DataSpan>
+              {(selectDayInfo.date && `${selectDayInfo.events.waterRate} L`) ||
+                '2 L'}
+            </DataSpan>
+          </DaysListItem>
+          <DaysListItem>
+            Fulfillment of the daily norm:
+            <DataSpan>
+              {(selectDayInfo.date && `${selectDayInfo.events.percent}%`) ||
+                '0%'}
+            </DataSpan>
+          </DaysListItem>
+          <DaysListItem>
+            How many servings of water:
+            <DataSpan>
+              {(selectDayInfo.date &&
+                `${selectDayInfo.events.numberRecords}`) ||
+                '0'}
+            </DataSpan>
+          </DaysListItem>
+        </DaysList>
+      </DaysGeneralStatsModal>
+    </OverlayDeleteModal>
   );
 };
 

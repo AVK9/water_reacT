@@ -179,7 +179,7 @@ const MonthStatsTable = () => {
               ({ id, date, events: { percent, waterRate, numberRecords } }) => (
                 <ContainerData key={id}>
                   <CalendarData
-                  // onClick={handleOpenModalRate}
+                  onClick={handleOpenModalRate}
                   >
                     <span
                       style={{
@@ -215,7 +215,7 @@ const MonthStatsTable = () => {
           <Loader /> || <p>No water</p>
         )}
         {isWaterModalRate && (
-          <DaysGeneralStats {...selectDayInfo} onClose={handleCloseModalRate} />
+          <DaysGeneralStats selectDayInfo={...selectDayInfo} onClose={handleCloseModalRate} />
         )}
       </TableContainer>
     </>

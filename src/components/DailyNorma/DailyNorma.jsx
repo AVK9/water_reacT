@@ -9,7 +9,10 @@ import {
 } from './DailyNorma.styled';
 
 const DailyNorma = () => {
-  const [dailyNorm, setDailyNorm] = useState(2.0);
+  const initialDailyNorm = localStorage.getItem('dailyNorm')
+    ? parseFloat(localStorage.getItem('dailyNorm'))
+    : 2.0;
+  const [dailyNorm, setDailyNorm] = useState(initialDailyNorm);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {

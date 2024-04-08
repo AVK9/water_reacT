@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
@@ -31,6 +30,7 @@ import {
   getWaterMonthThunk,
 } from '../../redux/water/waterThunk';
 import { Loader } from '../Loader/Loader';
+import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -201,6 +201,7 @@ const MonthStatsTable = () => {
           <Loader /> || <p>No water</p>
         )}
       </TableContainer>
+      <DaysGeneralStats statWater={updatedCalendar} selectDate={selectDate} />
     </>
   );
 };

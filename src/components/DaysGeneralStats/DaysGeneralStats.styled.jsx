@@ -8,8 +8,10 @@ export const DaysGeneralStatsModal = styled.div`
   box-shadow: 0 4px 4px 0 rgba(64, 123, 255, 0.3);
   background: var(--primery-color-white);
 
-  /* position: absolute;
-  transform: translate(-50% -50%);
+  position: absolute;
+  top: 80%;
+  left: 45%;
+  /* transform: translate(-50% -50%);
   width: 80%;
   max-width: 280px; */
 `;

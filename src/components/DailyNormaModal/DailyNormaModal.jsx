@@ -34,7 +34,7 @@ import {
 
 function DailyNormaModal({ onClose, setDailyNorm }) {
   const [gender, setGender] = useState('girl');
-  const [weight, setWeight] = useState('0');
+  const [weight, setWeight] = useState('0.0');
   const [activityTime, setActivityTime] = useState('0');
   const [waterIntake, setWaterIntake] = useState(0.0);
   const [plannedIntake, setPlannedIntake] = useState('0.0');
@@ -98,6 +98,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
       } else {
         console.error('intake is not a number:', intake);
       }
+      localStorage.setItem('dailyNorm', intake);
       handleClose();
     } catch (error) {
       console.error('Error during water rate update:', error);
@@ -196,6 +197,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                 Your weight in kilograms:
                 <InputValue
                   type="number"
+                  step="0.1"
                   min="0"
                   value={weight}
                   onChange={(e) => {

@@ -30,8 +30,8 @@ import {
   selectLoading,
   selectSelectDay,
   selectSelectMonth,
-  selectStateWaterDayList,
-  
+  // selectStateWaterDayList,
+  selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
@@ -53,11 +53,17 @@ const TodayWaterList = () => {
   const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
   /////////
+  // console.log('todaytodaytoday =>', today);
 
   // const date = new Date();
   // const date = DateTime.now().setZone('Europe/Kiev');
   const now = new Date();
   const date = dateFns.sub(now, { minutes: -180 });
+  // setDay(date);
+  // const now = DateTime.now();
+  // const date = now.setZone(now.offset - 180, { keepLocalTime: true });
+  // const timezoneOffset = 'kyivTimeZone';
+  // console.log('nowdate =>', date);
 
   const waterAmount = 500;
 
@@ -74,8 +80,8 @@ const TodayWaterList = () => {
     // dispatch(getWaterDayThunk());
   }, [dispatch]);
 
-  const dayWaterList = useSelector(selectStateWaterDayList);
-  // const dayWaterList = useSelector(selectVisibleDrinking);
+  // const dayWaterList = useSelector(selectStateWaterDayList);
+  const dayWaterList = useSelector(selectVisibleDrinking);
 
   const selectDay = useSelector(selectSelectDay);
   const headerSelect = selectDay.slice(8, 10).toString();
@@ -141,6 +147,34 @@ const TodayWaterList = () => {
             </DayDrinkBox>
             // <Loader /> &&
           )}
+
+          {/* <WaterAmountBox>
+          <IconWrapper>
+            <use href={`${sprite}#icon-glas-water`} />
+          </IconWrapper>
+          <WaterAmount>200 ml</WaterAmount>
+          <WaterAmountTime>14.00 PM</WaterAmountTime>
+          <IconWrapperStr>
+            <use href={`${sprite}#icon-pencil-square`} />
+          </IconWrapperStr>
+          <IconWrapperTrash>
+            <use href={`${sprite}#icon-trash`} />
+          </IconWrapperTrash>
+        </WaterAmountBox>
+        <WaterAmountBox>
+          <IconWrapper>
+            <use href={`${sprite}#icon-glas-water`} />
+          </IconWrapper>
+          <WaterAmount>200 ml</WaterAmount>
+          <WaterAmountTime>14.00 PM</WaterAmountTime>
+          <IconWrapperStr>
+            <use href={`${sprite}#icon-pencil-square`} />
+          </IconWrapperStr>
+          <IconWrapperTrash>
+            <use href={`${sprite}#icon-trash`} />
+          </IconWrapperTrash>
+        </WaterAmountBox> */}
+
           <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
         </AddWaterBox>
         {showModal && (

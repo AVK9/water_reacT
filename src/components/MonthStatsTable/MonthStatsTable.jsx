@@ -39,10 +39,15 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const MonthStatsTable = () => {
-  const [monthListWoter, setMonthListWoter] = useState('');
   const [selectDate, setSelectDate] = useState(new Date());
+  const [selectDayInfo, setSelectDayInfo] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
+
+  const [isWaterModalRate, setWaterModalRate] = useState(false);
+
+  const handleOpenModalRate = () => setWaterModalRate(true);
+  const handleCloseModalRate = () => setWaterModalRate(false);
 
   const dateTime = DateTime.now();
   console.log('dateTime :>> ', dateTime.c.month);
@@ -122,6 +127,7 @@ const MonthStatsTable = () => {
       return day;
     }
   });
+  console.log('selectDayInfo', selectDayInfo);
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
@@ -170,9 +176,11 @@ const MonthStatsTable = () => {
               </DayOfWeekSpan>
             ))}
             {updatedCalendar.map(
-              ({ id, date, events: { waterRate, percent, numberRecords } }) => (
+              ({ id, date, events: { percent, waterRate, numberRecords } }) => (
                 <ContainerData key={id}>
-                  <CalendarData>
+                  <CalendarData
+                  // onClick={handleOpenModalRate}
+                  >
                     <span
                       style={{
                         color: !dateFns.isSameMonth(date, currentDate)
@@ -186,7 +194,13 @@ const MonthStatsTable = () => {
                           : '',
                       }}
                       onClick={() => {
+                        setSelectDayInfo({
+                          id,
+                          date,
+                          events: { percent, waterRate, numberRecords },
+                        });
                         setSelectDate(date);
+                        // handleOpenModalRate();
                       }}
                     >
                       {dateFns.format(date, formatOfDay)}
@@ -200,8 +214,10 @@ const MonthStatsTable = () => {
         ) : (
           <Loader /> || <p>No water</p>
         )}
+        {isWaterModalRate && (
+          <DaysGeneralStats {...selectDayInfo} onClose={handleCloseModalRate} />
+        )}
       </TableContainer>
-      <DaysGeneralStats statWater={updatedCalendar} selectDate={selectDate} />
     </>
   );
 };

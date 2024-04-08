@@ -1,5 +1,15 @@
 import styled from '@emotion/styled';
 
+export const OverlayDeleteModal = styled.div`
+  position: fixed;
+  inset: 0;
+  /* background: rgba(0, 0, 0, 0.8); */
+  z-index: 10;
+  overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
+`;
+
 export const DaysGeneralStatsModal = styled.div`
   border-radius: 10px;
   padding: 24px 13px;
@@ -9,11 +19,11 @@ export const DaysGeneralStatsModal = styled.div`
   background: var(--primery-color-white);
 
   position: absolute;
-  top: 80%;
-  left: 45%;
-  /* transform: translate(-50% -50%);
+  /* top: 0;
+  left: 0; */
+  transform: translate(-50% -50%);
   width: 80%;
-  max-width: 280px; */
+  max-width: 280px;
 `;
 export const DaysList = styled.ul`
   display: flex;

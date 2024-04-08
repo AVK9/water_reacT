@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const TableContainer = styled.div`
   width: 264px;
   height: 506px;
+  position: relative;
 `;
 export const TableHeaderBox = styled.div`
   display: flex;

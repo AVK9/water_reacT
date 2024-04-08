@@ -4,7 +4,7 @@ const baseURL = 'https://water-backend-4k0b.onrender.com/api/water';
 
 export const saveWaterIntake = async (amount, time) => {
   try {
-    const response = await axios.post(baseURL, { waterAmount: amount, date: time });
+    const response = await axios.post(`${baseURL}/add`, { waterAmount: amount, date: time });
     return response.data;
   } catch (error) {
     console.error('Error saving water intake:', error);
@@ -14,7 +14,7 @@ export const saveWaterIntake = async (amount, time) => {
 
 export const updateWaterIntake = async (id, amount, time) => {
   try {
-    const response = await axios.put(`${baseURL}/${id}`, { waterAmount: amount, date: time });
+    const response = await axios.put(`${baseURL}/update/${id}`, { waterAmount: amount, date: time });
     return response.data;
   } catch (error) {
     console.error('Error updating water intake:', error);

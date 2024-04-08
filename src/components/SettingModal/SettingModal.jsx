@@ -131,6 +131,8 @@ const SettingModal = ({ onClose }) => {
   const handleUpload = (e) => {
     const selectedFile = e.target.files[0];
     const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+    formik.setFieldError('photo', '');
   
     if (fileExtension !== 'jpg') {
       formik.setFieldError('photo', 'Only JPG files are allowed.');
@@ -157,6 +159,8 @@ const SettingModal = ({ onClose }) => {
         gender: values.gender,
         userName: values.name,
         email: values.email,
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
       }));
       await dispatch(currentThunk());
       await handleClose();
@@ -252,11 +256,15 @@ const SettingModal = ({ onClose }) => {
                 <FieldWrapper>
                   <LabelName>Your name</LabelName>
                   <Input
+                    style={
+                      formik.touched.name &&
+                      formik.errors.name && { borderColor: '#ef5050' }
+                    }
                     type="text"
                     name="name"
                     onChange={formik.handleChange}
                     value={formik.values.name}
-                    // onblur={formik.handleBlur}
+                    onblur={formik.handleBlur}
                     placeholder="Name"
                     autoComplete="username"
                     error={formik.touched.name && formik.errors.name}
@@ -269,16 +277,20 @@ const SettingModal = ({ onClose }) => {
                 <FieldWrapper>
                   <LabelName>Email</LabelName>
                   <Input
+                    style={
+                      formik.touched.email &&
+                      formik.errors.email && { borderColor: '#ef5050' }
+                    }
                     type="email"
                     name="email"
                     id="InputEmail1"
                     aria-describedby="emailHelp"
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                    // onblur={formik.handleBlur}
+                    onblur={formik.handleBlur}
                     placeholder="Email"
                     autoComplete="email"
-                    $error={formik.touched.email && formik.errors.email}
+                    error={formik.touched.email && formik.errors.email}
                   />
                   {formik.touched.email && formik.errors.email && (
                     <TextError>{formik.errors.email}</TextError>
@@ -305,14 +317,15 @@ const SettingModal = ({ onClose }) => {
                   <Input
                     style={
                       formik.touched.oldPassword &&
-                      formik.errors.oldPassword && { borderColor: '#EF5050 ' }
+                      formik.errors.oldPassword && { borderColor: '#ef5050' }
                     }
                     type={isShowOldPassword ? 'text' : 'password'}
                     id="oldPassword"
                     onChange={formik.handleChange}
                     value={formik.values.oldPassword}
-                    // onBlur={formik.handleBlur}
+                    onBlur={formik.handleBlur}
                     placeholder="Old password"
+                    error={formik.touched.oldPassword && formik.errors.oldPassword}
                   />
                   {formik.touched.oldPassword && formik.errors.oldPassword && (
                     <TextError>{formik.errors.oldPassword}</TextError>
@@ -337,14 +350,15 @@ const SettingModal = ({ onClose }) => {
                     <Input
                       style={
                         formik.touched.newPassword &&
-                        formik.errors.newPassword && { borderColor: '#EF5050 ' }
+                        formik.errors.newPassword && { borderColor: '#ef5050' }
                       }
                       type={isShowNewPassword ? 'text' : 'password'}
                       onChange={formik.handleChange}
                       value={formik.values.newPassword}
-                      // onBlur={formik.handleBlur}
+                      onBlur={formik.handleBlur}
                       id="newPassword"
                       placeholder="New Password"
+                      error={formik.touched.newPassword && formik.errors.newPassword}
                     />
                     {formik.touched.newPassword && formik.errors.newPassword && (
                       <TextError>{formik.errors.newPassword}</TextError>
@@ -373,15 +387,16 @@ const SettingModal = ({ onClose }) => {
                       style={
                         formik.touched.repeatPassword &&
                         formik.errors.repeatPassword && {
-                          borderColor: '#EF5050 ',
+                          borderColor: '#ef5050',
                         }
                       }
                       type={isShowConfirmPassword ? 'text' : 'password'}
                       id="repeatPassword"
                       onChange={formik.handleChange}
                       value={formik.values.repeatPassword}
-                      // onBlur={formik.handleBlur}
+                      onBlur={formik.handleBlur}
                       placeholder="Repeat new password"
+                      error={formik.touched.repeatPassword && formik.errors.repeatPassword}
                     />
                     {formik.touched.repeatPassword &&
                       formik.errors.repeatPassword && (
@@ -393,7 +408,7 @@ const SettingModal = ({ onClose }) => {
             </div>
           </FormContainer>
 
-          <StyledButton disabled={!formik.isValid} type="submit">
+          <StyledButton type="submit">
             Save
           </StyledButton>
         </Form>

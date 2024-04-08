@@ -447,7 +447,11 @@ const SettingModal = ({ onClose }) => {
         autoHideDuration={11000}
         onClose={() => setOpenSnackBar(false)}
       >
-        <Alert severity={snackBarStatus}>
+        <Alert
+          severity={snackBarStatus}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
           {snackBarStatus === 'success'
             ? 'Information Updated Successfully!'
             : 'Error Updating Information'}

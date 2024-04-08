@@ -31,6 +31,7 @@ import {
   TextError,
 } from './SettingModal.styled';
 
+import { Snackbar, Alert } from '@mui/material';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -85,6 +86,11 @@ const SettingModal = ({ onClose }) => {
   const [isShowNewPassword, setIsShowNewPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
   const [isShowOldPassword, setIsShowOldPassword] = useState(false);
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [snackBarStatus, setSnackBarStatus] = useState('success');
+  const [passwordMismatchError, setPasswordMismatchError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -166,6 +172,10 @@ const SettingModal = ({ onClose }) => {
           newPassword: values.newPassword,
         })
       );
+
+      setOpenSnackBar(true);
+      setSnackBarStatus('success');
+
       await dispatch(currentThunk());
       await handleClose();
     },
@@ -423,9 +433,26 @@ const SettingModal = ({ onClose }) => {
             </div>
           </FormContainer>
 
-          <StyledButton type="submit">Save</StyledButton>
+          <StyledButton
+            onAbort={formik.handleSubmit}
+            type="submit"
+            disabled={passwordMismatchError || isSubmitting}
+          >
+            {isSubmitting ? 'Loading...' : 'Save'}
+          </StyledButton>
         </Form>
       </ModalContent>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={11000}
+        onClose={() => setOpenSnackBar(false)}
+      >
+        <Alert severity={snackBarStatus}>
+          {snackBarStatus === 'success'
+            ? 'Information Updated Successfully!'
+            : 'Error Updating Information'}
+        </Alert>
+      </Snackbar>
     </ModalOverlay>
   );
 };

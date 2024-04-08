@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import {
   SignInGlobalContainer,
@@ -24,19 +24,11 @@ import {
 } from './SignInPage.styled';
 import sprite from '../../assets/img/sprite.svg';
 
-import { useNavigate } from 'react-router-dom';
 import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
-import { isAuthSelector } from '../../redux/auth/selectors';
 import { Section } from '../../components/Section/Section';
 
 const SignInComponent = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(isAuthSelector);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    isAuth && navigate('/home');
-  }, [isAuth, navigate]);
 
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {

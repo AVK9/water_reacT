@@ -96,3 +96,9 @@ export const DayDrinkBox = styled.div`
     background-color: rgba(175, 0, 0, 0.8);
   }
 `;
+export const DrinkinfInfoBox = styled.div`
+  ///
+`;
+export const DrinkinfContolBox = styled.div`
+  ///
+`;

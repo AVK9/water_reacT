@@ -98,7 +98,7 @@ const SignUpComponent = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.email && formik.errors.email}
+              $error={formik.touched.email && formik.errors.email}
             />
             {formik.touched.email && formik.errors.email && (
               <ErrorMessage>{formik.errors.email}</ErrorMessage>
@@ -113,7 +113,7 @@ const SignUpComponent = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.password && formik.errors.password}
+                $error={formik.touched.password && formik.errors.password}
               />
 
               <TogglePasswordButton
@@ -142,7 +142,7 @@ const SignUpComponent = () => {
                 value={formik.values.repeatPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
+                $error={
                   formik.touched.repeatPassword && formik.errors.repeatPassword
                 }
               />

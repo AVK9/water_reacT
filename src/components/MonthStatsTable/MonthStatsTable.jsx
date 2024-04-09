@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
+import { addMonths, subMonths, format } from 'date-fns';
 import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import {
   CalendarTab,
@@ -31,7 +32,10 @@ import {
 } from '../../redux/water/waterThunk';
 import { Loader } from '../Loader/Loader';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats';
-import { updateStateHandleDate } from '../../redux/action/action.js';
+import {
+  updateStateHandleDate,
+  updateStateHandleMonth,
+} from '../../redux/action/action.js';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -40,6 +44,8 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const MonthStatsTable = () => {
+  const dispatch = useDispatch();
+
   const [selectDateUse, setSelectDateUse] = useState(new Date());
   const [selectDayInfo, setSelectDayInfo] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -66,6 +72,18 @@ const MonthStatsTable = () => {
     end: endDate,
   });
 
+  const firstDayNextMonth = dateFns.startOfMonth(addMonths(currentDate, 1));
+  const lastDayNextMonth = dateFns.lastDayOfMonth(addMonths(currentDate, 1));
+  const startDateNext = dateFns.startOfWeek(firstDayNextMonth);
+  const endDateNext = dateFns.lastDayOfWeek(lastDayNextMonth);
+
+  const firstPreviousMonth = dateFns.startOfMonth(subMonths(currentDate, 1));
+  const lastDayPreviousMonth = dateFns.lastDayOfMonth(
+    subMonths(currentDate, 1)
+  );
+  const startDateSub = dateFns.startOfWeek(firstPreviousMonth);
+  const endDateSub = dateFns.lastDayOfWeek(lastDayPreviousMonth);
+
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
@@ -79,17 +97,6 @@ const MonthStatsTable = () => {
 
   const isToday = (day) => dateFns.isSameDay(day, today);
   const isSelectedDate = (day) => dateFns.isSameDay(day, selectDateUse);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (today) {
-      dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
-    }
-  }, [selectDateUse]);
-
-  useEffect(() => {
-    dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
-  }, [selectMonth]);
 
   const calendrShablon = totalDate.map((day) => {
     const data = `${dateFns.format(day, formatOfDay)}-${dateFns.format(
@@ -131,12 +138,35 @@ const MonthStatsTable = () => {
     }
   });
 
+  useEffect(() => {
+    if (today) {
+      dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
+    }
+    const start = dateFns.format(startDate, 'yyyy-MM-dd');
+    const end = dateFns.format(endDate, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  }, [dispatch]);
+
+  const updateMonthNext = () => {
+    const start = dateFns.format(startDateNext, 'yyyy-MM-dd');
+    const end = dateFns.format(endDateNext, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  };
+
+  const updateMonthSub = () => {
+    const start = dateFns.format(startDateSub, 'yyyy-MM-dd');
+    const end = dateFns.format(endDateSub, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  };
+
   const updateSelectDay = (date) => {
     const click = dateFns.sub(date, { minutes: -180 });
     const todayDay = dateFns.format(click, 'yyyy-MM-dd');
     dispatch(updateStateHandleDate(todayDay));
   };
-
 
   return (
     <>
@@ -149,7 +179,7 @@ const MonthStatsTable = () => {
             <BtnMonthBox
               onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
             >
-              <IconWrapper>
+              <IconWrapper onClick={updateMonthSub}>
                 <use href={`${sprite}#icon-chevron-right`} />
               </IconWrapper>
             </BtnMonthBox>
@@ -164,7 +194,7 @@ const MonthStatsTable = () => {
             <BtnMonthBox
               onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
             >
-              <IconWrapper>
+              <IconWrapper onClick={updateMonthNext}>
                 <use href={`${sprite}#icon-chevron-left`} />
               </IconWrapper>
             </BtnMonthBox>

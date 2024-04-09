@@ -123,7 +123,7 @@ const SignUpComponent = () => {
                 <svg>
                   <use
                     href={`${sprite}#${
-                      showPassword ? 'icon-eye' : 'icon-eye-slash'
+                      showPassword ? 'eye' : 'eye-slash'
                     }`}
                   />
                 </svg>
@@ -153,7 +153,7 @@ const SignUpComponent = () => {
                 <svg>
                   <use
                     href={`${sprite}#${
-                      showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'
+                      showRepeatPassword ? 'eye' : 'eye-slash'
                     }`}
                   />
                 </svg>

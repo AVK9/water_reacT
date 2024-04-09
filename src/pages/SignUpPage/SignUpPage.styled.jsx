@@ -152,12 +152,6 @@ export const TogglePasswordButton = styled.button`
   top: 50%;
   transform: translateY(-50%);
 
-  display: flex;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-
   svg {
     width: 16px;
     height: 16px;

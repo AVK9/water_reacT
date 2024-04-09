@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -23,13 +22,11 @@ import {
   TextLink,
 } from './SignInPage.styled';
 import sprite from '../../assets/img/sprite.svg';
-
 import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
 
 const SignInComponent = () => {
   const dispatch = useDispatch();
-
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -37,36 +34,42 @@ const SignInComponent = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validate: (values) => {
-      const errors = {};
+const formik = useFormik({
+  initialValues: {
+    email: '',
+    password: '',
+  },
+  validate: (values) => {
+    const errors = {};
 
-      if (!values.email || !values.email.includes('@')) {
-        errors.email = 'Email is invalid';
+    if (!values.email || !values.email.includes('@')) {
+      errors.email = 'Email is invalid';
+    }
+
+    if (!values.password || values.password.length < 6) {
+      errors.password = 'Password is invalid';
+    }
+
+    return errors;
+  },
+  onSubmit: async (values) => {
+    try {
+      if (!values.password) {
+        setLoginError('Password is required');
+        return;
       }
 
-      if (!values.password || values.password.length < 6) {
-        errors.password = 'Password is invalid';
-      }
+      await dispatch(
+        loginThunk({ email: values.email, password: values.password })
+      );
+      await dispatch(currentThunk());
+    } catch (error) {
+      setLoginError('Invalid email or password. Please try again.');
+    }
+  },
+});
 
-      return errors;
-    },
-    onSubmit: async (values) => {
-      try {
-        await dispatch(
-          loginThunk({ email: values.email, password: values.password })
-        );
-        await dispatch(currentThunk());
-      } catch (error) {
-        console.error('Error during login:', error);
-        setLoginError('Invalid email or password. Please try again.'); // Встановлення помилкового повідомлення при невірному вході
-      }
-    },
-  });
+
 
   return (
     <DesktopBg>
@@ -95,6 +98,7 @@ const SignInComponent = () => {
               {formik.touched.email && formik.errors.email && (
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               )}
+
               <SignInLabel>Enter your password</SignInLabel>
               <div style={{ position: 'relative' }}>
                 <SignInInput
@@ -112,9 +116,7 @@ const SignInComponent = () => {
                 >
                   <svg>
                     <use
-                      href={`${sprite}#${
-                        showPassword ? 'icon-eye' : 'icon-eye-slash'
-                      }`}
+                      href={`${sprite}#${showPassword ? 'eye' : 'eye-slash'}`}
                     />
                   </svg>
                 </TogglePasswordButton>
@@ -122,8 +124,9 @@ const SignInComponent = () => {
               {formik.touched.password && formik.errors.password && (
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
-              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}{' '}
-             
+
+              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
+
               <SignInButton type="submit" disabled={!formik.isValid}>
                 Sign In
               </SignInButton>

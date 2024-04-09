@@ -15,6 +15,7 @@ const DailyNorma = () => {
   const profileWaterRate = useSelector(profileSelector).waterRate / 1000;
   // localStorage.setItem('dailyNorm', profileWaterRate);
   // const initialDailyNorm = parseFloat(localStorage.getItem('dailyNorm'));
+
   // const initialDailyNorm = localStorage.getItem('dailyNorm')
   //   ? parseFloat(localStorage.getItem('dailyNorm'))
   //   : 2.0;

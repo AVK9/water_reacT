@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { profileSelector } from '../../redux/auth/selectors';
 import DailyNormaModal from '../DailyNormaModal/DailyNormaModal';
 import {
   DailyNormaWrapper,
@@ -9,10 +11,18 @@ import {
 } from './DailyNorma.styled';
 
 const DailyNorma = () => {
-  const initialDailyNorm = localStorage.getItem('dailyNorm')
-    ? parseFloat(localStorage.getItem('dailyNorm'))
-    : 2.0;
-  const [dailyNorm, setDailyNorm] = useState(initialDailyNorm);
+
+  const profileWaterRate = useSelector(profileSelector).waterRate / 1000;
+  // localStorage.setItem('dailyNorm', profileWaterRate);
+
+  // const initialDailyNorm = parseFloat(localStorage.getItem('dailyNorm'));
+
+  // const initialDailyNorm = localStorage.getItem('dailyNorm')
+  //   ? parseFloat(localStorage.getItem('dailyNorm'))
+  //   : 2.0;
+
+
+  const [dailyNorm, setDailyNorm] = useState(profileWaterRate);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -45,7 +55,7 @@ const DailyNorma = () => {
       <DailyNormaWrapper>
         <DailyNormaTitle>My daily norma</DailyNormaTitle>
         <DailyNormaContent>
-          <DailyNormaValue>{dailyNorm.toFixed(1)} L</DailyNormaValue>
+          <DailyNormaValue>{profileWaterRate.toFixed(1)} L</DailyNormaValue>
           <EditButton onClick={handleOpenModal}>Edit</EditButton>
         </DailyNormaContent>
       </DailyNormaWrapper>

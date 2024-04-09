@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateWaterRateThunk } from '../../redux/auth/authThunk';
+import { updateWaterRateThunk, currentThunk } from '../../redux/auth/authThunk';
 
 import sprite from '../../assets/img/sprite.svg';
 import {
@@ -98,7 +98,8 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
       } else {
         console.error('intake is not a number:', intake);
       }
-      localStorage.setItem('dailyNorm', intake);
+      // localStorage.setItem('dailyNorm', intake);
+      dispatch(currentThunk())
       handleClose();
     } catch (error) {
       console.error('Error during water rate update:', error);

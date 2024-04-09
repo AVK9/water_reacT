@@ -52,6 +52,6 @@ export const updateWaterRateApi = async (waterRate) => {
   if (!axios.defaults.headers.common.Authorization) {
     throw new Error('User is not authorized');
   }
-  const { data } = await axios.patch('/api/users/waterrate', { waterRate });
+  const { data } = await axios.patch('/api/users/waterrate', { waterRate: waterRate * 1000 });
   return data;
 };

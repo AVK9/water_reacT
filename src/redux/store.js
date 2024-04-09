@@ -12,8 +12,9 @@ import {
 } from 'redux-persist';
 
 import { waterReduser } from './water/waterSlice';
-import { filterReduser } from './sliceFilter'
+import { filterReduser } from './sliceFilter';
 import { authReduser } from './auth/authSlice';
+import { timeReduser } from './action/action';
 
 const persistConfig = {
   key: 'auth',
@@ -28,6 +29,7 @@ export const store = configureStore({
     water: waterReduser,
     filter: filterReduser,
     auth: persistedReduser,
+    time: timeReduser,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

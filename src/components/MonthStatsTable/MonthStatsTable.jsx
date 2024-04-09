@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
 import { addMonths, subMonths, format } from 'date-fns';
 import { nanoid } from 'nanoid';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import {
   CalendarTab,
@@ -32,10 +32,7 @@ import {
 } from '../../redux/water/waterThunk';
 import { Loader } from '../Loader/Loader';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats';
-import {
-  updateStateHandleDate,
-  updateStateHandleMonth,
-} from '../../redux/action/action.js';
+import { updateStateHandleDate } from '../../redux/action/action.js';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';

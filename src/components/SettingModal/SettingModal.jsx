@@ -41,6 +41,7 @@ import {
   changeUserDataThunk,
 } from '../../redux/auth/authThunk';
 import { profileSelector } from '../../redux/auth/selectors';
+import { LoaderAvatar } from '../Loader/LoaderAvatar';
 
 const SettingModal = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +92,7 @@ const SettingModal = ({ onClose }) => {
   const [snackBarStatus, setSnackBarStatus] = useState('success');
   const [passwordMismatchError, setPasswordMismatchError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -149,12 +151,15 @@ const SettingModal = ({ onClose }) => {
 
     const formData = new FormData();
     formData.append('avatar', selectedFile);
-    
+
     try {
+      setIsLoading(true);
       await dispatch(updateAvatarThunk(formData));
       await dispatch(currentThunk());
     } catch (error) {
       console.error('Error updating avatar:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -211,13 +216,15 @@ const SettingModal = ({ onClose }) => {
 
           <UploadWrapper>
             <ContainerAvatar>
-              {!userAvatarUrl && (
+              {isLoading && <LoaderAvatar />}{' '}
+              {/* Показати лоадер, якщо isLoading */}
+              {!isLoading && !userAvatarUrl && (
                 <div>
                   {userName ? userName.split('')[0].toUpperCase() : 'V'}
                 </div>
               )}
-              {userAvatarUrl && (
-                <Avatar src={userAvatarUrl} alt="AVATAR" weight="80px" />
+              {!isLoading && userAvatarUrl && (
+                <Avatar src={userAvatarUrl} alt="AVATAR" />
               )}
             </ContainerAvatar>
 

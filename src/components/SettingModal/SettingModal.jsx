@@ -205,9 +205,9 @@ const SettingModal = ({ onClose }) => {
           <HeaderSettingName>Setting</HeaderSettingName>
 
           <ButtonClose onClick={handleClose}>
-            <s>
+            <IconWrapper>
               <use xlinkHref={`${sprite}#icon-close`} />
-            </s>
+            </IconWrapper>
           </ButtonClose>
         </HeaderSettingModal>
 

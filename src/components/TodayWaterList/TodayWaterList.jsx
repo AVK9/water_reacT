@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import WaterModal from '../About-waterModal/aboutWaterEdit';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -20,7 +19,6 @@ import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
 import { format } from 'date-fns';
 
-import { changeWaterThunk, getWaterThunk } from '../../redux/water/waterThunk';
 import {
   selectError,
   selectLoading,
@@ -31,6 +29,7 @@ import {
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
 import AddWaterModal from '../AddWaterModal/AddWaterModal';
+import EditWaterModal from '../EditWaterModal/EditWaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 import { Loader } from '../Loader/Loader';
 
@@ -40,6 +39,12 @@ const TodayWaterList = () => {
   const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
   const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
   const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
+
+  const [isModaEditWaterOpen, setIsModalEditWaterOpen] = useState(false);
+  const handleOpenModalEditWater = () => setIsModalEditWaterOpen(true);
+  const handleCloseModalEditWater = () => setIsModalEditWaterOpen(false);
+  
+
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
 
@@ -50,7 +55,6 @@ const TodayWaterList = () => {
   const handleCloseModalDell = () => setDeleteWaterModal(false);
 
   ///////+
-  const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
   /////////
   // console.log('todaytodaytoday =>', today);
@@ -89,11 +93,6 @@ const TodayWaterList = () => {
 
   const handleEditWaterIntake = (waterIntake) => {
     setEditWaterIntake(waterIntake);
-    setShowModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setEditWaterIntake(null);
   };
   ////////////////+
   return (
@@ -120,8 +119,7 @@ const TodayWaterList = () => {
                   <DrinkinfContolBox>
                     <IconWrapperStr
                       onClick={() => {
-                        dispatch(changeWaterThunk({ _id, waterAmount, date }));
-                        dispatch(getWaterThunk());
+                        handleOpenModalEditWater();
                         handleEditWaterIntake({ _id, waterAmount, date });
                       }}
                     >
@@ -172,26 +170,16 @@ const TodayWaterList = () => {
             + Add Water
           </BtnAddWater>
         </AddWaterBox>
-        {showModal && (
-          <WaterModal
+        {isModaEditWaterOpen &&
+          <EditWaterModal
             waterIntakeId={editWaterIntake?._id}
             initialValue={editWaterIntake?.waterAmount}
             initialTime={editWaterIntake?.date.slice(11, 16)}
-            onSave={(updatedAmount, updatedTime) => {
-              dispatch(
-                changeWaterThunk({
-                  _id: editWaterIntake._id,
-                  waterAmount: updatedAmount,
-                  date: updatedTime,
-                })
-              );
-              setShowModal(false);
-              setEditWaterIntake(null);
-            }}
-            onClose={handleCloseModal}
+            onTimeChange
+            onClose={handleCloseModalEditWater}
             editMode
           />
-        )}
+        }
         {isModaAddWaterOpen && (
           <AddWaterModal onClose={handleCloseModalAddWater} />
         )}

@@ -180,7 +180,6 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
 
                 <AddWaterAmountContainer>
                     <AddWaterAmount>{waterAmount || '0'} ml</AddWaterAmount>
-                    
                     <SaveButton onClick={handleAddWater}>Save</SaveButton>
                 </AddWaterAmountContainer>
             </ModalContainer>

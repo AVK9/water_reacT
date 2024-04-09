@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 
-export const OverlayDeleteModal = styled.div`
+export const TransparentOverlay = styled.div`
   position: fixed;
-  inset: 0;
-  /* background: rgba(0, 0, 0, 0.8); */
-  z-index: 10;
-  overflow: auto;
-  opacity: ${(props) => (props.isOpen ? 1 : 0)};
-  transition: opacity 0.5s ease-in-out;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 export const DaysGeneralStatsModal = styled.div`
@@ -19,11 +17,14 @@ export const DaysGeneralStatsModal = styled.div`
   background: var(--primery-color-white);
 
   position: absolute;
-  /* top: 0;
-  left: 0; */
+  top: ${(props) => (props.isOpen ? '32px' : '-6px')};
+  left: 0;
   transform: translate(-50% -50%);
-  width: 80%;
-  max-width: 280px;
+  overflow: auto;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transition:
+    opacity 0.8s ease-in-out,
+    top 0.5s ease-in-out;
 `;
 export const DaysList = styled.ul`
   display: flex;

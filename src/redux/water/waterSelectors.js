@@ -3,7 +3,6 @@ export const selectSelectMonth = (state) => state.water.selectMonth;
 export const selectStateWaterMonthList = (state) => state.water.month;
 export const selectStateWaterDayList = (state) => state.water.dayWaterList;
 export const selectSelectDay = (state) => state.water.selectDay;
-export const selectStateContacts = (state) => state.contacts.contacts;
 export const selectFilter = (state) => state.filter.filter;
 export const selectLoading = (state) => state.isLoading;
 export const selectError = (state) => state.error;

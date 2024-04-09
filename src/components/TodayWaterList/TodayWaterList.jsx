@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import WaterModal from '../About-waterModal/aboutWaterEdit';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -13,16 +12,13 @@ import {
   IconWrapperStr,
   IconWrapperTrash,
   DayDrinkBox,
+  DrinkinfContolBox,
+  DrinkinfInfoBox,
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
 import { format } from 'date-fns';
 
-import {
-  addWaterThunk,
-  changeWaterThunk,
-  getWaterThunk,
-} from '../../redux/water/waterThunk';
 import {
   selectError,
   selectLoading,
@@ -32,12 +28,23 @@ import {
   selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
+import AddWaterModal from '../AddWaterModal/AddWaterModal';
+import EditWaterModal from '../EditWaterModal/EditWaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 import { Loader } from '../Loader/Loader';
 
 const formatOfManth = 'MMMM';
 
 const TodayWaterList = () => {
+  const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
+  const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
+  const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
+
+  const [isModaEditWaterOpen, setIsModalEditWaterOpen] = useState(false);
+  const handleOpenModalEditWater = () => setIsModalEditWaterOpen(true);
+  const handleCloseModalEditWater = () => setIsModalEditWaterOpen(false);
+  
+
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
 
@@ -48,7 +55,6 @@ const TodayWaterList = () => {
   const handleCloseModalDell = () => setDeleteWaterModal(false);
 
   ///////+
-  const [showModal, setShowModal] = useState(false);
   const [editWaterIntake, setEditWaterIntake] = useState(null);
   /////////
   // console.log('todaytodaytoday =>', today);
@@ -63,16 +69,10 @@ const TodayWaterList = () => {
   // const timezoneOffset = 'kyivTimeZone';
   // console.log('nowdate =>', date);
 
-  const waterAmount = 500;
-
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  const addWater = () => {
-    const body = { date, waterAmount };
-    dispatch(addWaterThunk(body));
-  };
   useEffect(() => {
     // dispatch(getWaterThunk());
     // dispatch(getWaterDayThunk());
@@ -93,11 +93,6 @@ const TodayWaterList = () => {
 
   const handleEditWaterIntake = (waterIntake) => {
     setEditWaterIntake(waterIntake);
-    setShowModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setEditWaterIntake(null);
   };
   ////////////////+
   return (
@@ -109,35 +104,31 @@ const TodayWaterList = () => {
             ? `${headerSelect}  ${month}`
             : 'Today'}
         </Header>
-        {/* <Header>{today && dayWaterList[0].date}</Header> */}
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
               {dayWaterList.map(({ _id, waterAmount, date }, index) => (
                 <WaterAmountBox key={index}>
-                  <IconWrapper>
-                    <use href={`${sprite}#icon-glas-water`} />
-                  </IconWrapper>
-                  <WaterAmount>{waterAmount} ml</WaterAmount>
-                  <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
-                  <IconWrapperStr
-                    onClick={() => {
-                      dispatch(changeWaterThunk({ _id, waterAmount, date }));
-                      dispatch(getWaterThunk());
-                      handleEditWaterIntake({ _id, waterAmount, date });
-                    }}
-                  >
-                    <use href={`${sprite}#icon-pencil-square`} />
-                  </IconWrapperStr>
-                  <IconWrapperTrash
-                    onClick={
-                      () => handleOpenModalDell(_id)
-                      // dispatch(delWaterThunk(_id));
-                      // dispatch(getWaterDayThunk());
-                    }
-                  >
-                    <use href={`${sprite}#icon-trash`} />
-                  </IconWrapperTrash>
+                  <DrinkinfInfoBox>
+                    <IconWrapper>
+                      <use href={`${sprite}#icon-glas-water`} />
+                    </IconWrapper>
+                    <WaterAmount>{waterAmount} ml</WaterAmount>
+                    <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
+                  </DrinkinfInfoBox>
+                  <DrinkinfContolBox>
+                    <IconWrapperStr
+                      onClick={() => {
+                        handleOpenModalEditWater();
+                        handleEditWaterIntake({ _id, waterAmount, date });
+                      }}
+                    >
+                      <use href={`${sprite}#icon-pencil-square`} />
+                    </IconWrapperStr>
+                    <IconWrapperTrash onClick={() => handleOpenModalDell(_id)}>
+                      <use href={`${sprite}#icon-trash`} />
+                    </IconWrapperTrash>
+                  </DrinkinfContolBox>
                 </WaterAmountBox>
               ))}
             </DayDrinkBox>
@@ -175,28 +166,22 @@ const TodayWaterList = () => {
             <use href={`${sprite}#icon-trash`} />
           </IconWrapperTrash>
         </WaterAmountBox> */}
-
-          <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
+          <BtnAddWater onClick={handleOpenModalAddWater}>
+            + Add Water
+          </BtnAddWater>
         </AddWaterBox>
-        {showModal && (
-          <WaterModal
+        {isModaEditWaterOpen &&
+          <EditWaterModal
             waterIntakeId={editWaterIntake?._id}
             initialValue={editWaterIntake?.waterAmount}
             initialTime={editWaterIntake?.date.slice(11, 16)}
-            onSave={(updatedAmount, updatedTime) => {
-              dispatch(
-                changeWaterThunk({
-                  _id: editWaterIntake._id,
-                  waterAmount: updatedAmount,
-                  date: updatedTime,
-                })
-              );
-              setShowModal(false);
-              setEditWaterIntake(null);
-            }}
-            onClose={handleCloseModal}
+            onTimeChange
+            onClose={handleCloseModalEditWater}
             editMode
           />
+        }
+        {isModaAddWaterOpen && (
+          <AddWaterModal onClose={handleCloseModalAddWater} />
         )}
         {isDeleteWaterModal && (
           <DeleteWaterModal onClose={handleCloseModalDell} delId={selectItem} />

@@ -31,10 +31,15 @@ import {
   TextError,
 } from './SettingModal.styled';
 
+import { Snackbar, Alert } from '@mui/material';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { currentThunk, updateAvatarThunk, changeUserDataThunk } from '../../redux/auth/authThunk';
+import {
+  currentThunk,
+  updateAvatarThunk,
+  changeUserDataThunk,
+} from '../../redux/auth/authThunk';
 import { profileSelector } from '../../redux/auth/selectors';
 
 const SettingModal = ({ onClose }) => {
@@ -82,17 +87,20 @@ const SettingModal = ({ onClose }) => {
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
   const [isShowOldPassword, setIsShowOldPassword] = useState(false);
 
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [snackBarStatus, setSnackBarStatus] = useState('success');
+  const [passwordMismatchError, setPasswordMismatchError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const UserSettingShema = yup.object().shape({
     gender: yup.string().required(),
-    name: yup
-      .string()
-      .max(32, 'max length 32')
-      .matches(
-        /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ]+$/,
-        'Name should only contain letters (Latin, Ukrainian or Cyrillic)'
-      ),
+    name: yup.string().max(32, 'max length 32'),
+    // .matches(
+    //   /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ]+$/,
+    //   'Name should only contain letters (Latin, Ukrainian or Cyrillic)'
+    // ),
     email: yup.string().matches(emailPattern, 'Email is not valid'),
     oldPassword: yup
       .string()
@@ -133,7 +141,7 @@ const SettingModal = ({ onClose }) => {
     const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
 
     formik.setFieldError('photo', '');
-  
+
     if (fileExtension !== 'jpg') {
       formik.setFieldError('photo', 'Only JPG files are allowed.');
       return;
@@ -155,13 +163,19 @@ const SettingModal = ({ onClose }) => {
     },
     validationSchema: UserSettingShema,
     onSubmit: async (values) => {
-      await dispatch(changeUserDataThunk({
-        gender: values.gender,
-        userName: values.name,
-        email: values.email,
-        oldPassword: values.oldPassword,
-        newPassword: values.newPassword,
-      }));
+      await dispatch(
+        changeUserDataThunk({
+          gender: values.gender,
+          userName: values.name,
+          email: values.email,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        })
+      );
+
+      setOpenSnackBar(true);
+      setSnackBarStatus('success');
+
       await dispatch(currentThunk());
       await handleClose();
     },
@@ -187,16 +201,14 @@ const SettingModal = ({ onClose }) => {
             <ContainerAvatar>
               {!userAvatarUrl && (
                 <div>
-                  {userName
-                    ? userName.split('')[0].toUpperCase()
-                    : 'V'}
+                  {userName ? userName.split('')[0].toUpperCase() : 'V'}
                 </div>
               )}
               {userAvatarUrl && (
                 <Avatar src={userAvatarUrl} alt="AVATAR" weight="80px" />
               )}
             </ContainerAvatar>
-            
+
             <Upload>
               <input
                 name="photo"
@@ -216,7 +228,7 @@ const SettingModal = ({ onClose }) => {
             )}
           </UploadWrapper>
         </ContainerPhoto>
-        
+
         <Form onSubmit={formik.handleSubmit}>
           <FormContainer>
             <FirstContainer>
@@ -251,7 +263,7 @@ const SettingModal = ({ onClose }) => {
                   </RadioWrapper>
                 </RadiosWrapper>
               </GenderWrapper>
-              
+
               <ContainerRME>
                 <FieldWrapper>
                   <LabelName>Your name</LabelName>
@@ -273,7 +285,7 @@ const SettingModal = ({ onClose }) => {
                     <TextError>{formik.errors.name}</TextError>
                   )}
                 </FieldWrapper>
-              
+
                 <FieldWrapper>
                   <LabelName>Email</LabelName>
                   <Input
@@ -309,8 +321,9 @@ const SettingModal = ({ onClose }) => {
                   >
                     <svg>
                       <use
-                        href={`${sprite}#${isShowOldPassword ? 'icon-eye' : 'icon-eye-slash'
-                          }`}
+                        href={`${sprite}#${
+                          isShowOldPassword ? 'icon-eye' : 'icon-eye-slash'
+                        }`}
                       />
                     </svg>
                   </EyeButton>
@@ -325,7 +338,9 @@ const SettingModal = ({ onClose }) => {
                     value={formik.values.oldPassword}
                     onBlur={formik.handleBlur}
                     placeholder="Old password"
-                    error={formik.touched.oldPassword && formik.errors.oldPassword}
+                    error={
+                      formik.touched.oldPassword && formik.errors.oldPassword
+                    }
                   />
                   {formik.touched.oldPassword && formik.errors.oldPassword && (
                     <TextError>{formik.errors.oldPassword}</TextError>
@@ -342,8 +357,9 @@ const SettingModal = ({ onClose }) => {
                     >
                       <svg>
                         <use
-                          href={`${sprite}#${isShowNewPassword ? 'icon-eye' : 'icon-eye-slash'
-                            }`}
+                          href={`${sprite}#${
+                            isShowNewPassword ? 'icon-eye' : 'icon-eye-slash'
+                          }`}
                         />
                       </svg>
                     </EyeButton>
@@ -358,11 +374,14 @@ const SettingModal = ({ onClose }) => {
                       onBlur={formik.handleBlur}
                       id="newPassword"
                       placeholder="New Password"
-                      error={formik.touched.newPassword && formik.errors.newPassword}
+                      error={
+                        formik.touched.newPassword && formik.errors.newPassword
+                      }
                     />
-                    {formik.touched.newPassword && formik.errors.newPassword && (
-                      <TextError>{formik.errors.newPassword}</TextError>
-                    )}
+                    {formik.touched.newPassword &&
+                      formik.errors.newPassword && (
+                        <TextError>{formik.errors.newPassword}</TextError>
+                      )}
                   </PasswordWrapper>
                 </div>
               </FieldWrapper>
@@ -378,8 +397,11 @@ const SettingModal = ({ onClose }) => {
                     >
                       <svg>
                         <use
-                          href={`${sprite}#${isShowConfirmPassword ? 'icon-eye' : 'icon-eye-slash'
-                            }`}
+                          href={`${sprite}#${
+                            isShowConfirmPassword
+                              ? 'icon-eye'
+                              : 'icon-eye-slash'
+                          }`}
                         />
                       </svg>
                     </EyeButton>
@@ -396,7 +418,10 @@ const SettingModal = ({ onClose }) => {
                       value={formik.values.repeatPassword}
                       onBlur={formik.handleBlur}
                       placeholder="Repeat new password"
-                      error={formik.touched.repeatPassword && formik.errors.repeatPassword}
+                      error={
+                        formik.touched.repeatPassword &&
+                        formik.errors.repeatPassword
+                      }
                     />
                     {formik.touched.repeatPassword &&
                       formik.errors.repeatPassword && (
@@ -408,11 +433,30 @@ const SettingModal = ({ onClose }) => {
             </div>
           </FormContainer>
 
-          <StyledButton type="submit">
-            Save
+          <StyledButton
+            onAbort={formik.handleSubmit}
+            type="submit"
+            disabled={passwordMismatchError || isSubmitting}
+          >
+            {isSubmitting ? 'Loading...' : 'Save'}
           </StyledButton>
         </Form>
       </ModalContent>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={11000}
+        onClose={() => setOpenSnackBar(false)}
+      >
+        <Alert
+          severity={snackBarStatus}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackBarStatus === 'success'
+            ? 'Information Updated Successfully!'
+            : 'Error Updating Information'}
+        </Alert>
+      </Snackbar>
     </ModalOverlay>
   );
 };

@@ -5,14 +5,18 @@ import {
   WaterInfo,
   Button,
 } from './WaterRatioPanel.styled';
-
+import { useState, useEffect } from 'react';
+import AddWaterModal from '../AddWaterModal/AddWaterModal';
 import sprite from '../../assets/img/sprite.svg';
 
-import { Section } from '../Section/Section';
 
 export const WaterRatioPanel = () => {
+  const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
+  const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
+  const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
+
   return (
-    <Section>
+    <>
       <StatusContainer>
         <WaterStatus>
           <p>Today</p>
@@ -25,14 +29,18 @@ export const WaterRatioPanel = () => {
             <span>100%</span>
           </WaterInfo>
         </WaterStatus>
-        <Button onClick>
+        <Button onClick={handleOpenModalAddWater}>
           <svg>
             <use href={sprite + '#icon-plus'} />
           </svg>
           Add water
         </Button>
+      
       </StatusContainer>
-    </Section>
+      {isModaAddWaterOpen && (
+        <AddWaterModal onClose={handleCloseModalAddWater} />
+      )}
+    </>
   );
 };
 

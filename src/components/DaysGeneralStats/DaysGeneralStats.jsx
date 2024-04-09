@@ -7,10 +7,10 @@ import {
   DaysGeneralStatsModal,
   DaysList,
   DaysListItem,
-  OverlayDeleteModal,
+  TransparentOverlay,
 } from './DaysGeneralStats.styled';
 
-const DaysGeneralStats = (selectDayInfo, onClose) => {
+const DaysGeneralStats = ({ selectDayInfo, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -18,36 +18,14 @@ const DaysGeneralStats = (selectDayInfo, onClose) => {
     setTimeout(onClose, 500);
   };
 
-  const handleBackdropClick = (event) => {
-    if (event.currentTarget === event.target) {
-      handleClose();
-    }
-  };
-
   useEffect(() => {
     setIsOpen(true);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, []);
 
-  useEffect(() => {
-    const close = (e) => {
-      if (e.code === 'Escape') {
-        handleClose();
-      }
-    };
-
-    document.addEventListener('keydown', close);
-
-    return () => {
-      document.removeEventListener('keydown', close);
-    };
-  }, [onClose]);
-
   return (
-    <OverlayDeleteModal isOpen={isOpen} onClick={handleBackdropClick}>
+    <>
+      {isOpen && <TransparentOverlay onClick={handleClose} />}
+
       <DaysGeneralStatsModal isOpen={isOpen} onClick={onClose}>
         <DaysList>
           <DaysListItem>
@@ -80,7 +58,7 @@ const DaysGeneralStats = (selectDayInfo, onClose) => {
           </DaysListItem>
         </DaysList>
       </DaysGeneralStatsModal>
-    </OverlayDeleteModal>
+    </>
   );
 };
 

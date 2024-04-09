@@ -9,6 +9,14 @@ export const DailyNormaWrapper = styled.div`
   border: 1px solid var(--secondary-color-2);
   background: var(--primery-color-white);
   box-shadow: 0px 4px 8px 0px rgba(158, 187, 255, 0.12);
+
+  @media screen and (min-width: 768px) {
+    position: absolute;
+  }
+  @media screen and (min-width: 1440px) {
+    top: 30px;
+    left: 73px;
+  }
 `;
 
 export const DailyNormaTitle = styled.h3`

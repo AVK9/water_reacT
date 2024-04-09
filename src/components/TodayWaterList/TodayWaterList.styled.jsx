@@ -98,7 +98,6 @@ export const WaterAmount = styled.span`
   white-space: nowrap;
 `;
 
-export const DrinkinfContolBox = styled.div``;
 
 export const DrinkinfInfoBox = styled.div`
   display: flex;
@@ -116,9 +115,6 @@ export const DayDrinkBox = styled.div`
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(175, 0, 0, 0.8);
   }
-`;
-export const DrinkinfInfoBox = styled.div`
-  ///
 `;
 export const DrinkinfContolBox = styled.div`
   ///

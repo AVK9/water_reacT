@@ -84,7 +84,7 @@ export const IconWrapper = styled.svg`
 export const ContainerPhoto = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px
+  gap: 8px;
 `;
 
 export const TitlePhoto = styled.h3`
@@ -114,10 +114,10 @@ export const Upload = styled.label`
   &:hover,
   &:focus {
     & svg {
-      stroke: var(--secondary-color-3);
+      stroke: var(--secondary-color-5);
     }
     & p {
-      color: var(--secondary-color-3);
+      color: var(--secondary-color-5);
     }
   }
 
@@ -163,7 +163,6 @@ export const FormContainer = styled.div`
   flex-direction: column;
   gap: 24px;
 
-
   @media screen and (min-width: 1440px) {
     flex-direction: row;
   }
@@ -196,7 +195,7 @@ export const LabelName = styled.label`
 export const GenderWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px
+  gap: 12px;
 `;
 
 export const RadiosWrapper = styled.div`

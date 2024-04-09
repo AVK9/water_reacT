@@ -21,7 +21,6 @@ import * as dateFns from 'date-fns';
 import { format } from 'date-fns';
 
 import {
-  addWaterThunk,
   changeWaterThunk,
   getWaterThunk,
 } from '../../redux/water/waterThunk';
@@ -34,12 +33,16 @@ import {
   selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
+import AddWaterModal from '../AddWaterModal/AddWaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
 import { Loader } from '../Loader/Loader';
 
 const formatOfManth = 'MMMM';
 
 const TodayWaterList = () => {
+  const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
+  const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
+  const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);  
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
 
@@ -65,16 +68,10 @@ const TodayWaterList = () => {
   // const timezoneOffset = 'kyivTimeZone';
   // console.log('nowdate =>', date);
 
-  const waterAmount = 500;
-
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  const addWater = () => {
-    const body = { date, waterAmount };
-    dispatch(addWaterThunk(body));
-  };
   useEffect(() => {
     // dispatch(getWaterThunk());
     // dispatch(getWaterDayThunk());
@@ -174,8 +171,7 @@ const TodayWaterList = () => {
             <use href={`${sprite}#icon-trash`} />
           </IconWrapperTrash>
         </WaterAmountBox> */}
-
-          <BtnAddWater onClick={addWater}>+ Add Water</BtnAddWater>
+          <BtnAddWater onClick={handleOpenModalAddWater}>+ Add Water</BtnAddWater
         </AddWaterBox>
         {showModal && (
           <WaterModal
@@ -197,6 +193,7 @@ const TodayWaterList = () => {
             editMode
           />
         )}
+         {isModaAddWaterOpen && <AddWaterModal onClose={handleCloseModalAddWater} />}
         {isDeleteWaterModal && (
           <DeleteWaterModal onClose={handleCloseModalDell} delId={selectItem} />
         )}

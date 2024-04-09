@@ -20,10 +20,7 @@ import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
 import { format } from 'date-fns';
 
-import {
-  changeWaterThunk,
-  getWaterThunk,
-} from '../../redux/water/waterThunk';
+import { changeWaterThunk, getWaterThunk } from '../../redux/water/waterThunk';
 import {
   selectError,
   selectLoading,
@@ -42,7 +39,7 @@ const formatOfManth = 'MMMM';
 const TodayWaterList = () => {
   const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
   const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
-  const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);  
+  const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
 
@@ -171,7 +168,9 @@ const TodayWaterList = () => {
             <use href={`${sprite}#icon-trash`} />
           </IconWrapperTrash>
         </WaterAmountBox> */}
-          <BtnAddWater onClick={handleOpenModalAddWater}>+ Add Water</BtnAddWater
+          <BtnAddWater onClick={handleOpenModalAddWater}>
+            + Add Water
+          </BtnAddWater>
         </AddWaterBox>
         {showModal && (
           <WaterModal
@@ -193,7 +192,9 @@ const TodayWaterList = () => {
             editMode
           />
         )}
-         {isModaAddWaterOpen && <AddWaterModal onClose={handleCloseModalAddWater} />}
+        {isModaAddWaterOpen && (
+          <AddWaterModal onClose={handleCloseModalAddWater} />
+        )}
         {isDeleteWaterModal && (
           <DeleteWaterModal onClose={handleCloseModalDell} delId={selectItem} />
         )}

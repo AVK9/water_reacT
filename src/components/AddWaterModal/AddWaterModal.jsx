@@ -23,26 +23,23 @@ import {
   IconWrapper
 } from './AddWaterModal.styled';
 import sprite from '../../assets/img/sprite.svg';
+import * as dateFns from 'date-fns';
 
 const formatTime = (date) => {
-  if (!(date instanceof Date)) {
-    console.error('Invalid date:', date);
-    return '';
-  }
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const hours = dateFns.format(date, 'HH');
+  const minutes = dateFns.format(date, 'mm');
   return `${hours}:${minutes}`;
 };
 
 const getTimeOptions = (start, end, step = 5) => {
   const options = [];
-  let currentTime = new Date(start);
-  const endTime = new Date(end);
+  let currentTime = start;
+  const endTime = end;
 
   while (currentTime <= endTime) {
     const timeString = formatTime(currentTime);
     options.push({ value: timeString, label: timeString });
-    currentTime = new Date(currentTime.getTime() + step * 60000); 
+    currentTime = dateFns.add(currentTime, { minutes: step });
   }
 
   return options;
@@ -60,7 +57,10 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
         setSelectedTime(newDate);
     };
 
-    const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59, 0));
+    const now = new Date();
+    const adjustedTime = dateFns.sub(now, { minutes: -180 });
+
+    const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59), 5);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -108,7 +108,7 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
     const dispatch = useDispatch();
 
     const handleAddWater = () => {
-        dispatch(addWaterThunk({ date: selectedTime, waterAmount: waterAmount }));
+        dispatch(addWaterThunk({ date: adjustedTime, waterAmount: waterAmount }));
         handleClose();
     };
 

@@ -98,6 +98,8 @@ export const SignInInput = styled.input`
   background: var(--primery-color-white);
   outline: none;
 
+  
+
   @media screen and (min-width: 768px) {
     border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
@@ -175,6 +177,8 @@ export const ErrorMessage = styled.div`
   color: red;
   margin-top: 5px;
 `;
+
+
 
 export const Form = styled.form`
   display: flex;

@@ -31,6 +31,7 @@ import {
 } from '../../redux/water/waterThunk';
 import { Loader } from '../Loader/Loader';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats';
+import { updateStateHandleDate } from '../../redux/action/action.js';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -39,7 +40,7 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const MonthStatsTable = () => {
-  const [selectDate, setSelectDate] = useState(new Date());
+  const [selectDateUse, setSelectDateUse] = useState(new Date());
   const [selectDayInfo, setSelectDayInfo] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
@@ -52,11 +53,10 @@ const MonthStatsTable = () => {
   const dateTime = DateTime.now();
   console.log('dateTime :>> ', dateTime.c.month);
 
-  const selectMonth = dateFns.format(selectDate, formatOfManthDig);
-  const selectYear = dateFns.format(selectDate, formatOfYear);
-  const selectDay = dateFns.format(selectDate, formatOfDay);
+  const selectMonth = dateFns.format(selectDateUse, formatOfManthDig);
+  const selectYear = dateFns.format(selectDateUse, formatOfYear);
+  const selectDay = dateFns.format(selectDateUse, formatOfDay);
 
-  console.log(selectDate);
   const firstDay = dateFns.startOfMonth(currentDate);
   const lastDay = dateFns.lastDayOfMonth(currentDate);
   const startDate = dateFns.startOfWeek(firstDay);
@@ -78,14 +78,14 @@ const MonthStatsTable = () => {
   })(totalDate);
 
   const isToday = (day) => dateFns.isSameDay(day, today);
-  const isSelectedDate = (day) => dateFns.isSameDay(day, selectDate);
+  const isSelectedDate = (day) => dateFns.isSameDay(day, selectDateUse);
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (today) {
       dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
     }
-  }, [selectDate]);
+  }, [selectDateUse]);
 
   useEffect(() => {
     dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
@@ -130,7 +130,14 @@ const MonthStatsTable = () => {
       return day;
     }
   });
-  console.log('selectDayInfo', selectDayInfo);
+
+  const updateSelectDay = (date) => {
+    const click = dateFns.sub(date, { minutes: -180 });
+    const todayDay = dateFns.format(click, 'yyyy-MM-dd');
+    dispatch(updateStateHandleDate(todayDay));
+  };
+
+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
@@ -202,7 +209,8 @@ const MonthStatsTable = () => {
                           date,
                           events: { percent, waterRate, numberRecords },
                         });
-                        setSelectDate(date);
+                        setSelectDateUse(date);
+                        updateSelectDay(date);
                         // handleOpenModalRate();
                       }}
                     >

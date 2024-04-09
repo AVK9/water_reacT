@@ -24,7 +24,6 @@ import {
   selectLoading,
   selectSelectDay,
   selectSelectMonth,
-  // selectStateWaterDayList,
   selectVisibleDrinking,
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
@@ -43,7 +42,6 @@ const TodayWaterList = () => {
   const [isModaEditWaterOpen, setIsModalEditWaterOpen] = useState(false);
   const handleOpenModalEditWater = () => setIsModalEditWaterOpen(true);
   const handleCloseModalEditWater = () => setIsModalEditWaterOpen(false);
-  
 
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
@@ -57,17 +55,6 @@ const TodayWaterList = () => {
   ///////+
   const [editWaterIntake, setEditWaterIntake] = useState(null);
   /////////
-  // console.log('todaytodaytoday =>', today);
-
-  // const date = new Date();
-  // const date = DateTime.now().setZone('Europe/Kiev');
-  const now = new Date();
-  const date = dateFns.sub(now, { minutes: -180 });
-  // setDay(date);
-  // const now = DateTime.now();
-  // const date = now.setZone(now.offset - 180, { keepLocalTime: true });
-  // const timezoneOffset = 'kyivTimeZone';
-  // console.log('nowdate =>', date);
 
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -87,23 +74,25 @@ const TodayWaterList = () => {
   const fullMonth = selMonth + '-01';
   const month = dateFns.format(fullMonth, formatOfManth);
 
-  const todayDay = format(new Date(), 'yyyy-MM-dd');
+  const now = new Date();
+  const date = dateFns.sub(now, { minutes: -180 });
+  const todayDay = format(date, 'yyyy-MM-dd');
 
+  console.log('selectDayselectDay', selectDay);
+  console.log('selMonthselMonthselMonth', selMonth);
   ///////////////+
 
   const handleEditWaterIntake = (waterIntake) => {
     setEditWaterIntake(waterIntake);
   };
   ////////////////+
+  const clickDate = useSelector((state) => state.time.stateHandleDate);
+
   return (
     <>
       {error && <p>Error: {error}</p>}
       <TodayWaterListBox>
-        <Header>
-          {selectDay.slice(0, 10).toString() !== todayDay.toString()
-            ? `${headerSelect}  ${month}`
-            : 'Today'}
-        </Header>
+        <Header>{clickDate ? format(clickDate, 'dd, MMMM') : 'Today'}</Header>
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
@@ -139,38 +128,11 @@ const TodayWaterList = () => {
             </DayDrinkBox>
             // <Loader /> &&
           )}
-
-          {/* <WaterAmountBox>
-          <IconWrapper>
-            <use href={`${sprite}#icon-glas-water`} />
-          </IconWrapper>
-          <WaterAmount>200 ml</WaterAmount>
-          <WaterAmountTime>14.00 PM</WaterAmountTime>
-          <IconWrapperStr>
-            <use href={`${sprite}#icon-pencil-square`} />
-          </IconWrapperStr>
-          <IconWrapperTrash>
-            <use href={`${sprite}#icon-trash`} />
-          </IconWrapperTrash>
-        </WaterAmountBox>
-        <WaterAmountBox>
-          <IconWrapper>
-            <use href={`${sprite}#icon-glas-water`} />
-          </IconWrapper>
-          <WaterAmount>200 ml</WaterAmount>
-          <WaterAmountTime>14.00 PM</WaterAmountTime>
-          <IconWrapperStr>
-            <use href={`${sprite}#icon-pencil-square`} />
-          </IconWrapperStr>
-          <IconWrapperTrash>
-            <use href={`${sprite}#icon-trash`} />
-          </IconWrapperTrash>
-        </WaterAmountBox> */}
           <BtnAddWater onClick={handleOpenModalAddWater}>
             + Add Water
           </BtnAddWater>
         </AddWaterBox>
-        {isModaEditWaterOpen &&
+        {isModaEditWaterOpen && (
           <EditWaterModal
             waterIntakeId={editWaterIntake?._id}
             initialValue={editWaterIntake?.waterAmount}
@@ -179,7 +141,7 @@ const TodayWaterList = () => {
             onClose={handleCloseModalEditWater}
             editMode
           />
-        }
+        )}
         {isModaAddWaterOpen && (
           <AddWaterModal onClose={handleCloseModalAddWater} />
         )}

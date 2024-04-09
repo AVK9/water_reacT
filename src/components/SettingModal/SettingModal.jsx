@@ -111,7 +111,7 @@ const SettingModal = ({ onClose }) => {
       ),
     newPassword: yup
       .string()
-      .min(8, 'Password must be at least 6 characters')
+      .min(6, 'Password must be at least 6 characters')
       .max(64, 'Max length 64')
       .nullable()
       .test(
@@ -136,20 +136,26 @@ const SettingModal = ({ onClose }) => {
     e.preventDefault();
   };
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
     const selectedFile = e.target.files[0];
     const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-
-    formik.setFieldError('photo', '');
 
     if (fileExtension !== 'jpg') {
       formik.setFieldError('photo', 'Only JPG files are allowed.');
       return;
     }
 
+    formik.setFieldError('photo', '');
+
     const formData = new FormData();
     formData.append('avatar', selectedFile);
-    dispatch(updateAvatarThunk(formData));
+    
+    try {
+      await dispatch(updateAvatarThunk(formData));
+      await dispatch(currentThunk());
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+    }
   };
 
   const formik = useFormik({
@@ -163,21 +169,27 @@ const SettingModal = ({ onClose }) => {
     },
     validationSchema: UserSettingShema,
     onSubmit: async (values) => {
-      await dispatch(
-        changeUserDataThunk({
-          gender: values.gender,
-          userName: values.name,
-          email: values.email,
-          oldPassword: values.oldPassword,
-          newPassword: values.newPassword,
-        })
-      );
+      try {
+        await dispatch(
+          changeUserDataThunk({
+            gender: values.gender,
+            userName: values.name,
+            email: values.email,
+            oldPassword: values.oldPassword,
+            newPassword: values.newPassword,
+          })
+        );
 
-      setOpenSnackBar(true);
-      setSnackBarStatus('success');
+        setOpenSnackBar(true);
+        setSnackBarStatus('success');
 
-      await dispatch(currentThunk());
-      await handleClose();
+        await dispatch(currentThunk());
+        await handleClose();
+      } catch (error) {
+        console.error('Error updating user data:', error);
+        setOpenSnackBar(true);
+        setSnackBarStatus('error');
+      }
     },
   });
 
@@ -434,7 +446,6 @@ const SettingModal = ({ onClose }) => {
           </FormContainer>
 
           <StyledButton
-            onAbort={formik.handleSubmit}
             type="submit"
             disabled={passwordMismatchError || isSubmitting}
           >

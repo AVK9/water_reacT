@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 import * as dateFns from 'date-fns';
+import { addMonths, subMonths, format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -31,6 +32,7 @@ import {
 } from '../../redux/water/waterThunk';
 import { Loader } from '../Loader/Loader';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats';
+import { updateStateHandleDate } from '../../redux/action/action.js';
 
 const formatOfYear = 'yyy';
 const formatOfManth = 'MMM';
@@ -39,7 +41,9 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const MonthStatsTable = () => {
-  const [selectDate, setSelectDate] = useState(new Date());
+  const dispatch = useDispatch();
+
+  const [selectDateUse, setSelectDateUse] = useState(new Date());
   const [selectDayInfo, setSelectDayInfo] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
@@ -52,11 +56,10 @@ const MonthStatsTable = () => {
   const dateTime = DateTime.now();
   console.log('dateTime :>> ', dateTime.c.month);
 
-  const selectMonth = dateFns.format(selectDate, formatOfManthDig);
-  const selectYear = dateFns.format(selectDate, formatOfYear);
-  const selectDay = dateFns.format(selectDate, formatOfDay);
+  const selectMonth = dateFns.format(selectDateUse, formatOfManthDig);
+  const selectYear = dateFns.format(selectDateUse, formatOfYear);
+  const selectDay = dateFns.format(selectDateUse, formatOfDay);
 
-  console.log(selectDate);
   const firstDay = dateFns.startOfMonth(currentDate);
   const lastDay = dateFns.lastDayOfMonth(currentDate);
   const startDate = dateFns.startOfWeek(firstDay);
@@ -65,6 +68,18 @@ const MonthStatsTable = () => {
     start: startDate,
     end: endDate,
   });
+
+  const firstDayNextMonth = dateFns.startOfMonth(addMonths(currentDate, 1));
+  const lastDayNextMonth = dateFns.lastDayOfMonth(addMonths(currentDate, 1));
+  const startDateNext = dateFns.startOfWeek(firstDayNextMonth);
+  const endDateNext = dateFns.lastDayOfWeek(lastDayNextMonth);
+
+  const firstPreviousMonth = dateFns.startOfMonth(subMonths(currentDate, 1));
+  const lastDayPreviousMonth = dateFns.lastDayOfMonth(
+    subMonths(currentDate, 1)
+  );
+  const startDateSub = dateFns.startOfWeek(firstPreviousMonth);
+  const endDateSub = dateFns.lastDayOfWeek(lastDayPreviousMonth);
 
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
@@ -78,18 +93,7 @@ const MonthStatsTable = () => {
   })(totalDate);
 
   const isToday = (day) => dateFns.isSameDay(day, today);
-  const isSelectedDate = (day) => dateFns.isSameDay(day, selectDate);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (today) {
-      dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
-    }
-  }, [selectDate]);
-
-  useEffect(() => {
-    dispatch(getWaterMonthThunk(`${selectYear}-${selectMonth}`));
-  }, [selectMonth]);
+  const isSelectedDate = (day) => dateFns.isSameDay(day, selectDateUse);
 
   const calendrShablon = totalDate.map((day) => {
     const data = `${dateFns.format(day, formatOfDay)}-${dateFns.format(
@@ -130,7 +134,37 @@ const MonthStatsTable = () => {
       return day;
     }
   });
-  console.log('selectDayInfo', selectDayInfo);
+
+  useEffect(() => {
+    if (today) {
+      dispatch(getWaterDayThunk(`${selectYear}-${selectMonth}-${selectDay}`));
+    }
+    const start = dateFns.format(startDate, 'yyyy-MM-dd');
+    const end = dateFns.format(endDate, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  }, [dispatch]);
+
+  const updateMonthNext = () => {
+    const start = dateFns.format(startDateNext, 'yyyy-MM-dd');
+    const end = dateFns.format(endDateNext, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  };
+
+  const updateMonthSub = () => {
+    const start = dateFns.format(startDateSub, 'yyyy-MM-dd');
+    const end = dateFns.format(endDateSub, 'yyyy-MM-dd');
+    const bady = { start, end };
+    dispatch(getWaterMonthThunk(bady));
+  };
+
+  const updateSelectDay = (date) => {
+    const click = dateFns.sub(date, { minutes: -180 });
+    const todayDay = dateFns.format(click, 'yyyy-MM-dd');
+    dispatch(updateStateHandleDate(todayDay));
+  };
+
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
@@ -142,7 +176,7 @@ const MonthStatsTable = () => {
             <BtnMonthBox
               onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
             >
-              <IconWrapper>
+              <IconWrapper onClick={updateMonthSub}>
                 <use href={`${sprite}#icon-chevron-right`} />
               </IconWrapper>
             </BtnMonthBox>
@@ -157,7 +191,7 @@ const MonthStatsTable = () => {
             <BtnMonthBox
               onClick={() => setCurrentDate(dateFns.addMonths(currentDate, 1))}
             >
-              <IconWrapper>
+              <IconWrapper onClick={updateMonthNext}>
                 <use href={`${sprite}#icon-chevron-left`} />
               </IconWrapper>
             </BtnMonthBox>
@@ -202,7 +236,8 @@ const MonthStatsTable = () => {
                           date,
                           events: { percent, waterRate, numberRecords },
                         });
-                        setSelectDate(date);
+                        setSelectDateUse(date);
+                        updateSelectDay(date);
                         // handleOpenModalRate();
                       }}
                     >

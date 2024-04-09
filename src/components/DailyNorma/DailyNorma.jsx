@@ -11,18 +11,11 @@ import {
 } from './DailyNorma.styled';
 
 const DailyNorma = () => {
-
   const profileWaterRate = useSelector(profileSelector).waterRate / 1000;
-  // localStorage.setItem('dailyNorm', profileWaterRate);
 
-  // const initialDailyNorm = parseFloat(localStorage.getItem('dailyNorm'));
-
-  // const initialDailyNorm = localStorage.getItem('dailyNorm')
   //   ? parseFloat(localStorage.getItem('dailyNorm'))
-  //   : 2.0;
 
-
-  const [dailyNorm, setDailyNorm] = useState(profileWaterRate);
+  const [dailyNorm, setDailyNorm] = useState(2);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -35,6 +28,12 @@ const DailyNorma = () => {
       setDailyNorm(newDailyNorm);
     }
   };
+
+  useEffect(() => {
+    if (profileWaterRate) {
+      setDailyNorm(profileWaterRate);
+    }
+  }, [profileWaterRate]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -55,7 +54,7 @@ const DailyNorma = () => {
       <DailyNormaWrapper>
         <DailyNormaTitle>My daily norma</DailyNormaTitle>
         <DailyNormaContent>
-          <DailyNormaValue>{profileWaterRate.toFixed(1)} L</DailyNormaValue>
+          <DailyNormaValue>{dailyNorm.toFixed(1)} L</DailyNormaValue>
           <EditButton onClick={handleOpenModal}>Edit</EditButton>
         </DailyNormaContent>
       </DailyNormaWrapper>

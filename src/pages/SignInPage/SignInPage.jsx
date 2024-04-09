@@ -71,6 +71,7 @@ const formik = useFormik({
 
 
 
+
   return (
     <DesktopBg>
       <Section>
@@ -98,7 +99,6 @@ const formik = useFormik({
               {formik.touched.email && formik.errors.email && (
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               )}
-
               <SignInLabel>Enter your password</SignInLabel>
               <div style={{ position: 'relative' }}>
                 <SignInInput
@@ -125,7 +125,9 @@ const formik = useFormik({
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
 
-              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
+
+              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}{' '}
+             
 
               <SignInButton type="submit" disabled={!formik.isValid}>
                 Sign In

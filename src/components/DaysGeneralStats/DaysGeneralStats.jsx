@@ -37,7 +37,7 @@ const DaysGeneralStats = ({ selectDayInfo, onClose }) => {
           <DaysListItem>
             Daily norma:
             <DataSpan>
-              {(selectDayInfo.date && `${selectDayInfo.events.waterRate} L`) ||
+              {(selectDayInfo.date && `${selectDayInfo.events.waterRate / 1000 } L`) ||
                 '2 L'}
             </DataSpan>
           </DaysListItem>

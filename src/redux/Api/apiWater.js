@@ -7,8 +7,6 @@ export const setTokenApi = (token) => {
 };
 
 export const addWaterApi = async (body) => {
-  console.log(body);
-
   const { data } = await axios.post('/api/water/add', body, {
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +24,6 @@ export const getWaterApi = async () => {
   return data;
 };
 export const getWaterSelectDayApi = async (body) => {
-  console.log('bodybody', body);
   const { data } = await axios.get(`/api/water/today?date=${body}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -48,16 +45,27 @@ export const getWaterSelectDayApi = async (body) => {
 //   }
 // };
 
-export const getWaterMonthApi = async (body) => {
-  if (body) {
-    const { data } = await axios.get(`/api/water/month?date=${body}`, {
+// export const getWaterMonthApi = async (body) => {
+//   if (body) {
+//     const { data } = await axios.get(`/api/water/month?date=${body}`, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return data;
+//   }
+//   return;
+// };
+export const getWaterMonthApi = async ({ start, end }) => {
+  const { data } = await axios.get(
+    `/api/water/month?start=${start}&end=${end}`,
+    {
       headers: {
         'Content-Type': 'application/json',
       },
-    });
-    return data;
-  }
-  return;
+    }
+  );
+  return data;
 };
 
 export const delWaterApi = async (delId) => {

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   stateHandleDate: null,
+  stateHandleMonth: {},
 };
 
 const timeSlice = createSlice({
@@ -11,9 +12,13 @@ const timeSlice = createSlice({
     updateStateHandleDate: (state, action) => {
       state.stateHandleDate = action.payload;
     },
+    updateStateHandleMonth: (state, action) => {
+      state.stateHandleMonth = action.payload;
+    },
   },
 });
 
-export const { updateStateHandleDate } = timeSlice.actions;
+export const { updateStateHandleDate, updateStateHandleMonth } =
+  timeSlice.actions;
 
 export const timeReduser = timeSlice.reducer;

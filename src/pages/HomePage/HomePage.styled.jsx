@@ -54,7 +54,7 @@ export const Compare = styled.div`
     flex-direction: column;
   }
 `;
-export const Bottle = styled.img`
+export const Bottle = styled.div`
   border: none;
   margin-top: 8px;
   margin-bottom: 15px;

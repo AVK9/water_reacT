@@ -171,8 +171,7 @@ const TodayWaterList = () => {
             <use href={`${sprite}#icon-trash`} />
           </IconWrapperTrash>
         </WaterAmountBox> */}
-
-          <BtnAddWater onClick={handleOpenModalAddWater}>+ Add Water</BtnAddWater>
+          <BtnAddWater onClick={handleOpenModalAddWater}>+ Add Water</BtnAddWater
         </AddWaterBox>
         {showModal && (
           <WaterModal

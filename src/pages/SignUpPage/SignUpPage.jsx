@@ -49,14 +49,17 @@ const SignUpComponent = () => {
     onSubmit: (values, { setSubmitting }) => {
       dispatch(signUpThunk({ email: values.email, password: values.password }))
         .then((response) => {
-          setSubmitting(false);
-          if (response.error && response.error === 'Email already exists') {
+          if (response.error && response.error.message === 'Rejected') {
             formik.setFieldError('email', 'This email is already registered');
           }
+          setSubmitting(false);
         })
-
         .catch((error) => {
-          console.error('Error:', error);
+          if (error.response && error.response.status === 409) {
+            formik.setFieldError('email', 'This email is already registered');
+          } else {
+            console.error('Error:', error);
+          }
           setSubmitting(false);
         });
     },
@@ -74,7 +77,7 @@ const SignUpComponent = () => {
   };
 
   return (
-    <Section> 
+    <Section>
       <SignUpGlobalContainer>
         <SignUpwater></SignUpwater>
         <SignUpContainer>
@@ -95,7 +98,7 @@ const SignUpComponent = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.email && formik.errors.email}
+              $error={formik.touched.email && formik.errors.email}
             />
             {formik.touched.email && formik.errors.email && (
               <ErrorMessage>{formik.errors.email}</ErrorMessage>
@@ -110,7 +113,7 @@ const SignUpComponent = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.password && formik.errors.password}
+                $error={formik.touched.password && formik.errors.password}
               />
 
               <TogglePasswordButton
@@ -139,7 +142,7 @@ const SignUpComponent = () => {
                 value={formik.values.repeatPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
+                $error={
                   formik.touched.repeatPassword && formik.errors.repeatPassword
                 }
               />
@@ -170,7 +173,6 @@ const SignUpComponent = () => {
             <StyledLink to="/signin">
               <TextLink>Sign In</TextLink>
             </StyledLink>
-
           </Form>
         </SignUpContainer>
       </SignUpGlobalContainer>

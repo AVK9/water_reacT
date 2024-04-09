@@ -84,7 +84,7 @@ export const SignUpLabel = styled.label`
 `;
 
 export const SignUpInput = styled.input`
-  border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
+  border: 1px solid ${(props) => (props.$error ? 'red' : '#d7e3ff')};
 
   border-radius: 6px;
   padding: 12px 10px;
@@ -94,7 +94,7 @@ export const SignUpInput = styled.input`
   outline: none;
 
   @media screen and (min-width: 768px) {
-    border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
+    border: 1px solid ${(props) => (props.$error ? 'red' : '#d7e3ff')};
 
     border-radius: 6px;
     padding: 12px 10px;
@@ -103,7 +103,7 @@ export const SignUpInput = styled.input`
   }
 
   @media screen and (min-width: 1440px) {
-    border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
+    border: 1px solid ${(props) => (props.$error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
     padding: 12px 10px;
     width: 384px;

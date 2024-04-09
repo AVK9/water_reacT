@@ -15,14 +15,14 @@ const DailyNorma = () => {
   const profileWaterRate = useSelector(profileSelector).waterRate / 1000;
   // localStorage.setItem('dailyNorm', profileWaterRate);
 
-  const initialDailyNorm = parseFloat(localStorage.getItem('dailyNorm'));
+  // const initialDailyNorm = parseFloat(localStorage.getItem('dailyNorm'));
 
   // const initialDailyNorm = localStorage.getItem('dailyNorm')
   //   ? parseFloat(localStorage.getItem('dailyNorm'))
   //   : 2.0;
 
 
-  const [dailyNorm, setDailyNorm] = useState(initialDailyNorm);
+  const [dailyNorm, setDailyNorm] = useState(profileWaterRate);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -55,7 +55,7 @@ const DailyNorma = () => {
       <DailyNormaWrapper>
         <DailyNormaTitle>My daily norma</DailyNormaTitle>
         <DailyNormaContent>
-          <DailyNormaValue>{(profileWaterRate).toFixed(1)} L</DailyNormaValue>
+          <DailyNormaValue>{profileWaterRate.toFixed(1)} L</DailyNormaValue>
           <EditButton onClick={handleOpenModal}>Edit</EditButton>
         </DailyNormaContent>
       </DailyNormaWrapper>

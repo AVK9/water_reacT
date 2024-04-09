@@ -31,6 +31,8 @@ const SignInComponent = () => {
   const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -61,6 +63,7 @@ const SignInComponent = () => {
         await dispatch(currentThunk());
       } catch (error) {
         console.error('Error during login:', error);
+        setLoginError('Invalid email or password. Please try again.'); // Встановлення помилкового повідомлення при невірному вході
       }
     },
   });
@@ -92,7 +95,6 @@ const SignInComponent = () => {
               {formik.touched.email && formik.errors.email && (
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               )}
-
               <SignInLabel>Enter your password</SignInLabel>
               <div style={{ position: 'relative' }}>
                 <SignInInput
@@ -120,7 +122,8 @@ const SignInComponent = () => {
               {formik.touched.password && formik.errors.password && (
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
-
+              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}{' '}
+             
               <SignInButton type="submit" disabled={!formik.isValid}>
                 Sign In
               </SignInButton>

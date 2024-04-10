@@ -96,9 +96,9 @@ export const CalendarData = styled.div`
   border-radius: 50%;
   border: 1px solid
     ${({ percentage }) =>
-      percentage === 100
-        ? 'var(--primery-color-white)'
-        : 'var(--secondary-color-5)'};
+      percentage < 100
+        ? 'var(--secondary-color-5)'
+        : 'var(--primery-color-white)'};
   background: var(--primery-color-white);
   display: flex;
   align-items: center;

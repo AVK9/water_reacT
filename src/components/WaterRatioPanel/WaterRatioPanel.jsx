@@ -10,17 +10,21 @@ import AddWaterModal from '../AddWaterModal/AddWaterModal';
 import sprite from '../../assets/img/sprite.svg';
 
 
+import { useSelector } from 'react-redux';
+import { selectDayWaterStat } from '../../redux/water/waterSelectors';
+
 export const WaterRatioPanel = () => {
-  const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
+  const [isModalAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
   const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
   const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
+  const dailyNormFulfillment = useSelector(selectDayWaterStat);
 
   return (
     <>
       <StatusContainer>
         <WaterStatus>
           <p>Today</p>
-          <WaterMeter>
+          <WaterMeter $filled={dailyNormFulfillment}>
             <div />
           </WaterMeter>
           <WaterInfo>
@@ -35,10 +39,10 @@ export const WaterRatioPanel = () => {
           </svg>
           Add water
         </Button>
-      
       </StatusContainer>
-      {isModaAddWaterOpen && (
+      {isModalAddWaterOpen && (
         <AddWaterModal onClose={handleCloseModalAddWater} />
+      
       )}
     </>
   );

@@ -18,12 +18,12 @@ export const AddWaterBox = styled.div`
   /* display: flex; */
 
   @media screen and (min-width: 768px) {
-    width:  656px;
-
+    width: 656px;
   }
 
   @media screen and (min-width: 1440px) {
     width: 100%;
+  }
 `;
 
 export const BtnAddWater = styled.div`
@@ -39,21 +39,22 @@ export const BtnAddWater = styled.div`
 `;
 
 export const WaterAmountBox = styled.div`
-   width: 100%;
+  width: 100%;
   height: 50px;
   border-bottom: 1px solid var(--secondary-color---5);
   border-top: 1px solid var(--secondary-color---5);
   display: flex;
   align-items: center;
-justify-content: space-between;
+  justify-content: space-between;
   @media screen and (min-width: 768px) {
     width: 100%;
-   
   }
 
   @media screen and (min-width: 1440px) {
     width: 100%;
+  }
 `;
+
 export const IconWrapper = styled.svg`
   /* padding-top: 7px; */
   /* padding-bottom: 0; */
@@ -63,6 +64,35 @@ export const IconWrapper = styled.svg`
   margin-right: 18px;
   align-content: center;
 `;
+
+export const IconBox = styled.div`
+  display: inline-flex;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 35%;
+    height: 1px;
+    background-color: var(--secondary-color-4);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    stroke: var(--primery-color-blue);
+
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+`;
+
 export const IconWrapperStr = styled.svg`
   width: 16px;
   height: 16px;
@@ -70,6 +100,33 @@ export const IconWrapperStr = styled.svg`
   stroke: var(--secondary-color-4);
   fill: transparent;
   margin-right: 20px;
+`;
+
+export const IconBoxTrash = styled.div`
+  display: inline-flex;
+  position: relative;
+  cursor: pointer;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 90%;
+    height: 1px;
+    background-color: var(--secondary-color-3);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    stroke: var(--primery-color-blue);
+
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
 `;
 export const IconWrapperTrash = styled.svg`
   width: 16px;

@@ -12,7 +12,7 @@ export const Header = styled.h3`
   margin-bottom: 16px;
 `;
 export const AddWaterBox = styled.div`
-  width: 264px;
+  width: 100%;
   height: 212px;
   margin-bottom: 24px;
   /* display: flex; */
@@ -85,7 +85,6 @@ export const WaterAmountTime = styled.span`
   font-size: 18px;
   line-height: 200%;
   color: var(--primery-color-black);
-  margin-right: 45px;
   white-space: nowrap;
 `;
 export const WaterAmount = styled.span`
@@ -116,5 +115,6 @@ export const DayDrinkBox = styled.div`
   }
 `;
 export const DrinkinfContolBox = styled.div`
-  ///
+  display: flex;
+  flex-wrap: nowrap;
 `;

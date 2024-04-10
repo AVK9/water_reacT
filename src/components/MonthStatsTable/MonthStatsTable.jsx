@@ -123,10 +123,7 @@ const MonthStatsTable = () => {
         events: {
           ...day.events,
           waterRate: matchingWater.waterRate,
-          percent:
-            matchingWater.percent > 100
-              ? Math.round(matchingWater.percent / 1000)
-              : Math.round(matchingWater.percent),
+          percent: matchingWater.percent,
           numberRecords: matchingWater.numberRecords,
         },
       };

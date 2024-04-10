@@ -218,7 +218,10 @@ const MonthStatsTable = () => {
             {updatedCalendar.map(
               ({ id, date, events: { percent, waterRate, numberRecords } }) => (
                 <ContainerData key={id}>
-                  <CalendarData onClick={handleOpenModalRate}>
+                  <CalendarData
+                    onClick={handleOpenModalRate}
+                    percentage={percent}
+                  >
                     <span
                       style={{
                         color: !dateFns.isSameMonth(date, currentDate)

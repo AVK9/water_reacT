@@ -14,6 +14,8 @@ import {
   DayDrinkBox,
   DrinkinfContolBox,
   DrinkinfInfoBox,
+  IconBox,
+  IconBoxTrash,
 } from './TodayWaterList.styled';
 import sprite from '../../assets/img/sprite.svg';
 import * as dateFns from 'date-fns';
@@ -106,17 +108,24 @@ const TodayWaterList = () => {
                     <WaterAmountTime>{date.slice(11, 16)}</WaterAmountTime>
                   </DrinkinfInfoBox>
                   <DrinkinfContolBox>
-                    <IconWrapperStr
-                      onClick={() => {
-                        handleOpenModalEditWater();
-                        handleEditWaterIntake({ _id, waterAmount, date });
-                      }}
-                    >
-                      <use href={`${sprite}#icon-pencil-square`} />
-                    </IconWrapperStr>
-                    <IconWrapperTrash onClick={() => handleOpenModalDell(_id)}>
-                      <use href={`${sprite}#icon-trash`} />
-                    </IconWrapperTrash>
+                    <IconBox>
+                      {' '}
+                      <IconWrapperStr
+                        onClick={() => {
+                          handleOpenModalEditWater();
+                          handleEditWaterIntake({ _id, waterAmount, date });
+                        }}
+                      >
+                        <use href={`${sprite}#icon-pencil-square`} />
+                      </IconWrapperStr>
+                    </IconBox>
+                    <IconBoxTrash>
+                      <IconWrapperTrash
+                        onClick={() => handleOpenModalDell(_id)}
+                      >
+                        <use href={`${sprite}#icon-trash`} />
+                      </IconWrapperTrash>
+                    </IconBoxTrash>
                   </DrinkinfContolBox>
                 </WaterAmountBox>
               ))}

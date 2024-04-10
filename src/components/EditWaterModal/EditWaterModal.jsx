@@ -106,7 +106,7 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
   const handleSave = async () => {
     try {
       if (editMode && waterIntakeId) {
-        dispatch(changeWaterThunk({ _id: waterIntakeId, waterAmount: waterAmount, date: adjustedTime }));
+        dispatch(changeWaterThunk({ _id: waterIntakeId, waterAmount, date: dateFns.sub(selectedTime, { minutes: -180 }) || adjustedTime }));
       }
       dispatch(getWaterThunk());
       handleClose();
@@ -167,7 +167,7 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
             <div>
               <StyledSelect
                 id="time"
-                value={formatTime(selectedTime)}
+                value={initialTime}
                 onChange={(e) => {
                   const [hours, minutes] = e.target.value.split(':');
                   const newDate = new Date();

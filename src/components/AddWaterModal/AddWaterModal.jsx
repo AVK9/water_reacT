@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+// import { selectDayWaterStat } from '../../redux/water/waterSelectors';
 import { addWaterThunk } from '../../redux/water/waterThunk';
 import {
   Backdrop,
@@ -45,7 +46,10 @@ const getTimeOptions = (start, end, step = 5) => {
   return options;
 };
 
-const AddWaterModal = ({ initialValue = 50, onClose }) => {
+const AddWaterModal = ({ onClose }) => {
+    // const date = useSelector(selectDayWaterStat);
+    // console.log(date);
+    const initialValue = 50;
     const [waterAmount, setWaterAmount] = useState(initialValue);
     const [selectedTime, setSelectedTime] = useState(new Date());
     const now = new Date();
@@ -99,7 +103,7 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
     const dispatch = useDispatch();
 
     const handleAddWater = () => {
-        dispatch(addWaterThunk({ waterAmount: waterAmount, date: adjustedTime }));
+        dispatch(addWaterThunk({ waterAmount, date: dateFns.sub(selectedTime, { minutes: -180 }) || adjustedTime }));
         handleClose();
     };
 

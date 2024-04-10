@@ -145,13 +145,13 @@ export const SignUpButton = styled.button`
   }
 `;
 
-export const TogglePasswordButton = styled.button`
+export const TogglePasswordButton = styled.span`
   display: flex;
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-
+  cursor: pointer;
   svg {
     width: 16px;
     height: 16px;
@@ -159,7 +159,7 @@ export const TogglePasswordButton = styled.button`
     fill: transparent;
 
     stroke: #407bff;
-    background-color: #fff;
+    
   }
 
   @media screen and (min-width: 1440px) {

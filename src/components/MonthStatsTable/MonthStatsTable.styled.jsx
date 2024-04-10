@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const TableContainer = styled.div`
-  width: 264px;
+  width: 100%;
   height: 506px;
   position: relative;
     @media screen and (min-width: 768px) {

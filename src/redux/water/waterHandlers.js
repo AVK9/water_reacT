@@ -1,4 +1,5 @@
 export const handleGetWater = (state, { payload }) => {
+  state.dayWaterStat = payload;
   if (payload) {
     state.dayWaterList = payload.waterRecords;
 
@@ -7,7 +8,10 @@ export const handleGetWater = (state, { payload }) => {
     } else {
       new Date();
     }
-    console.log('handleGetWater :>> ', payload.waterRecords);
+    // console.log(
+    //   'handleGetWater :>> ',
+    //   state.dayWaterStat.percentageWaterAmount
+    // );
   }
   return;
 };

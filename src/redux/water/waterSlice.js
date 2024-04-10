@@ -22,6 +22,7 @@ import {
 const initialState = {
   month: [],
   dayWaterList: [],
+  dayWaterStat: [],
   selectDay: '',
   selectMonth: '',
   isLoading: false,

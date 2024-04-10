@@ -11,7 +11,7 @@ export const selectVisibleDrinking = createSelector(
   [selectStateWaterDayList, selectFilter],
   (dayWaterList, filter) => {
     return filter.length > 0
-      ? dayWaterList.filter((water) => water.includes(filter))
+      ? dayWaterList.filter((water) => water._id.includes(filter))
       : dayWaterList;
   }
 );

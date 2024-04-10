@@ -24,7 +24,7 @@ import {
   selectLoading,
   selectSelectDay,
   selectSelectMonth,
-  selectVisibleDrinking,
+  selectStateWaterDayList,
 } from '../../redux/water/waterSelectors';
 // import { Loader } from '../Loader/Loader';
 import AddWaterModal from '../AddWaterModal/AddWaterModal';
@@ -65,8 +65,8 @@ const TodayWaterList = () => {
     // dispatch(getWaterDayThunk());
   }, [dispatch]);
 
-  // const dayWaterList = useSelector(selectStateWaterDayList);
-  const dayWaterList = useSelector(selectVisibleDrinking);
+  const dayWaterList = useSelector(selectStateWaterDayList);
+  // const dayWaterList = useSelector(selectVisibleDrinking);
 
   const selectDay = useSelector(selectSelectDay);
   const headerSelect = selectDay.slice(8, 10).toString();

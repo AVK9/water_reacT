@@ -137,7 +137,6 @@ const TodayWaterList = () => {
             waterIntakeId={editWaterIntake?._id}
             initialValue={editWaterIntake?.waterAmount}
             initialTime={editWaterIntake?.date.slice(11, 16)}
-            onTimeChange
             onClose={handleCloseModalEditWater}
             editMode
           />

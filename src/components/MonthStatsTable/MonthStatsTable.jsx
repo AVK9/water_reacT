@@ -163,6 +163,7 @@ const MonthStatsTable = () => {
     const click = dateFns.sub(date, { minutes: -180 });
     const todayDay = dateFns.format(click, 'yyyy-MM-dd');
     dispatch(updateStateHandleDate(todayDay));
+    dispatch(getWaterDayThunk(todayDay));
   };
 
   return (

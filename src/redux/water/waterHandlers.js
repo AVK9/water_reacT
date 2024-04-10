@@ -1,4 +1,5 @@
 export const handleGetWater = (state, { payload }) => {
+  state.dayWaterStat = payload;
   if (payload) {
     state.dayWaterList = payload.waterRecords;
 
@@ -7,7 +8,10 @@ export const handleGetWater = (state, { payload }) => {
     } else {
       new Date();
     }
-    console.log('handleGetWater :>> ', payload.waterRecords);
+    // console.log(
+    //   'handleGetWater :>> ',
+    //   state.dayWaterStat.percentageWaterAmount
+    // );
   }
   return;
 };
@@ -28,12 +32,18 @@ export const handleAddWater = (state, { payload }) => {
   state.dayWaterList.push(payload);
 };
 
-export const handleDelWater = (state, { payload }) => {
-  const item = state.water.findIndex((index) => index.id === payload.id);
-  state.water.splice(item, 1);
+export const handleDelWater = (state, payload) => {
+  const item = state.dayWaterList.findIndex(
+    (index) => index._id === payload.meta.arg
+  );
+  state.dayWaterList.splice(item, 1);
 };
 export const handleChangeWater = (state, { payload }) => {
-  console.log('handleChangeWater :>> ', payload);
-  state.dayWaterList.push(payload);
-  //дописать логіку
+  const index = state.dayWaterList.findIndex(
+    (item) => item.date === payload.date
+  );
+
+  if (index !== -1) {
+    state.dayWaterList[index] = payload;
+  }
 };

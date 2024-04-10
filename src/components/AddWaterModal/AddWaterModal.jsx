@@ -48,15 +48,6 @@ const getTimeOptions = (start, end, step = 5) => {
 const AddWaterModal = ({ initialValue = 50, onClose }) => {
     const [waterAmount, setWaterAmount] = useState(initialValue);
     const [selectedTime, setSelectedTime] = useState(new Date());
-
-    const handleTimeChange = (e) => {
-        const [hours, minutes] = e.target.value.split(':');
-        const newDate = new Date();
-        newDate.setHours(hours);
-        newDate.setMinutes(minutes);
-        setSelectedTime(newDate);
-    };
-
     const now = new Date();
     const adjustedTime = dateFns.sub(now, { minutes: -180 });
 
@@ -108,7 +99,7 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
     const dispatch = useDispatch();
 
     const handleAddWater = () => {
-        dispatch(addWaterThunk({ date: adjustedTime, waterAmount: waterAmount }));
+        dispatch(addWaterThunk({ waterAmount: waterAmount, date: adjustedTime }));
         handleClose();
     };
 
@@ -154,8 +145,15 @@ const AddWaterModal = ({ initialValue = 50, onClose }) => {
                             <StyledSelect
                                 id="time"
                                 value={formatTime(selectedTime)}
-                                onChange={handleTimeChange}
+                                onChange={(e) => {
+                                    const [hours, minutes] = e.target.value.split(':');
+                                    const newDate = new Date();
+                                    newDate.setHours(hours);
+                                    newDate.setMinutes(minutes);
+                                    setSelectedTime(newDate);
+                                }}
                             >
+                                <option value={formatTime(now)}>{formatTime(now)}</option>
                                 {timeOptions.map(({ value, label }) => (
                                     <option key={value} value={value}>
                                         {label}

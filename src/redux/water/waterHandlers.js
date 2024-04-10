@@ -33,7 +33,9 @@ export const handleDelWater = (state, { payload }) => {
   state.water.splice(item, 1);
 };
 export const handleChangeWater = (state, { payload }) => {
-  console.log('handleChangeWater :>> ', payload);
-  state.dayWaterList.push(payload);
-  //дописать логіку
+  const index = state.dayWaterList.findIndex(item => item.date === payload.date);
+  
+  if (index !== -1) {
+    state.dayWaterList[index] = payload;
+  }
 };

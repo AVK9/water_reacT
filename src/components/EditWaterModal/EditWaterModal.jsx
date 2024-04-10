@@ -27,7 +27,6 @@ import {
   SaveButton,
 } from './EditWaterModal.styled';
 import sprite from '../../assets/img/sprite.svg';
-
 import * as dateFns from 'date-fns';
 
 const formatTime = (date) => {
@@ -50,24 +49,15 @@ const getTimeOptions = (start, end, step = 5) => {
   return options;
 };
 
-const EditWaterModal = ({ initialValue = 0, initialTime, onTimeChange, onClose, editMode, waterIntakeId }) => {
+const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, waterIntakeId }) => {
   const [waterAmount, setWaterAmount] = useState(initialValue);
   const [selectedTime, setSelectedTime] = useState(new Date());
-
-  const handleTimeChange = (e) => {
-    const [hours, minutes] = e.target.value.split(':');
-    const newDate = new Date();
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
-    setSelectedTime(newDate);
-    onTimeChange = newDate;
-  };
 
   const now = new Date();
   const adjustedTime = dateFns.sub(now, { minutes: -180 });
 
   const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59), 5);
- 
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -136,8 +126,6 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onTimeChange, onClose, 
               <use href={`${sprite}#icon-close`} />
             </IconClose>
           </CloseButton>
-
-          
         </HeaderEditModal>
 
         {initialValue ? (
@@ -180,8 +168,16 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onTimeChange, onClose, 
               <StyledSelect
                 id="time"
                 value={formatTime(selectedTime)}
-                onChange={handleTimeChange}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':');
+                  const newDate = new Date();
+                  newDate.setHours(hours);
+                  newDate.setMinutes(minutes);
+                  setSelectedTime(newDate);
+                }}
               >
+              
+                <option value={formatTime(now)}>{formatTime(now)}</option>
                 {timeOptions.map(({ value, label }) => (
                   <option key={value} value={value}>
                     {label}

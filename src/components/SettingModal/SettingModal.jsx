@@ -341,7 +341,7 @@ const SettingModal = ({ onClose }) => {
                     <svg>
                       <use
                         href={`${sprite}#${
-                          isShowOldPassword ? 'icon-eye' : 'icon-eye-slash'
+                          isShowOldPassword ? 'eye' : 'eye-slash'
                         }`}
                       />
                     </svg>
@@ -377,7 +377,7 @@ const SettingModal = ({ onClose }) => {
                       <svg>
                         <use
                           href={`${sprite}#${
-                            isShowNewPassword ? 'icon-eye' : 'icon-eye-slash'
+                            isShowNewPassword ? 'eye' : 'eye-slash'
                           }`}
                         />
                       </svg>
@@ -417,9 +417,7 @@ const SettingModal = ({ onClose }) => {
                       <svg>
                         <use
                           href={`${sprite}#${
-                            isShowConfirmPassword
-                              ? 'icon-eye'
-                              : 'icon-eye-slash'
+                            isShowConfirmPassword ? 'eye' : 'eye-slash'
                           }`}
                         />
                       </svg>

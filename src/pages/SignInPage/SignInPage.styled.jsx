@@ -98,8 +98,6 @@ export const SignInInput = styled.input`
   background: var(--primery-color-white);
   outline: none;
 
-  
-
   @media screen and (min-width: 768px) {
     border: 1px solid ${(props) => (props.error ? 'red' : '#d7e3ff')};
     border-radius: 6px;
@@ -129,9 +127,14 @@ export const SignInButton = styled.button`
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  transition: box-shadow 500ms ease-in-out;
 
   &:hover {
-    background-color: #0056b3;
+    box-shadow: 0 4px 14px rgba(64, 123, 255, 0.54);
+  }
+
+  &:active {
+    box-shadow: none;
   }
 
   @media screen and (min-width: 768px) {
@@ -151,13 +154,13 @@ export const SignInButton = styled.button`
   }
 `;
 
-export const TogglePasswordButton = styled.span`
+export const TogglePasswordButton = styled.button`
   display: flex;
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+
   svg {
     width: 16px;
     height: 16px;
@@ -165,7 +168,7 @@ export const TogglePasswordButton = styled.span`
     fill: transparent;
 
     stroke: #407bff;
-   
+    background-color: #fff;
   }
 
   @media screen and (min-width: 1440px) {
@@ -177,8 +180,6 @@ export const ErrorMessage = styled.div`
   color: red;
   margin-top: 5px;
 `;
-
-
 
 export const Form = styled.form`
   display: flex;

@@ -124,8 +124,14 @@ export const SignUpButton = styled.button`
   border-radius: 10px;
   cursor: pointer;
 
+  transition: box-shadow 500ms ease-in-out;
+
   &:hover {
-    background-color: #0056b3;
+    box-shadow: 0 4px 14px rgba(64, 123, 255, 0.54);
+  }
+
+  &:active {
+    box-shadow: none;
   }
 
   @media screen and (min-width: 768px) {
@@ -159,7 +165,6 @@ export const TogglePasswordButton = styled.span`
     fill: transparent;
 
     stroke: #407bff;
-    
   }
 
   @media screen and (min-width: 1440px) {

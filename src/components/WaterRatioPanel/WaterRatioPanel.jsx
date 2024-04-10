@@ -5,10 +5,9 @@ import {
   WaterInfo,
   Button,
 } from './WaterRatioPanel.styled';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AddWaterModal from '../AddWaterModal/AddWaterModal';
 import sprite from '../../assets/img/sprite.svg';
-
 
 import { useSelector } from 'react-redux';
 import { selectDayWaterStat } from '../../redux/water/waterSelectors';
@@ -24,7 +23,7 @@ export const WaterRatioPanel = () => {
       <StatusContainer>
         <WaterStatus>
           <p>Today</p>
-          <WaterMeter $filled={dailyNormFulfillment}>
+          <WaterMeter $filled={dailyNormFulfillment.percentageWaterAmount}>
             <div />
           </WaterMeter>
           <WaterInfo>
@@ -42,7 +41,6 @@ export const WaterRatioPanel = () => {
       </StatusContainer>
       {isModalAddWaterOpen && (
         <AddWaterModal onClose={handleCloseModalAddWater} />
-      
       )}
     </>
   );

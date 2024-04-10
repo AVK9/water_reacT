@@ -3,11 +3,11 @@ export const handleGetWater = (state, { payload }) => {
   if (payload) {
     state.dayWaterList = payload.waterRecords;
 
-    if (payload.waterRecords.length) {
-      state.selectDay = payload.waterRecords[0].date;
-    } else {
-      new Date();
-    }
+    // if (payload.waterRecords.length) {
+    //   state.selectDay = payload.waterRecords[0].date;
+    // } else {
+    //   new Date();
+    // }
     // console.log(
     //   'handleGetWater :>> ',
     //   state.dayWaterStat.percentageWaterAmount
@@ -17,13 +17,13 @@ export const handleGetWater = (state, { payload }) => {
 };
 export const handleGetMonthWater = (state, { payload }) => {
   state.month = payload;
-  if ((state.selectMonth = payload)) {
-    state.selectMonth = payload[0].date;
-  } else {
-    new Date();
-  }
+  // if ((state.selectMonth = payload)) {
+  //   state.selectMonth = payload[0].date;
+  // } else {
+  //   new Date();
+  // }
 
-  state.selectMonth = payload[0].date;
+  // state.selectMonth = payload[0].date;
 
   console.log('handleGetMonthWater :>> ', payload);
 };

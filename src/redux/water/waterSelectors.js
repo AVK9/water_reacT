@@ -15,3 +15,18 @@ export const selectVisibleDrinking = createSelector(
       : dayWaterList;
   }
 );
+
+
+
+
+
+
+
+export const selectDailyNormFulfillment = state => {
+  const selectDay = selectSelectDay(state);
+  const dailyWaterConsumption = selectDay?.waterConsumption || 1500; 
+  const dailyNorm = 2000; 
+  return (dailyWaterConsumption / dailyNorm) * 100;
+};
+
+

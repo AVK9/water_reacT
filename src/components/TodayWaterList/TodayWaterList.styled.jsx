@@ -36,6 +36,12 @@ export const BtnAddWater = styled.div`
   color: var(--primery-color-blue);
   position: absolute;
   bottom: 0;
+  transition: color 500ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--secondary-color-5);
+  }
 `;
 
 export const WaterAmountBox = styled.div`
@@ -73,7 +79,7 @@ export const IconBox = styled.div`
   &::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -4px;
     left: 0;
     width: 35%;
     height: 1px;
@@ -109,7 +115,7 @@ export const IconBoxTrash = styled.div`
   &::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -4px;
     left: 0;
     width: 90%;
     height: 1px;

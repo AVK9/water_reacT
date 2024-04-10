@@ -5,13 +5,13 @@ export const TableContainer = styled.div`
   width: 100%;
   height: 506px;
   position: relative;
-    @media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     width: 100%;
-   
   }
 
   @media screen and (min-width: 1440px) {
     width: 100%;
+  }
 `;
 export const TableHeaderBox = styled.div`
   display: flex;
@@ -48,6 +48,12 @@ export const IconWrapper = styled.svg`
   width: 14px;
   height: 14px;
   fill: #407bff;
+  transition: fill 500ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    fill: var(--secondary-color-5);
+  }
 `;
 export const BtnMonthBox = styled.div`
   margin: 0;
@@ -88,10 +94,19 @@ export const CalendarData = styled.div`
   width: 34px;
   height: 34px;
   border-radius: 50%;
+  border: 1px solid
+    ${({ percentage }) =>
+      percentage === 100
+        ? 'var(--primery-color-white)'
+        : 'var(--secondary-color-5)'};
   background: var(--primery-color-white);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 `;
 export const PersentRateWoter = styled.span`
   font-family: var(--font-family);

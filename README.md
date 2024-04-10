@@ -3,7 +3,7 @@
 </p>
 <p align="center">
   <a href="https://water-backend-4k0b.onrender.com/api-docs/" target="_blank">
-    <img src="./src/assets/img/g2g.jpg" alt="Team Logo" width="200">
+    <img src="./src/assets/img/g2g.jpg" alt="Team Logo" width="300">
   </a>
 </p>
 
@@ -84,3 +84,7 @@ by controlling their water consumption!**
   JavaScript.
 - **MongoDB**: A high-performance NoSQL database that provides flexibility and
   scalability.
+
+<p align="center">
+  &copy; 2024 Go2Goal&trade;
+</p>

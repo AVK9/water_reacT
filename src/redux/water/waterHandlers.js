@@ -25,11 +25,20 @@ export const handleGetMonthWater = (state, { payload }) => {
 
   // state.selectMonth = payload[0].date;
 
-  console.log('handleGetMonthWater :>> ', payload);
+  // console.log('handleGetMonthWater :>> ', payload);
 };
 export const handleAddWater = (state, { payload }) => {
-  console.log('handleAddWater :>> ', payload);
+  // console.log('handleAddWater!!!!!!!!!!!!!!!!!! :>> ', payload);
   state.dayWaterList.push(payload);
+  state.dayWaterStat.percentageWaterAmount =
+    state.dayWaterStat.percentageWaterAmount +
+    (payload.waterAmount * 100) / state.dailyWaterRate;
+  // console.log(
+  //   'state.auth.profile.waterRate!!!!!!!!!!!!!!!!!! :>> ',
+  //   state.dailyWaterRate
+  // );
+  // payload.waterAmount * state.dailyWaterRate / 100;
+  //auth.profile.waterRate
 };
 
 export const handleDelWater = (state, payload) => {

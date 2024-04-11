@@ -54,7 +54,7 @@ const MonthStatsTable = () => {
   const handleCloseModalRate = () => setWaterModalRate(false);
 
   const dateTime = DateTime.now();
-  console.log('dateTime :>> ', dateTime.c.month);
+  // console.log('dateTime :>> ', dateTime.c.month);
 
   const selectMonth = dateFns.format(selectDateUse, formatOfManthDig);
   const selectYear = dateFns.format(selectDateUse, formatOfYear);
@@ -112,7 +112,7 @@ const MonthStatsTable = () => {
   });
 
   const monthListWater = useSelector(selectStateWaterMonthList);
-  console.log('monthListWater', monthListWater);
+  // console.log('monthListWater', monthListWater);
   const updatedCalendar = calendrShablon.map((day) => {
     const matchingWater = monthListWater.find(
       (task) => `${task.dayOfMonth.toString()}-${selectMonth}` === day.id

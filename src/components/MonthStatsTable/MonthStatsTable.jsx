@@ -251,7 +251,9 @@ const MonthStatsTable = () => {
             )}
           </CalendarTab>
         ) : (
-          <Loader /> || <p>No water</p>
+            <div>
+              {loading ? <Loader /> : <p>No water</p>}
+          </div>
         )}
         {isWaterModalRate && (
           <DaysGeneralStats

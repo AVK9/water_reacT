@@ -68,8 +68,8 @@ export const getWaterMonthApi = async ({ start, end }) => {
   return data;
 };
 
-export const delWaterApi = async (delId) => {
-  const { data } = await axios.delete(`/api/water/remove/${delId}`, {
+export const delWaterApi = async ({ _id }) => {
+  const { data } = await axios.delete(`/api/water/remove/${_id}`, {
     headers: {
       'Content-Type': 'application/json',
     },

@@ -3,8 +3,6 @@ import {
   handleFulfilled,
   handlePending,
   handleRejected,
-} from '../auth/handlers';
-import {
   handleAddWater,
   handleChangeWater,
   handleDelWater,
@@ -27,7 +25,7 @@ const initialState = {
   selectDay: '',
   selectMonth: '',
   isLoading: false,
-  error: null,
+  error: '',
 };
 const waterSlice = createSlice({
   name: 'water',

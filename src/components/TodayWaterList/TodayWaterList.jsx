@@ -28,7 +28,6 @@ import {
   selectSelectMonth,
   selectStateWaterDayList,
 } from '../../redux/water/waterSelectors';
-// import { Loader } from '../Loader/Loader';
 import AddWaterModal from '../AddWaterModal/AddWaterModal';
 import EditWaterModal from '../EditWaterModal/EditWaterModal';
 import DeleteWaterModal from '../DeleteWaterModal/DeleteWaterModal';
@@ -131,10 +130,8 @@ const TodayWaterList = () => {
             </DayDrinkBox>
           ) : (
             <DayDrinkBox>
-              {loading && <Loader />}
-              <p>No water</p>
+              {loading ? <Loader /> : <p>No water</p>}
             </DayDrinkBox>
-            // <Loader /> &&
           )}
           <BtnAddWater onClick={handleOpenModalAddWater}>
             + Add Water

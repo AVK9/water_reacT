@@ -48,8 +48,8 @@ const TodayWaterList = () => {
   const [isDeleteWaterModal, setDeleteWaterModal] = useState(false);
   const [selectItem, setSelectedItem] = useState(null);
 
-  const handleOpenModalDell = (_id) => {
-    setSelectedItem(_id);
+  const handleOpenModalDell = ({ _id, waterAmount }) => {
+    setSelectedItem({ _id, waterAmount });
     setDeleteWaterModal(true);
   };
   const handleCloseModalDell = () => setDeleteWaterModal(false);
@@ -71,7 +71,6 @@ const TodayWaterList = () => {
   // const dayWaterList = useSelector(selectVisibleDrinking);
 
   const selectDay = useSelector(selectSelectDay);
-  const headerSelect = selectDay.slice(8, 10).toString();
   const selMonth = useSelector(selectSelectMonth);
   const fullMonth = selMonth + '-01';
   const month = dateFns.format(fullMonth, formatOfManth);
@@ -80,8 +79,6 @@ const TodayWaterList = () => {
   const date = dateFns.sub(now, { minutes: -180 });
   const todayDay = format(date, 'yyyy-MM-dd');
 
-  console.log('selectDayselectDay', selectDay);
-  console.log('selMonthselMonthselMonth', selMonth);
   ///////////////+
 
   const handleEditWaterIntake = (waterIntake) => {
@@ -121,7 +118,9 @@ const TodayWaterList = () => {
                     </IconBox>
                     <IconBoxTrash>
                       <IconWrapperTrash
-                        onClick={() => handleOpenModalDell(_id)}
+                        onClick={() =>
+                          handleOpenModalDell({ _id, waterAmount })
+                        }
                       >
                         <use href={`${sprite}#icon-trash`} />
                       </IconWrapperTrash>

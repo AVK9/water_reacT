@@ -43,10 +43,15 @@ export const handleAddWater = (state, { payload }) => {
 
 export const handleDelWater = (state, payload) => {
   const item = state.dayWaterList.findIndex(
-    (index) => index._id === payload.meta.arg
+    (index) => index._id === payload.meta.arg._id
   );
   state.dayWaterList.splice(item, 1);
+  // console.log('!!!!!!!!!!!!!!!!!!payload', payload);
+  state.dayWaterStat.percentageWaterAmount =
+    state.dayWaterStat.percentageWaterAmount -
+    (payload.meta.arg.waterAmount * 100) / state.dailyWaterRate;
 };
+
 export const handleChangeWater = (state, { payload }) => {
   const index = state.dayWaterList.findIndex(
     (item) => item.date === payload.date

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { changeWaterThunk, getWaterThunk } from '../../redux/water/waterThunk';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectDayWaterStat } from '../../redux/water/waterSelectors';
+import { changeWaterThunk, getWaterDayThunk } from '../../redux/water/waterThunk';
+import { Snackbar, Alert } from '@mui/material';
 import {
   Backdrop,
   ModalContainer,
@@ -35,6 +37,10 @@ const formatTime = (date) => {
   return `${hours}:${minutes}`;
 };
 
+const formatDate = (date) => {
+  return dateFns.format(date, 'yyyy-MM-dd')
+};
+
 const getTimeOptions = (start, end, step = 5) => {
   const options = [];
   let currentTime = start;
@@ -51,10 +57,9 @@ const getTimeOptions = (start, end, step = 5) => {
 
 const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, waterIntakeId }) => {
   const [waterAmount, setWaterAmount] = useState(initialValue);
-  const [selectedTime, setSelectedTime] = useState(new Date());
 
-  const now = new Date();
-  const adjustedTime = dateFns.sub(now, { minutes: -180 });
+  const date = formatDate(useSelector(selectDayWaterStat).startDate);
+  const [selectedTime, setSelectedTime] = useState(new Date());
 
   const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59), 5);
 
@@ -93,6 +98,8 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
     };
   }, [onClose]);
 
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
@@ -104,11 +111,16 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
   };
 
   const handleSave = async () => {
+    if (waterAmount === 0) {
+      setOpenSnackBar(true);
+      return;
+    }
+
     try {
       if (editMode && waterIntakeId) {
-        dispatch(changeWaterThunk({ _id: waterIntakeId, waterAmount, date: dateFns.sub(selectedTime, { minutes: -180 }) || adjustedTime }));
+        await dispatch(changeWaterThunk({ _id: waterIntakeId, waterAmount, date: `${date}\'${formatTime(selectedTime)}` }));
       }
-      dispatch(getWaterThunk());
+      await dispatch(getWaterDayThunk(date));
       handleClose();
     } catch (error) {
       console.error('Error saving water intake:', error);
@@ -167,7 +179,7 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
             <div>
               <StyledSelect
                 id="time"
-                value={initialTime}
+                value={formatTime(selectedTime)}
                 onChange={(e) => {
                   const [hours, minutes] = e.target.value.split(':');
                   const newDate = new Date();
@@ -177,7 +189,7 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
                 }}
               >
               
-                <option value={formatTime(now)}>{formatTime(now)}</option>
+                <option value={formatTime(selectedTime)}>{formatTime(selectedTime)}</option>
                 {timeOptions.map(({ value, label }) => (
                   <option key={value} value={value}>
                     {label}
@@ -204,6 +216,17 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
           <SaveButton onClick={handleSave}>Save</SaveButton>
         </EditedWaterAmountContainer>
       </ModalContainer>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={11000}
+        onClose={() => setOpenSnackBar(false)}
+      >
+        <Alert
+          elevation={6} variant="filled" severity="error" onClose={() => setSnackbarOpen(false)}
+        >
+          Water amount cannot be 0 ml
+        </Alert>
+      </Snackbar>
     </Backdrop>
   );
 };

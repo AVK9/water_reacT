@@ -23,7 +23,6 @@ import {
 import sprite from '../../assets/img/sprite.svg';
 import {
   selectError,
-  selectLoading,
   selectStateWaterMonthList,
 } from '../../redux/water/waterSelectors';
 import {
@@ -81,8 +80,12 @@ const MonthStatsTable = () => {
   const startDateSub = dateFns.startOfWeek(firstPreviousMonth);
   const endDateSub = dateFns.lastDayOfWeek(lastDayPreviousMonth);
 
-  const loading = useSelector(selectLoading);
+  const [loading, setLoading] = useState(true);
   const error = useSelector(selectError);
+
+  useEffect(() => {
+    setLoading(false)
+  }, []);
 
   const weeks = ((date) => {
     const weeks = [];

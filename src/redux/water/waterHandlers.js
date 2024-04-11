@@ -1,44 +1,38 @@
+import * as dateFns from 'date-fns';
+
 export const handleGetWater = (state, { payload }) => {
   state.dayWaterStat = payload;
   if (payload) {
     state.dayWaterList = payload.waterRecords;
-
-    // if (payload.waterRecords.length) {
-    //   state.selectDay = payload.waterRecords[0].date;
-    // } else {
-    //   new Date();
-    // }
-    // console.log(
-    //   'handleGetWater :>> ',
-    //   state.dayWaterStat.percentageWaterAmount
-    // );
   }
   return;
 };
 export const handleGetMonthWater = (state, { payload }) => {
   state.month = payload;
-  // if ((state.selectMonth = payload)) {
-  //   state.selectMonth = payload[0].date;
-  // } else {
-  //   new Date();
-  // }
-
-  // state.selectMonth = payload[0].date;
-
-  // console.log('handleGetMonthWater :>> ', payload);
+  // console.log('handleGetMonthWater!!!!!!!!!!!!!!!!!! :>> ', state.month);
 };
 export const handleAddWater = (state, { payload }) => {
-  // console.log('handleAddWater!!!!!!!!!!!!!!!!!! :>> ', payload);
   state.dayWaterList.push(payload);
+  //---------------------
+  // console.log('handleAddWater!!!!!!!!!!!!!!!!!! :>> ', payload);
   state.dayWaterStat.percentageWaterAmount =
     state.dayWaterStat.percentageWaterAmount +
     (payload.waterAmount * 100) / state.dailyWaterRate;
-  // console.log(
-  //   'state.auth.profile.waterRate!!!!!!!!!!!!!!!!!! :>> ',
-  //   state.dailyWaterRate
-  // );
-  // payload.waterAmount * state.dailyWaterRate / 100;
-  //auth.profile.waterRate
+  //-------------------------
+  const today = dateFns.format(new Date(), 'dd');
+
+  // state.month.currenYeartMonth;
+  // state.month.dayOfMonth;
+  //state.month.percent
+  const item = state.month.findIndex(
+    (index) => index.dayOfMonth.toString() === today.toString()
+  );
+  state.month[item].percent = Math.round(
+    state.dayWaterStat.percentageWaterAmount +
+      (payload.waterAmount * 100) / state.dailyWaterRate
+  );
+
+  // console.log('handleAddWater!!!!!!!!!!!!!!!!!! :>> ', item);
 };
 
 export const handleDelWater = (state, payload) => {
@@ -46,10 +40,21 @@ export const handleDelWater = (state, payload) => {
     (index) => index._id === payload.meta.arg._id
   );
   state.dayWaterList.splice(item, 1);
-  // console.log('!!!!!!!!!!!!!!!!!!payload', payload);
+  //-------------------------
+
   state.dayWaterStat.percentageWaterAmount =
     state.dayWaterStat.percentageWaterAmount -
     (payload.meta.arg.waterAmount * 100) / state.dailyWaterRate;
+  //-------------------------
+
+  const today = dateFns.format(new Date(), 'dd');
+  const itemPersent = state.month.findIndex(
+    (index) => index.dayOfMonth.toString() === today.toString()
+  );
+  state.month[itemPersent].percent = Math.round(
+    state.dayWaterStat.percentageWaterAmount -
+      (payload.meta.arg.waterAmount * 100) / state.dailyWaterRate
+  );
 };
 
 export const handleChangeWater = (state, { payload }) => {

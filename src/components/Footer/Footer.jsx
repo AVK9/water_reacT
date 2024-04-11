@@ -7,10 +7,10 @@ const Footer = () => {
     <Section>
       <FooterContainer>
         {/* <Logo /> */}
-        <StyledLink to="/welcome">WelcomePage</StyledLink>
+        {/* <StyledLink to="/welcome">WelcomePage</StyledLink> */}
 
         <Content> © 2024 </Content>
-        <StyledLink to="/home">HomePage</StyledLink>
+        {/* <StyledLink to="/home">HomePage</StyledLink> */}
       </FooterContainer>
     </Section>
   );

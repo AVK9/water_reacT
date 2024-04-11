@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-// import { selectDayWaterStat } from '../../redux/water/waterSelectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectDayWaterStat } from '../../redux/water/waterSelectors';
 import { addWaterThunk } from '../../redux/water/waterThunk';
+import { Snackbar, Alert } from '@mui/material';
 import {
   Backdrop,
   ModalContainer,
@@ -32,6 +33,10 @@ const formatTime = (date) => {
   return `${hours}:${minutes}`;
 };
 
+const formatDate = (date) => {
+    return dateFns.format(date, 'yyyy-MM-dd')
+};
+
 const getTimeOptions = (start, end, step = 5) => {
   const options = [];
   let currentTime = start;
@@ -47,13 +52,11 @@ const getTimeOptions = (start, end, step = 5) => {
 };
 
 const AddWaterModal = ({ onClose }) => {
-    // const date = useSelector(selectDayWaterStat);
-    // console.log(date);
     const initialValue = 50;
     const [waterAmount, setWaterAmount] = useState(initialValue);
+
+    const date = formatDate(useSelector(selectDayWaterStat).startDate);
     const [selectedTime, setSelectedTime] = useState(new Date());
-    const now = new Date();
-    const adjustedTime = dateFns.sub(now, { minutes: -180 });
 
     const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59), 5);
 
@@ -100,12 +103,20 @@ const AddWaterModal = ({ onClose }) => {
         setWaterAmount((prevAmount) => (Number(prevAmount) >= 50 ? Number(prevAmount) - 50 : 0));
     };
 
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+
     const dispatch = useDispatch();
 
     const handleAddWater = () => {
-        dispatch(addWaterThunk({ waterAmount, date: dateFns.sub(selectedTime, { minutes: -180 }) || adjustedTime }));
+        if (waterAmount === 0) {
+            setOpenSnackBar(true);
+            return;
+        }
+        
+        dispatch(addWaterThunk({waterAmount, date: `${date}\'${formatTime(selectedTime)}`}));
         handleClose();
     };
+    
 
     return (
         <Backdrop isOpen={isOpen} onClick={handleBackdropClick}>
@@ -157,7 +168,7 @@ const AddWaterModal = ({ onClose }) => {
                                     setSelectedTime(newDate);
                                 }}
                             >
-                                <option value={formatTime(now)}>{formatTime(now)}</option>
+                                <option value={formatTime(selectedTime)}>{formatTime(selectedTime)}</option>
                                 {timeOptions.map(({ value, label }) => (
                                     <option key={value} value={value}>
                                         {label}
@@ -185,6 +196,17 @@ const AddWaterModal = ({ onClose }) => {
                     <SaveButton onClick={handleAddWater}>Save</SaveButton>
                 </AddWaterAmountContainer>
             </ModalContainer>
+            <Snackbar
+                open={openSnackBar}
+                autoHideDuration={11000}
+                onClose={() => setOpenSnackBar(false)}
+            >
+                <Alert
+                    elevation={6} variant="filled" severity="error" onClose={() => setSnackbarOpen(false)}
+                >
+                    Water amount cannot be 0 ml
+                </Alert>
+            </Snackbar>
         </Backdrop>
     );
 };

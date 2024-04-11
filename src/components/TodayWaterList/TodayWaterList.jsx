@@ -23,7 +23,6 @@ import { format } from 'date-fns';
 
 import {
   selectError,
-  selectLoading,
   selectSelectDay,
   selectSelectMonth,
   selectStateWaterDayList,
@@ -58,13 +57,13 @@ const TodayWaterList = () => {
   /////////
 
   const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
+  const [loading, setLoading] = useState(true);
   const error = useSelector(selectError);
 
   useEffect(() => {
-    // dispatch(getWaterThunk());
-    // dispatch(getWaterDayThunk());
-  }, [dispatch]);
+    setTimeout(setLoading(false), 10000)
+    
+  }, []);
 
   const dayWaterList = useSelector(selectStateWaterDayList);
   // const dayWaterList = useSelector(selectVisibleDrinking);

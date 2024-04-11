@@ -73,7 +73,7 @@ export const changeWaterThunk = createAsyncThunk(
   'waterAmount/changeWater',
   async (body, { rejectWithValue, getState }) => {
     try {
-      console.log('changeWaterThunk:', body);
+      // console.log('changeWaterThunk:', body);
       setTokenApi(getState().auth.token);
       return await changeWaterApi(body);
     } catch (error) {

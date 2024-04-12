@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDayWaterStat } from '../../redux/water/waterSelectors';
-import { changeWaterThunk, getWaterDayThunk } from '../../redux/water/waterThunk';
+import {
+  changeWaterThunk,
+  getWaterDayThunk,
+} from '../../redux/water/waterThunk';
 import { Snackbar, Alert } from '@mui/material';
 import {
   Backdrop,
@@ -38,7 +41,7 @@ const formatTime = (date) => {
 };
 
 const formatDate = (date) => {
-  return dateFns.format(date, 'yyyy-MM-dd')
+  return dateFns.format(date, 'yyyy-MM-dd');
 };
 
 const getTimeOptions = (start, end, step = 5) => {
@@ -55,13 +58,23 @@ const getTimeOptions = (start, end, step = 5) => {
   return options;
 };
 
-const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, waterIntakeId }) => {
+const EditWaterModal = ({
+  initialValue = 0,
+  initialTime,
+  onClose,
+  editMode,
+  waterIntakeId,
+}) => {
   const [waterAmount, setWaterAmount] = useState(initialValue);
 
   const date = formatDate(useSelector(selectDayWaterStat).startDate);
   const [selectedTime, setSelectedTime] = useState(new Date());
 
-  const timeOptions = getTimeOptions(new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 23, 59), 5);
+  const timeOptions = getTimeOptions(
+    new Date(0, 0, 0, 0, 0),
+    new Date(0, 0, 0, 23, 59),
+    5
+  );
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -90,9 +103,9 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
         handleClose();
       }
     };
-    
+
     document.addEventListener('keydown', close);
-    
+
     return () => {
       document.removeEventListener('keydown', close);
     };
@@ -107,7 +120,9 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
   };
 
   const handleDecrement = () => {
-    setWaterAmount((prevAmount) => (Number(prevAmount) >= 50 ? Number(prevAmount) - 50 : 0));
+    setWaterAmount((prevAmount) =>
+      Number(prevAmount) >= 50 ? Number(prevAmount) - 50 : 0
+    );
   };
 
   const handleSave = async () => {
@@ -118,9 +133,15 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
 
     try {
       if (editMode && waterIntakeId) {
-        await dispatch(changeWaterThunk({ _id: waterIntakeId, waterAmount, date: `${date}\'${formatTime(selectedTime)}` }));
+        await dispatch(
+          changeWaterThunk({
+            _id: waterIntakeId,
+            waterAmount,
+            date: `${date}\'${formatTime(selectedTime)}`,
+          })
+        );
       }
-      await dispatch(getWaterDayThunk(date));
+      // await dispatch(getWaterDayThunk(date));
       handleClose();
     } catch (error) {
       console.error('Error saving water intake:', error);
@@ -188,8 +209,9 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
                   setSelectedTime(newDate);
                 }}
               >
-              
-                <option value={formatTime(selectedTime)}>{formatTime(selectedTime)}</option>
+                <option value={formatTime(selectedTime)}>
+                  {formatTime(selectedTime)}
+                </option>
                 {timeOptions.map(({ value, label }) => (
                   <option key={value} value={value}>
                     {label}
@@ -199,18 +221,22 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
             </div>
           </TimeContainer>
         </div>
-        
+
         <div>
-          <EnterWaterValueText>Enter the value of the water used:</EnterWaterValueText>
+          <EnterWaterValueText>
+            Enter the value of the water used:
+          </EnterWaterValueText>
           <WaterAmountInputManually
             value={waterAmount + ' ml' || '0'}
             onChange={(e) => {
               const newValue = parseInt(e.target.value.replace(/\D/g, ''));
-              setWaterAmount(isNaN(newValue) || e.target.value === '' ? 0 : newValue);
+              setWaterAmount(
+                isNaN(newValue) || e.target.value === '' ? 0 : newValue
+              );
             }}
           />
         </div>
-          
+
         <EditedWaterAmountContainer>
           <EditedWaterAmount>{waterAmount || '0'} ml</EditedWaterAmount>
           <SaveButton onClick={handleSave}>Save</SaveButton>
@@ -222,7 +248,10 @@ const EditWaterModal = ({ initialValue = 0, initialTime, onClose, editMode, wate
         onClose={() => setOpenSnackBar(false)}
       >
         <Alert
-          elevation={6} variant="filled" severity="error" onClose={() => setSnackbarOpen(false)}
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={() => setSnackbarOpen(false)}
         >
           Water amount cannot be 0 ml
         </Alert>

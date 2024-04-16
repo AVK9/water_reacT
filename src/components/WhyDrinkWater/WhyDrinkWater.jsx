@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ContainerWDW,
   TitleWDW,
@@ -9,39 +10,43 @@ import {
 } from './WhyDrinkWater.styled';
 
 const WhyDrinkWater = () => {
+  const { t } = useTranslation();
+
   return (
     <ContainerWDW>
-      <TitleWDW>Why drink water</TitleWDW>
+      <TitleWDW>{t('Why drink water')}</TitleWDW>
 
       <ListWDW>
         <ItemWDW>
           <Point></Point>
-          <TextWDW>Supply of nutrients to all organs</TextWDW>
+          <TextWDW>{t('Supply of nutrients to all organs')}</TextWDW>
         </ItemWDW>
         <ItemWDW>
           <Point></Point>
-          <TextWDW>Providing oxygen to the lungs</TextWDW>
+          <TextWDW>{t('Providing oxygen to the lungs')}</TextWDW>
         </ItemWDW>
         <ItemWDW>
           <Point></Point>
-          <TextWDW>Maintaining the work of the heart</TextWDW>
+          <TextWDW>{t('Maintaining the work of the heart')}</TextWDW>
         </ItemWDW>
         <ItemWDW>
           <Point></Point>
-          <TextWDW>Release of processed substances</TextWDW>
-        </ItemWDW>
-        <ItemWDW>
-          <Point></Point>
-          <TextWDW>Ensuring the stability of the internal environment</TextWDW>
-        </ItemWDW>
-        <ItemWDW>
-          <Point></Point>
-          <TextWDW>Maintaining within the normal temperature</TextWDW>
+          <TextWDW>{t('Release of processed substances')}</TextWDW>
         </ItemWDW>
         <ItemWDW>
           <Point></Point>
           <TextWDW>
-            Maintaining an immune system capable of resisting disease
+            {t('Ensuring the stability of the internal environment')}
+          </TextWDW>
+        </ItemWDW>
+        <ItemWDW>
+          <Point></Point>
+          <TextWDW>{t('Maintaining within the normal temperature')}</TextWDW>
+        </ItemWDW>
+        <ItemWDW>
+          <Point></Point>
+          <TextWDW>
+            {t('Maintaining an immune system capable of resisting disease')}
           </TextWDW>
         </ItemWDW>
       </ListWDW>

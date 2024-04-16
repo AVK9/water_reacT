@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { profileSelector } from '../../redux/auth/selectors';
 import DailyNormaModal from '../DailyNormaModal/DailyNormaModal';
+import { useTranslation } from 'react-i18next';
 import {
   DailyNormaWrapper,
   DailyNormaTitle,
@@ -11,6 +12,7 @@ import {
 } from './DailyNorma.styled';
 
 const DailyNorma = () => {
+  const { t } = useTranslation();
   const profileWaterRate = useSelector(profileSelector).waterRate / 1000;
 
   //   ? parseFloat(localStorage.getItem('dailyNorm'))
@@ -52,10 +54,10 @@ const DailyNorma = () => {
   return (
     <>
       <DailyNormaWrapper>
-        <DailyNormaTitle>My daily norma</DailyNormaTitle>
+        <DailyNormaTitle>{t('My daily norma')}</DailyNormaTitle>
         <DailyNormaContent>
           <DailyNormaValue>{dailyNorm.toFixed(1)} L</DailyNormaValue>
-          <EditButton onClick={handleOpenModal}>Edit</EditButton>
+          <EditButton onClick={handleOpenModal}>{t('Edit')}</EditButton>
         </DailyNormaContent>
       </DailyNormaWrapper>
       {isModalOpen && (

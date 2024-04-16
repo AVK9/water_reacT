@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateWaterRateThunk, currentThunk } from '../../redux/auth/authThunk';
-
+import { useTranslation } from 'react-i18next';
 import sprite from '../../assets/img/sprite.svg';
 import {
   ModalNorma,
@@ -33,6 +33,7 @@ import {
 } from './DailyNormaModal.styled';
 
 function DailyNormaModal({ onClose, setDailyNorm }) {
+  const { t } = useTranslation();
   const [gender, setGender] = useState('girl');
   const [weight, setWeight] = useState('0.0');
   const [activityTime, setActivityTime] = useState('0');
@@ -77,10 +78,10 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
     event.preventDefault();
     if (!weight || !activityTime || weight === '0' || activityTime === '0') {
       if (!weight || weight === '0')
-        setWeightError('Weight is a required field and cannot be zero');
+        setWeightError(t('Weight is a required field and cannot be zero'));
       if (!activityTime || activityTime === '0')
         setActivityTimeError(
-          'Activity time is a required field and cannot be zero'
+          t('Activity time is a required field and cannot be zero')
         );
       return;
     }
@@ -99,7 +100,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
         console.error('intake is not a number:', intake);
       }
       // localStorage.setItem('dailyNorm', intake);
-      dispatch(currentThunk())
+      dispatch(currentThunk());
       handleClose();
     } catch (error) {
       console.error('Error during water rate update:', error);
@@ -133,7 +134,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
     <Backdrop isOpen={isOpen} onClick={handleBackdropClick}>
       <ModalNorma isOpen={isOpen}>
         <NormaContainer>
-          <Title>My daily norma</Title>
+          <Title>{t('My daily norma')}</Title>
           <CloseBtn onClick={handleClose}>
             <svg>
               <use href={`${sprite}#icon-close`} />
@@ -141,24 +142,23 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
           </CloseBtn>
           <WrapperDef>
             <DescriptionDef>
-              <LabelRate>For girl:</LabelRate>{' '}
+              <LabelRate>{t('For girl')}:</LabelRate>{' '}
               <LabelDef>V=(M*0,03) + (T*0,4)</LabelDef>
             </DescriptionDef>
             <DescriptionDef>
-              <LabelRate>For man:</LabelRate>
+              <LabelRate>{t('For man')}:</LabelRate>
               <LabelDef>V=(M*0,04) + (T*0,6)</LabelDef>
             </DescriptionDef>
           </WrapperDef>
           <DescriptionTitle>
-            V is the volume of the water norm in liters per day, M is your body
-            weight, T is the time of active sports, or another type of activity
-            commensurate in terms of loads (in the absence of these, you must
-            set 0)
+            {t(
+              'V is the volume of the water norm in liters per day, M is your body weight, T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)'
+            )}
           </DescriptionTitle>
 
           <Form onSubmit={handleSubmit}>
             <ContainerForm>
-              <CalcTitle>Calculate your rate:</CalcTitle>
+              <CalcTitle>{t('Calculate your rate')}:</CalcTitle>
               <LabelGen>
                 <RadioInput
                   type="radio"
@@ -175,7 +175,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                     style={{ opacity: gender === 'girl' ? 1 : 0 }}
                   />
                 </CustomRadio>
-                <GenTitle>For woman</GenTitle>
+                <GenTitle>{t('For woman')}</GenTitle>
                 <RadioInput
                   id="man"
                   className="radio_input"
@@ -192,10 +192,10 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                     style={{ opacity: gender === 'man' ? 1 : 0 }}
                   />
                 </CustomRadio>
-                <GenTitle>For man</GenTitle>
+                <GenTitle>{t('For man')}</GenTitle>
               </LabelGen>
               <Label>
-                Your weight in kilograms:
+                {t('Your weight in kilograms')}:
                 <InputValue
                   type="number"
                   step="0.1"
@@ -204,11 +204,11 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                   onChange={(e) => {
                     if (e.target.value > 300) {
                       setWeightError(
-                        'Weight must be less than or equal to 300'
+                        t('Weight must be less than or equal to 300')
                       );
                       setWeight('');
                     } else if (e.target.value === '') {
-                      setWeightError('Weight is a required field');
+                      setWeightError(t('Weight is a required field'));
                       setWeight('');
                     } else {
                       setWeightError('');
@@ -223,11 +223,13 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                   onKeyDown={handleKeyPress}
                   required
                 />
-                {weightError && <ErrorMessage>{weightError}</ErrorMessage>}
+                {weightError && <ErrorMessage>{t(weightError)}</ErrorMessage>}
               </Label>
               <Label>
-                The time of active participation in sports or other activities
-                with a high physical load in hours:
+                {t(
+                  'The time of active participation in sports or other activities with a high physical load in hours'
+                )}
+                :
                 <InputValue
                   type="number"
                   min="0"
@@ -235,7 +237,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                   onChange={(e) => {
                     if (e.target.value > 12) {
                       setActivityTimeError(
-                        'Activity time must be less than or equal to 12'
+                        t('Activity time must be less than or equal to 12')
                       );
                       setActivityTime('');
                     } else {
@@ -248,12 +250,12 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                   required
                 />
                 {activityTimeError && (
-                  <ErrorMessage>{activityTimeError}</ErrorMessage>
+                  <ErrorMessage>{t(activityTimeError)}</ErrorMessage>
                 )}
               </Label>
               <LabelAmount>
                 <LabelSpan>
-                  The required amount of water in liters per day:
+                  {t('The required amount of water in liters per day')}:
                 </LabelSpan>
                 <ValueResult>
                   {parseFloat(waterIntake).toFixed(1)} L{' '}
@@ -262,7 +264,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
             </ContainerForm>
             <Label>
               <LabelMuch>
-                Write down how much water you will drink in liters:
+                {t('Write down how much water you will drink in liters')}:
               </LabelMuch>
               <InputValue
                 type="number"
@@ -272,7 +274,7 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
                 onChange={(e) => {
                   if (e.target.value > 15) {
                     setPlannedIntakeError(
-                      'Rate must be less than or equal to 15'
+                      t('Rate must be less than or equal to 15')
                     );
                     setPlannedIntake('');
                   } else {
@@ -285,9 +287,9 @@ function DailyNormaModal({ onClose, setDailyNorm }) {
               />
             </Label>
             {plannedIntakeError && (
-              <ErrorMessage>{plannedIntakeError}</ErrorMessage>
+              <ErrorMessage>{t(plannedIntakeError)}</ErrorMessage>
             )}
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t('Save')}</Button>
           </Form>
         </NormaContainer>
       </ModalNorma>

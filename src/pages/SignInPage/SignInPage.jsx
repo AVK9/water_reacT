@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
   SignInGlobalContainer,
   SignInContainer,
@@ -26,6 +27,7 @@ import { loginThunk, currentThunk } from '../../redux/auth/authThunk';
 import { Section } from '../../components/Section/Section';
 
 const SignInComponent = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
@@ -34,43 +36,40 @@ const SignInComponent = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-const formik = useFormik({
-  initialValues: {
-    email: '',
-    password: '',
-  },
-  validate: (values) => {
-    const errors = {};
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validate: (values) => {
+      const errors = {};
 
-    if (!values.email || !values.email.includes('@')) {
-      errors.email = 'Email is invalid';
-    }
-
-    if (!values.password || values.password.length < 6) {
-      errors.password = 'Password is invalid';
-    }
-
-    return errors;
-  },
-  onSubmit: async (values) => {
-    try {
-      if (!values.password) {
-        setLoginError('Password is required');
-        return;
+      if (!values.email || !values.email.includes('@')) {
+        errors.email = t('Email is invalid');
       }
 
-      await dispatch(
-        loginThunk({ email: values.email, password: values.password })
-      );
-      await dispatch(currentThunk());
-    } catch (error) {
-      setLoginError('Invalid email or password. Please try again.');
-    }
-  },
-});
+      if (!values.password || values.password.length < 6) {
+        errors.password = t('Password is invalid');
+      }
 
+      return errors;
+    },
+    onSubmit: async (values) => {
+      try {
+        if (!values.password) {
+          setLoginError('Password is required');
+          return;
+        }
 
-
+        await dispatch(
+          loginThunk({ email: values.email, password: values.password })
+        );
+        await dispatch(currentThunk());
+      } catch (error) {
+        setLoginError('Invalid email or password. Please try again.');
+      }
+    },
+  });
 
   return (
     <DesktopBg>
@@ -78,14 +77,14 @@ const formik = useFormik({
         <SignInGlobalContainer>
           <SignInwater></SignInwater>
           <SignInContainer>
-            <SignInTitle>Sign In</SignInTitle>
+            <SignInTitle>{t(`Sign In`)}</SignInTitle>
             <FirstWaterBulb />
             <SecondWaterBulb />
             <ThirdWaterBulb />
             <FourthWaterBulb />
             <FifthWaterBulb />
             <Form onSubmit={formik.handleSubmit}>
-              <SignInLabel>Enter your email</SignInLabel>
+              <SignInLabel>{t(`Enter your email`)}</SignInLabel>
               <SignInInput
                 type="email"
                 name="email"
@@ -99,7 +98,7 @@ const formik = useFormik({
               {formik.touched.email && formik.errors.email && (
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               )}
-              <SignInLabel>Enter your password</SignInLabel>
+              <SignInLabel>{t(`Enter your password`)}</SignInLabel>
               <div style={{ position: 'relative' }}>
                 <SignInInput
                   type={showPassword ? 'text' : 'password'}
@@ -124,17 +123,13 @@ const formik = useFormik({
               {formik.touched.password && formik.errors.password && (
                 <ErrorMessage>{formik.errors.password}</ErrorMessage>
               )}
-
-
-              {loginError && <ErrorMessage>{loginError}</ErrorMessage>}{' '}
-             
-
+              {loginError && <ErrorMessage>(loginError)</ErrorMessage>}{' '}
               <SignInButton type="submit" disabled={!formik.isValid}>
-                Sign In
+                {t(`Sign In`)}
               </SignInButton>
             </Form>
             <StyledLink to="/signup">
-              <TextLink>Sign Up</TextLink>
+              <TextLink>{t(`Sign Up`)}</TextLink>
             </StyledLink>
           </SignInContainer>
         </SignInGlobalContainer>

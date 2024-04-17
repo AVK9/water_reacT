@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   OverlayDeleteModal,
   ContainerDeleteModal,
@@ -16,6 +17,7 @@ import sprite from '../../assets/img/sprite.svg';
 import { delWaterThunk } from '../../redux/water/waterThunk';
 
 const DeleteWaterModal = ({ onClose, delId }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +52,7 @@ const DeleteWaterModal = ({ onClose, delId }) => {
     return () => {
       document.removeEventListener('keydown', close);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose]);
 
   const handleDelete = () => {
@@ -64,7 +66,7 @@ const DeleteWaterModal = ({ onClose, delId }) => {
     <OverlayDeleteModal isOpen={isOpen} onClick={handleBackdropClick}>
       <ContainerDeleteModal isOpen={isOpen}>
         <TitleContainer>
-          <TitleDelete>Delete entry</TitleDelete>
+          <TitleDelete>{t('Delete entry')}</TitleDelete>
 
           <ButtonClose type="button" onClick={onClose}>
             <IconWrapper>
@@ -73,14 +75,16 @@ const DeleteWaterModal = ({ onClose, delId }) => {
           </ButtonClose>
         </TitleContainer>
 
-        <TextDelete>Are you sure you want to delete the entry?</TextDelete>
+        <TextDelete>
+          {t('Are you sure you want to delete the entry?')}
+        </TextDelete>
 
         <ButtonsContainer>
           <ButtonDelete type="button" onClick={handleDelete}>
-            Delete
+            {t('Delete')}
           </ButtonDelete>
           <ButtonCancel type="button" onClick={onClose}>
-            Cancel
+            {t('Cancel')}
           </ButtonCancel>
         </ButtonsContainer>
       </ContainerDeleteModal>

@@ -5,6 +5,7 @@ import { addMonths, subMonths, format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CalendarTab,
   CalendarData,
@@ -40,6 +41,7 @@ const formatOfWeek = 'eee';
 const formatOfDay = 'd';
 
 const MonthStatsTable = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [selectDateUse, setSelectDateUse] = useState(new Date());
@@ -84,7 +86,7 @@ const MonthStatsTable = () => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   const weeks = ((date) => {
@@ -169,10 +171,14 @@ const MonthStatsTable = () => {
   return (
     <>
       {loading && !error && <p>Loading pleasure wait</p>}
-      {error && <p>Error: {error}</p>}
+      {error && (
+        <p>
+          {t('Error:')} {error}
+        </p>
+      )}
       <TableContainer>
         <TableHeaderBox>
-          <MonthSpan>Month</MonthSpan>
+          <MonthSpan>{t('Month')}</MonthSpan>
           <MonthStatsControlBox>
             <BtnMonthBox
               onClick={() => setCurrentDate(dateFns.subMonths(currentDate, 1))}
@@ -254,9 +260,7 @@ const MonthStatsTable = () => {
             )}
           </CalendarTab>
         ) : (
-            <div>
-              {loading ? <Loader /> : <p>No water</p>}
-          </div>
+          <div>{loading ? <Loader /> : <p>{t('No water')}</p>}</div>
         )}
         {isWaterModalRate && (
           <DaysGeneralStats

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import sprite from '../../assets/img/sprite.svg';
+import { useTranslation } from 'react-i18next';
 import {
   ButtonClose,
   IconWrapper,
@@ -44,6 +45,7 @@ import { profileSelector } from '../../redux/auth/selectors';
 import { LoaderAvatar } from '../Loader/LoaderAvatar';
 
 const SettingModal = ({ onClose }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -98,27 +100,27 @@ const SettingModal = ({ onClose }) => {
 
   const UserSettingShema = yup.object().shape({
     gender: yup.string().required(),
-    name: yup.string().max(32, 'max length 32'),
+    name: yup.string().max(32, t('max length 32')),
     // .matches(
     //   /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ]+$/,
     //   'Name should only contain letters (Latin, Ukrainian or Cyrillic)'
     // ),
-    email: yup.string().matches(emailPattern, 'Email is not valid'),
+    email: yup.string().matches(emailPattern, t('Email is not valid')),
     oldPassword: yup
       .string()
-      .min(8, 'Password must be at least 6 characters')
-      .max(64, 'Max length 64')
+      .min(8, t('Password must be at least 6 characters'))
+      .max(64, t('Max length 64'))
       .when('newPassword', (newPassword, field) =>
         newPassword[0] ? field.required() : field
       ),
     newPassword: yup
       .string()
-      .min(6, 'Password must be at least 6 characters')
-      .max(64, 'Max length 64')
+      .min(6, t('Password must be at least 6 characters'))
+      .max(64, t('Max length 64'))
       .nullable()
       .test(
         'differentPassword',
-        'The new password must differ from the old one.',
+        t('The new password must differ from the old one.'),
         function (value) {
           const oldPassword = this.resolve(yup.ref('oldPassword'));
           return !oldPassword || value !== oldPassword;
@@ -126,9 +128,9 @@ const SettingModal = ({ onClose }) => {
       ),
     repeatPassword: yup
       .string()
-      .min(8, 'Password must be at least 6 characters')
-      .max(64, 'Max length 64')
-      .test('commonPassword', 'Passwords do not match.', function (value) {
+      .min(8, t('Password must be at least 6 characters'))
+      .max(64, t('Max length 64'))
+      .test('commonPassword', t('Passwords do not match.'), function (value) {
         const newPassword = this.resolve(yup.ref('newPassword'));
         return !newPassword || String(value) === String(newPassword);
       }),
@@ -143,7 +145,7 @@ const SettingModal = ({ onClose }) => {
     const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
 
     if (fileExtension !== 'jpg') {
-      formik.setFieldError('photo', 'Only JPG files are allowed.');
+      formik.setFieldError('photo', t('Only JPG files are allowed.'));
       return;
     }
 
@@ -157,7 +159,7 @@ const SettingModal = ({ onClose }) => {
       await dispatch(updateAvatarThunk(formData));
       await dispatch(currentThunk());
     } catch (error) {
-      console.error('Error updating avatar:', error);
+      console.error(`${t('Error updating avatar:')} ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -202,7 +204,7 @@ const SettingModal = ({ onClose }) => {
     <ModalOverlay isOpen={isOpen} onClick={handleBackdropClick}>
       <ModalContent isOpen={isOpen}>
         <HeaderSettingModal>
-          <HeaderSettingName>Setting</HeaderSettingName>
+          <HeaderSettingName>{t('Setting')}</HeaderSettingName>
 
           <ButtonClose onClick={handleClose}>
             <IconWrapper>
@@ -212,7 +214,7 @@ const SettingModal = ({ onClose }) => {
         </HeaderSettingModal>
 
         <ContainerPhoto>
-          <TitlePhoto>Your photo</TitlePhoto>
+          <TitlePhoto>{t('Your photo')}</TitlePhoto>
 
           <UploadWrapper>
             <ContainerAvatar>
@@ -240,7 +242,7 @@ const SettingModal = ({ onClose }) => {
               <svg>
                 <use href={`${sprite}#icon-arrow-up-tray`} />
               </svg>
-              <p>Upload a photo</p>
+              <p>{t('Upload a photo')}</p>
             </Upload>
             {formik.errors.photo && (
               <TextError>{formik.errors.photo}</TextError>
@@ -252,7 +254,7 @@ const SettingModal = ({ onClose }) => {
           <FormContainer>
             <FirstContainer>
               <GenderWrapper>
-                <StyledLabel>Your gender identity:</StyledLabel>
+                <StyledLabel>{t('Your gender identity:')}</StyledLabel>
 
                 <RadiosWrapper>
                   <RadioWrapper>
@@ -264,7 +266,7 @@ const SettingModal = ({ onClose }) => {
                         onChange={formik.handleChange}
                         checked={formik.values.gender === 'female'}
                       />
-                      <span>Woman</span>
+                      <span>{t('Woman')}</span>
                     </label>
                   </RadioWrapper>
 
@@ -277,7 +279,7 @@ const SettingModal = ({ onClose }) => {
                         onChange={formik.handleChange}
                         checked={formik.values.gender === 'male'}
                       />
-                      <span>Man</span>
+                      <span>{t('Man')}</span>
                     </label>
                   </RadioWrapper>
                 </RadiosWrapper>
@@ -285,7 +287,7 @@ const SettingModal = ({ onClose }) => {
 
               <ContainerRME>
                 <FieldWrapper>
-                  <LabelName>Your name</LabelName>
+                  <LabelName>{t('Your name')}</LabelName>
                   <Input
                     style={
                       formik.touched.name &&
@@ -296,7 +298,7 @@ const SettingModal = ({ onClose }) => {
                     onChange={formik.handleChange}
                     value={formik.values.name}
                     onblur={formik.handleBlur}
-                    placeholder="Name"
+                    placeholder={t('Name')}
                     autoComplete="username"
                     error={formik.touched.name && formik.errors.name}
                   />
@@ -306,7 +308,7 @@ const SettingModal = ({ onClose }) => {
                 </FieldWrapper>
 
                 <FieldWrapper>
-                  <LabelName>Email</LabelName>
+                  <LabelName>{t('Email')}</LabelName>
                   <Input
                     style={
                       formik.touched.email &&
@@ -330,9 +332,9 @@ const SettingModal = ({ onClose }) => {
               </ContainerRME>
             </FirstContainer>
             <div>
-              <StyledLabel>Password</StyledLabel>
+              <StyledLabel>{t('Password')}</StyledLabel>
               <FieldWrapper>
-                <FormText>Outdate password:</FormText>
+                <FormText>{t('Outdate password:')}</FormText>
                 <PasswordWrapper>
                   <EyeButton
                     onClick={() => setIsShowOldPassword(!isShowOldPassword)}
@@ -356,7 +358,7 @@ const SettingModal = ({ onClose }) => {
                     onChange={formik.handleChange}
                     value={formik.values.oldPassword}
                     onBlur={formik.handleBlur}
-                    placeholder="Old password"
+                    placeholder={t('Old password')}
                     error={
                       formik.touched.oldPassword && formik.errors.oldPassword
                     }
@@ -367,7 +369,7 @@ const SettingModal = ({ onClose }) => {
                 </PasswordWrapper>
               </FieldWrapper>
               <FieldWrapper>
-                <FormText>New Password:</FormText>
+                <FormText>{t('New Password:')}</FormText>
                 <div>
                   <PasswordWrapper>
                     <EyeButton
@@ -392,7 +394,7 @@ const SettingModal = ({ onClose }) => {
                       value={formik.values.newPassword}
                       onBlur={formik.handleBlur}
                       id="newPassword"
-                      placeholder="New Password"
+                      placeholder={t('New Password')}
                       error={
                         formik.touched.newPassword && formik.errors.newPassword
                       }
@@ -405,7 +407,7 @@ const SettingModal = ({ onClose }) => {
                 </div>
               </FieldWrapper>
               <FieldWrapper>
-                <FormText>Repeat new Password:</FormText>
+                <FormText>{t('Repeat new Password:')}</FormText>
                 <div>
                   <PasswordWrapper>
                     <EyeButton
@@ -434,7 +436,7 @@ const SettingModal = ({ onClose }) => {
                       onChange={formik.handleChange}
                       value={formik.values.repeatPassword}
                       onBlur={formik.handleBlur}
-                      placeholder="Repeat new password"
+                      placeholder={t('Repeat new password')}
                       error={
                         formik.touched.repeatPassword &&
                         formik.errors.repeatPassword
@@ -469,8 +471,8 @@ const SettingModal = ({ onClose }) => {
           sx={{ width: '100%' }}
         >
           {snackBarStatus === 'success'
-            ? 'Information Updated Successfully!'
-            : 'Error Updating Information'}
+            ? t('Information Updated Successfully!')
+            : t('Error Updating Information')}
         </Alert>
       </Snackbar>
     </ModalOverlay>

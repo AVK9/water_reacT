@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AddWaterBox,
   BtnAddWater,
@@ -35,6 +36,7 @@ import { Loader } from '../Loader/Loader';
 const formatOfManth = 'MMMM';
 
 const TodayWaterList = () => {
+  const { t } = useTranslation();
   const [isModaAddWaterOpen, setIsModalAddWaterOpen] = useState(false);
   const handleOpenModalAddWater = () => setIsModalAddWaterOpen(true);
   const handleCloseModalAddWater = () => setIsModalAddWaterOpen(false);
@@ -61,8 +63,7 @@ const TodayWaterList = () => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    setTimeout(setLoading(false), 10000)
-    
+    setTimeout(setLoading(false), 10000);
   }, []);
 
   const dayWaterList = useSelector(selectStateWaterDayList);
@@ -87,9 +88,15 @@ const TodayWaterList = () => {
 
   return (
     <>
-      {error && <p>Error: {error}</p>}
+      {error && (
+        <p>
+          {t('Error:')} {error}
+        </p>
+      )}
       <TodayWaterListBox>
-        <Header>{clickDate ? format(clickDate, 'dd, MMMM') : 'Today'}</Header>
+        <Header>
+          {clickDate ? format(clickDate, 'dd, MMMM') : t('Today')}
+        </Header>
         <AddWaterBox>
           {dayWaterList.length ? (
             <DayDrinkBox>
@@ -129,11 +136,11 @@ const TodayWaterList = () => {
             </DayDrinkBox>
           ) : (
             <DayDrinkBox>
-              {loading ? <Loader /> : <p>No water</p>}
+              {loading ? <Loader /> : <p>{t('No water')}</p>}
             </DayDrinkBox>
           )}
           <BtnAddWater onClick={handleOpenModalAddWater}>
-            + Add Water
+            {t('+ Add Water')}
           </BtnAddWater>
         </AddWaterBox>
         {isModaEditWaterOpen && (

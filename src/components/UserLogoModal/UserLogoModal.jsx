@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import SettingModal from '../SettingModal/SettingModal';
 import UserLogoutModal from '../UserLogoutModal/UserLogoutModal';
+import { useTranslation } from 'react-i18next';
 import {
   TransparentOverlay,
   ContainerUserLogoModal,
   ButtonsUserLogoModal,
   IconWrapper,
-  ButtonText
+  ButtonText,
 } from './UserLogoModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
 const UserLogoModal = ({ onClose }) => {
+  const { t } = useTranslation();
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const handleOpenSettingModal = () => setIsSettingModalOpen(true);
   const handleCloseSettingModal = () => setIsSettingModalOpen(false);
@@ -32,28 +34,32 @@ const UserLogoModal = ({ onClose }) => {
 
   return (
     <>
-      {isOpen && <TransparentOverlay  onClick={handleClose}/>}
+      {isOpen && <TransparentOverlay onClick={handleClose} />}
 
       <ContainerUserLogoModal isOpen={isOpen}>
-        <ButtonsUserLogoModal type='button' onClick={handleOpenSettingModal}>
+        <ButtonsUserLogoModal type="button" onClick={handleOpenSettingModal}>
           <IconWrapper>
             <use xlinkHref={`${sprite}#icon-cog-6-tooth`}></use>
           </IconWrapper>
-          <ButtonText>Setting</ButtonText>
+          <ButtonText>{t('Setting')}</ButtonText>
         </ButtonsUserLogoModal>
 
-        <ButtonsUserLogoModal type='button' onClick={handleOpenModalLogout}>
+        <ButtonsUserLogoModal type="button" onClick={handleOpenModalLogout}>
           <IconWrapper>
             <use xlinkHref={`${sprite}#icon-arrow-right-on-rectangle`}></use>
           </IconWrapper>
-          <ButtonText>Log out</ButtonText>
+          <ButtonText>{t('Log out')}</ButtonText>
         </ButtonsUserLogoModal>
 
-        {isSettingModalOpen && <SettingModal onClose={handleCloseSettingModal} />}
-        {isModalLogoutOpen && <UserLogoutModal onClose={handleCloseModalLogout} />}
+        {isSettingModalOpen && (
+          <SettingModal onClose={handleCloseSettingModal} />
+        )}
+        {isModalLogoutOpen && (
+          <UserLogoutModal onClose={handleCloseModalLogout} />
+        )}
       </ContainerUserLogoModal>
     </>
-  )
+  );
 };
 
 export default UserLogoModal;

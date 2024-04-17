@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -30,7 +30,7 @@ import { Section } from '../../components/Section/Section';
 
 const SignUpComponent = () => {
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -38,27 +38,35 @@ const SignUpComponent = () => {
       repeatPassword: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Required'),
+      email: Yup.string()
+        .email(t('Invalid email address'))
+        .required(t('Required')),
       password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Required'),
+        .min(6, t('Password must be at least 6 characters'))
+        .required(t('Required')),
       repeatPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Required'),
+        .oneOf([Yup.ref('password'), null], t('Passwords must match'))
+        .required(t('Required')),
     }),
     onSubmit: (values, { setSubmitting }) => {
       dispatch(signUpThunk({ email: values.email, password: values.password }))
         .then((response) => {
           if (response.error && response.error.message === 'Rejected') {
-            formik.setFieldError('email', 'This email is already registered');
+            formik.setFieldError(
+              'email',
+              t('This email is already registered')
+            );
           }
           setSubmitting(false);
         })
         .catch((error) => {
           if (error.response && error.response.status === 409) {
-            formik.setFieldError('email', 'This email is already registered');
+            formik.setFieldError(
+              'email',
+              t('This email is already registered')
+            );
           } else {
-            console.error('Error:', error);
+            console.error(`${t('Error:')} ${error}`);
           }
           setSubmitting(false);
         });
@@ -81,7 +89,7 @@ const SignUpComponent = () => {
       <SignUpGlobalContainer>
         <SignUpwater></SignUpwater>
         <SignUpContainer>
-          <SignUpTitle>Sign Up</SignUpTitle>
+          <SignUpTitle>{t('Sign Up')}</SignUpTitle>
 
           <FirstWaterBulb />
           <SecondWaterBulb />
@@ -90,7 +98,7 @@ const SignUpComponent = () => {
           <FifthWaterBulb />
 
           <Form onSubmit={formik.handleSubmit}>
-            <SignUpLabel>Enter your email</SignUpLabel>
+            <SignUpLabel>{t(`Enter your email`)}</SignUpLabel>
             <SignUpInput
               type="email"
               name="email"
@@ -104,12 +112,12 @@ const SignUpComponent = () => {
               <ErrorMessage>{formik.errors.email}</ErrorMessage>
             )}
 
-            <SignUpLabel>Enter your password</SignUpLabel>
+            <SignUpLabel>{t(`Enter your password`)}</SignUpLabel>
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showPassword ? 'text' : 'password'}
                 name="password"
-                placeholder="Password"
+                placeholder={t('Password')}
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -122,9 +130,7 @@ const SignUpComponent = () => {
               >
                 <svg>
                   <use
-                    href={`${sprite}#${
-                      showPassword ? 'eye' : 'eye-slash'
-                    }`}
+                    href={`${sprite}#${showPassword ? 'eye' : 'eye-slash'}`}
                   />
                 </svg>
               </TogglePasswordButton>
@@ -133,12 +139,12 @@ const SignUpComponent = () => {
               <ErrorMessage>{formik.errors.password}</ErrorMessage>
             )}
 
-            <SignUpLabel>Repeat password</SignUpLabel>
+            <SignUpLabel>{t(`Repeat password`)}</SignUpLabel>
             <div style={{ position: 'relative' }}>
               <SignUpInput
                 type={showRepeatPassword ? 'text' : 'password'}
                 name="repeatPassword"
-                placeholder="Repeat Password"
+                placeholder={t('Repeat Password')}
                 value={formik.values.repeatPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -167,11 +173,11 @@ const SignUpComponent = () => {
               type="submit"
               disabled={!formik.isValid || formik.isSubmitting}
             >
-              Sign Up
+              {t('Sign Up')}
             </SignUpButton>
 
             <StyledLink to="/signin">
-              <TextLink>Sign In</TextLink>
+              <TextLink>{t('Sign In')}</TextLink>
             </StyledLink>
           </Form>
         </SignUpContainer>

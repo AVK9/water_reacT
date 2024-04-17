@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { loginOutThunk } from '../../redux/auth/authThunk';
 import {
@@ -11,11 +12,12 @@ import {
   TextLogout,
   ButtonsContainer,
   ButtonLogout,
-  ButtonCancel
+  ButtonCancel,
 } from './UserLogoutModal.styled';
 import sprite from '../../assets/img/sprite.svg';
 
 const UserLogoutModal = ({ onClose }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -43,39 +45,43 @@ const UserLogoutModal = ({ onClose }) => {
         handleClose();
       }
     };
-    
+
     document.addEventListener('keydown', close);
-    
+
     return () => {
       document.removeEventListener('keydown', close);
     };
   }, [onClose]);
 
   const dispatch = useDispatch();
-  
+
   const handleLogout = () => {
     dispatch(loginOutThunk());
     handleClose();
   };
-  
+
   return (
     <OverlayLogoutModal isOpen={isOpen} onClick={handleBackdropClick}>
       <ContainerLogoutModal isOpen={isOpen}>
         <TitleContainer>
-          <TitleLogout>Log out</TitleLogout>
+          <TitleLogout>{t('Log out')}</TitleLogout>
 
-          <ButtonClose type='button' onClick={handleClose}>
+          <ButtonClose type="button" onClick={handleClose}>
             <IconWrapper>
               <use xlinkHref={`${sprite}#icon-close`}></use>
             </IconWrapper>
           </ButtonClose>
         </TitleContainer>
 
-        <TextLogout>Do you really want to leave?</TextLogout>
+        <TextLogout>{t('Do you really want to leave?')}</TextLogout>
 
         <ButtonsContainer>
-          <ButtonLogout type='button' onClick={handleLogout}>Log out</ButtonLogout>
-          <ButtonCancel type='button' onClick={handleClose}>Cancel</ButtonCancel>
+          <ButtonLogout type="button" onClick={handleLogout}>
+            {t('Log out')}
+          </ButtonLogout>
+          <ButtonCancel type="button" onClick={handleClose}>
+            {t('Cancel')}
+          </ButtonCancel>
         </ButtonsContainer>
       </ContainerLogoutModal>
     </OverlayLogoutModal>

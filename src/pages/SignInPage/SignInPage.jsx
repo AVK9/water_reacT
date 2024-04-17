@@ -103,7 +103,7 @@ const SignInComponent = () => {
                 <SignInInput
                   type={showPassword ? 'text' : 'password'}
                   name="password"
-                  placeholder="Password"
+                  placeholder={t('Password')}
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDayWaterStat } from '../../redux/water/waterSelectors';
+import { useTranslation } from 'react-i18next';
 import {
   changeWaterThunk,
   getWaterDayThunk,
@@ -65,6 +66,7 @@ const EditWaterModal = ({
   editMode,
   waterIntakeId,
 }) => {
+  const { t } = useTranslation();
   const [waterAmount, setWaterAmount] = useState(initialValue);
 
   const date = formatDate(useSelector(selectDayWaterStat).startDate);
@@ -144,7 +146,7 @@ const EditWaterModal = ({
       // await dispatch(getWaterDayThunk(date));
       handleClose();
     } catch (error) {
-      console.error('Error saving water intake:', error);
+      console.error(`${t('Error saving water intake:')} ${error}`);
     }
   };
 
@@ -152,7 +154,7 @@ const EditWaterModal = ({
     <Backdrop isOpen={isOpen} onClick={handleBackdropClick}>
       <ModalContainer isOpen={isOpen}>
         <HeaderEditModal>
-          <ModalTitle>Edit the entered amount of water</ModalTitle>
+          <ModalTitle>{t(`Edit the entered amount of water`)}</ModalTitle>
 
           <CloseButton onClick={handleClose}>
             <IconClose>
@@ -170,11 +172,13 @@ const EditWaterModal = ({
             <IntakeTime>{initialTime}</IntakeTime>
           </PreviousIntakeText>
         ) : (
-          <PreviousIntakeText>No notes yet</PreviousIntakeText>
+          <PreviousIntakeText>{t('No notes yet')}</PreviousIntakeText>
         )}
         <div>
-          <CorrectEnteredDataText>Correct entered data:</CorrectEnteredDataText>
-          <AmountOfWaterText>Amount of water:</AmountOfWaterText>
+          <CorrectEnteredDataText>
+            {t('Correct entered data:')}
+          </CorrectEnteredDataText>
+          <AmountOfWaterText>{t('Amount of water:')}</AmountOfWaterText>
 
           <WaterAmountControls>
             <WaterAmountButton onClick={handleDecrement}>
@@ -194,7 +198,7 @@ const EditWaterModal = ({
         </div>
 
         <div>
-          <AmountOfWaterText>Recording time:</AmountOfWaterText>
+          <AmountOfWaterText>{t('Recording time:')}</AmountOfWaterText>
 
           <TimeContainer>
             <div>
@@ -224,7 +228,7 @@ const EditWaterModal = ({
 
         <div>
           <EnterWaterValueText>
-            Enter the value of the water used:
+            {t(`Enter the value of the water used:`)}
           </EnterWaterValueText>
           <WaterAmountInputManually
             value={waterAmount + ' ml' || '0'}
@@ -239,7 +243,7 @@ const EditWaterModal = ({
 
         <EditedWaterAmountContainer>
           <EditedWaterAmount>{waterAmount || '0'} ml</EditedWaterAmount>
-          <SaveButton onClick={handleSave}>Save</SaveButton>
+          <SaveButton onClick={handleSave}>{t('Save')}</SaveButton>
         </EditedWaterAmountContainer>
       </ModalContainer>
       <Snackbar
@@ -253,7 +257,7 @@ const EditWaterModal = ({
           severity="error"
           onClose={() => setSnackbarOpen(false)}
         >
-          Water amount cannot be 0 ml
+          {t('Water amount cannot be 0 ml')}
         </Alert>
       </Snackbar>
     </Backdrop>

@@ -99,7 +99,7 @@ i18n.use(initReactI18next).init({
         'Do you really want to leave?': 'Ви дійсно хочете вийти?',
         'Add water': 'Додати воду',
         'This email is already registered':
-          'Цей електронна пошта вже зареєстрована',
+          'Ця електронна пошта вже зареєстрована',
         'Invalid email address': 'Недійсна адреса електронної пошти',
         Required: "Обов'язково",
         'Passwords must match': 'Паролі повинні співпадати',
